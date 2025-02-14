@@ -1,0 +1,44 @@
+---
+import { 
+  Rocket, 
+  LineChart, 
+  MessageCircle, 
+  Brain, 
+  Shield, 
+  Clock, 
+  TrendingUp,
+  Wrench,
+  Mail,
+  Settings,
+  Heart
+} from 'lucide-react';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+const icons = {
+  rocket: Rocket,
+  chart: LineChart,
+  chat: MessageCircle,
+  brain: Brain,
+  shield: Shield,
+  clock: Clock,
+  'trending-up': TrendingUp,
+  tools: Wrench,
+  mail: Mail,
+  settings: Settings,
+  heart: Heart
+};
+
+const IconComponent = icons[name as keyof typeof icons];
+---
+
+{
+  IconComponent && (
+    <IconComponent className={className} />
+  )
+}

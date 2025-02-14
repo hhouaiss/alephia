@@ -1,0 +1,80 @@
+---
+const navItems = [
+  { label: "Accueil", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Tarifs", href: "/tarifs" },
+  { label: "À propos", href: "/a-propos" },
+  { label: "Blog", href: "/blog" }
+];
+---
+
+<nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center">
+        <img src="/images/logo.svg" alt="Alephia" class="h-8 w-auto">
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center space-x-8">
+        {navItems.map(item => (
+          <a 
+            href={item.href}
+            class="text-gray-600 hover:text-primary transition-colors font-medium"
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- CTA Button -->
+      <a 
+        href="/contact"
+        class="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg hidden md:block"
+      >
+        Démarrer un projet
+      </a>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        id="mobile-menu-button"
+        aria-label="Menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="md:hidden hidden" id="mobile-menu">
+    <div class="px-4 py-4 space-y-3 bg-white border-t border-gray-200">
+      {navItems.map(item => (
+        <a 
+          href={item.href}
+          class="block px-4 py-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors"
+        >
+          {item.label}
+        </a>
+      ))}
+      <a 
+        href="/contact"
+        class="block px-4 py-2 text-center bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+      >
+        Démarrer un projet
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

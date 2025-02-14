@@ -1,0 +1,83 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  number: string;
+  label: string;
+  description: string;
+  icon?: string;
+}
+
+const { number, label, description, icon = 'trending-up' } = Astro.props;
+const numericValue = number.replace(/[^0-9]/g, '');
+const suffix = number.replace(/[0-9]/g, '');
+---
+
+<div class="relative group bg-white p-8 rounded-2xl shadow-lg text-center transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+  <!-- Background decoration -->
+  <div class="absolute -right-8 -top-8 w-24 h-24 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
+  <div class="absolute -left-8 -bottom-8 w-32 h-32 bg-secondary/5 rounded-full group-hover:scale-150 transition-transform duration-500 delay-100"></div>
+  
+  <div class="relative">
+    <!-- Icon -->
+    <div class="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+      <Icon name={icon} class="w-8 h-8" />
+    </div>
+
+    <!-- Number with counter -->
+    <div class="text-6xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent mb-4">
+      <span 
+        class="number-counter inline-block" 
+        data-target={numericValue}
+        data-suffix={suffix}
+      >
+        {number}
+      </span>
+    </div>
+
+    <!-- Label and Description -->
+    <div class="text-xl font-semibold mb-3 text-gray-800">{label}</div>
+    <p class="text-gray-600 relative z-10">{description}</p>
+  </div>
+</div>
+
+<script>
+  function animateValue(element: HTMLElement, start: number, end: number, duration: number) {
+    if (start === end) return;
+    
+    const suffix = element.dataset.suffix || '';
+    let startTimestamp: number | null = null;
+    
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const current = Math.floor(progress * (end - start) + start);
+      element.innerText = `${current}${suffix}`;
+      
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    
+    window.requestAnimationFrame(step);
+  }
+
+  // Intersection Observer setup
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target as HTMLElement;
+        const target = parseInt(counter.dataset.target || '0');
+        animateValue(counter, 0, target, 2000);
+        observer.unobserve(counter);
+      }
+    });
+  }, {
+    threshold: 0.2
+  });
+
+  // Start observing all counter elements
+  document.querySelectorAll('.number-counter').forEach(counter => {
+    observer.observe(counter);
+  });
+</script>

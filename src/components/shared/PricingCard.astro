@@ -1,0 +1,98 @@
+---
+interface Feature {
+  text: string;
+  included: boolean;
+}
+
+interface Props {
+  title: string;
+  price: string;
+  description: string;
+  features: Feature[];
+  popular?: boolean;
+  ctaText?: string;
+}
+
+const { 
+  title, 
+  price, 
+  description, 
+  features, 
+  popular = false,
+  ctaText = "Commencer" 
+} = Astro.props;
+---
+
+<div class={`relative rounded-2xl ${popular ? 'bg-primary text-white' : 'bg-white'} p-8 shadow-xl`}>
+  {popular && (
+    <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+      <span class="bg-secondary text-primary text-sm font-semibold px-3 py-1 rounded-full">
+        Recommandé
+      </span>
+    </div>
+  )}
+  
+  <div class="mb-8">
+    <h3 class="text-2xl font-bold mb-2">{title}</h3>
+    <p class={`${popular ? 'text-gray-200' : 'text-gray-600'} mb-6`}>
+      {description}
+    </p>
+    <div class="flex items-baseline gap-2">
+      <span class="text-4xl font-bold">{price}€</span>
+      <span class={`${popular ? 'text-gray-200' : 'text-gray-600'}`}>/mois</span>
+    </div>
+  </div>
+
+  <ul class="space-y-4 mb-8">
+    {features.map(feature => (
+      <li class="flex items-start gap-3">
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          class={`w-6 h-6 ${
+            feature.included 
+              ? popular 
+                ? 'text-white' 
+                : 'text-green-500'
+              : 'text-gray-400'
+          }`}
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          {feature.included ? (
+            <path 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M5 13l4 4L19 7"
+            />
+          ) : (
+            <path 
+              stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M6 18L18 6M6 6l12 12"
+            />
+          )}
+        </svg>
+        <span class={`${
+          popular 
+            ? feature.included ? 'text-white' : 'text-gray-300'
+            : feature.included ? 'text-gray-900' : 'text-gray-500'
+        }`}>
+          {feature.text}
+        </span>
+      </li>
+    ))}
+  </ul>
+
+  <button
+    class={`w-full py-3 px-6 rounded-lg font-semibold transition-colors ${
+      popular
+        ? 'bg-white text-primary hover:bg-gray-100'
+        : 'bg-primary text-white hover:bg-primary-dark'
+    }`}
+  >
+    {ctaText}
+  </button>
+</div>

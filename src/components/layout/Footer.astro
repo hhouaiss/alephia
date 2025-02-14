@@ -1,0 +1,94 @@
+---
+const currentYear = new Date().getFullYear();
+
+const company = [
+  { text: 'À propos', href: '/about' },
+  { text: 'Carrières', href: '/careers' },
+  { text: 'Contact', href: '/contact' },
+];
+
+const services = [
+  { text: 'IA Générative', href: '/services#generative' },
+  { text: 'Automatisation', href: '/services#automation' },
+  { text: 'Analytics', href: '/services#analytics' },
+];
+
+const legal = [
+  { text: 'Mentions légales', href: '/legal' },
+  { text: 'Politique de confidentialité', href: '/privacy' },
+  { text: 'CGV', href: '/terms' },
+];
+---
+
+<footer class="bg-neutral-900 text-white pt-20 pb-10">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <!-- Branding -->
+      <div class="col-span-1">
+        <img src="/images/alephia-white-logo.svg" alt="Alephia" class="h-8 w-auto mb-6">
+        <p class="text-gray-400 mb-6">
+          Transformez votre entreprise grâce à l'intelligence artificielle
+        </p>
+        <div class="flex space-x-4">
+          <a href="https://linkedin.com" class="text-gray-400 hover:text-white">
+            <span class="sr-only">LinkedIn</span>
+            <!-- Icon LinkedIn -->
+          </a>
+          <a href="https://twitter.com" class="text-gray-400 hover:text-white">
+            <span class="sr-only">Twitter</span>
+            <!-- Icon Twitter -->
+          </a>
+        </div>
+      </div>
+
+      <!-- Company -->
+      <div>
+        <h3 class="text-lg font-semibold mb-6">Entreprise</h3>
+        <ul class="space-y-4">
+          {company.map(item => (
+            <li>
+              <a href={item.href} class="text-gray-400 hover:text-white transition-colors">
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h3 class="text-lg font-semibold mb-6">Services</h3>
+        <ul class="space-y-4">
+          {services.map(item => (
+            <li>
+              <a href={item.href} class="text-gray-400 hover:text-white transition-colors">
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h3 class="text-lg font-semibold mb-6">Légal</h3>
+        <ul class="space-y-4">
+          {legal.map(item => (
+            <li>
+              <a href={item.href} class="text-gray-400 hover:text-white transition-colors">
+                {item.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="border-t border-gray-800 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400">© {currentYear} Alephia. Tous droits réservés.</p>
+      </div>
+    </div>
+  </div>
+</footer>

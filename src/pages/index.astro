@@ -1,0 +1,340 @@
+---
+import Layout from '../layouts/Layout.astro';
+import StatCard from '../components/shared/StatCard.astro';
+import ServiceCard from '../components/shared/ServiceCard.astro';
+import PricingCard from '../components/shared/PricingCard.astro';
+import Icon from '../components/shared/Icon.astro';
+import ImpactCard from '../components/shared/ImpactCard.astro';
+
+// Statistiques mises à jour
+const stats = [
+  {
+    number: "72%",
+    label: "PME visant l'adoption IA d'ici 2026",
+    description: "Rejoignez la transformation digitale",
+    icon: "chart"
+  },
+  {
+    number: "250h",
+    label: "Temps moyen gagné par mois",
+    description: "Automatisation intelligente",
+    icon: "clock"
+  },
+  {
+    number: "0%",
+    label: "Données exposées à l'internet",
+    description: "Sécurité maximale garantie",
+    icon: "shield"
+  }
+];
+
+// Services sectoriels mis à jour
+const services = [
+  {
+    title: "Artisanat",
+    description: "Automatisation des devis et gain de 15h/mois/artisan",
+    icon: "tools"
+  },
+  {
+    title: "Commerce",
+    description: "Analyse prédictive des stocks avec 30% de réduction du surstockage",
+    icon: "chart"
+  },
+  {
+    title: "Services",
+    description: "Tri automatique des emails avec 90% de temps gagné",
+    icon: "mail"
+  },
+  {
+    title: "Industrie",
+    description: "Maintenance prédictive augmentant de 25% la durée de vie des machines",
+    icon: "settings"
+  },
+  {
+    title: "Santé",
+    description: "Classification des documents médicaux réduisant de 50% les erreurs",
+    icon: "heart"
+  }
+];
+
+const impacts = [
+  {
+    metric: "147h/mois",
+    description: "Temps moyen gagné par entreprise"
+  },
+  {
+    metric: "68%",
+    description: "Réduction des erreurs manuelles"
+  },
+  {
+    metric: "40k€/an",
+    description: "Économies moyennes constatées"
+  }
+];
+---
+
+<Layout title="Alephia - l’IA qui vous appartient">
+  <!-- Hero Section Mise à jour -->
+  <section class="pt-40 pb-28 bg-gradient-to-b from-primary to-primary-dark text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+    
+    <div class="container mx-auto px-4 relative">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="mb-8 inline-flex items-center bg-white/10 rounded-full px-6 py-3 backdrop-blur-sm border border-white/10">
+          <Icon name="rocket" class="w-5 h-5 text-secondary" />
+          <span class="text-sm font-medium ml-2">+40% de productivité sans perte de contrôle</span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+          Votre IA privée et souveraine
+          <br/>
+          <span class="text-secondary bg-gradient-to-r from-secondary to-secondary-light bg-clip-text text-transparent">100% sécurisée</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-12 text-gray-200 leading-relaxed">
+          Hébergez votre propre IA en France et boostez votre productivité.<br/> 
+          Sécurité, performance et conformité RGPD garanties.
+        </p>
+        
+        <!-- CTA Form -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 max-w-2xl mx-auto border border-white/10 shadow-xl">
+          <form class="flex flex-col md:flex-row gap-4">
+            <input 
+              type="email" 
+              placeholder="Votre email professionnel" 
+              class="flex-1 px-6 py-4 rounded-xl text-gray-900 bg-white/95 focus:ring-2 focus:ring-secondary focus:bg-white transition-all duration-200"
+            >
+            <button class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105">
+              Audit IA gratuit
+            </button>
+          </form>
+          <p class="text-sm mt-4 text-gray-300">Analyse RGPD incluse - Compatible France Relance</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats mis à jour -->
+  <section class="py-16 bg-neutral-100">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {stats.map(stat => (
+          <StatCard {...stat} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Valeurs fondamentales -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-16">Nos Valeurs Fondamentales</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="text-4xl mb-4">🔒</div>
+          <h3 class="font-semibold mb-2">Confidentialité maximale</h3>
+          <p class="text-gray-600">Zéro donnée exposée aux GAFAM</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="text-4xl mb-4">🇫🇷</div>
+          <h3 class="font-semibold mb-2">Souveraineté numérique</h3>
+          <p class="text-gray-600">Stack technique française certifiée</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="text-4xl mb-4">📈</div>
+          <h3 class="font-semibold mb-2">ROI mesurable</h3>
+          <p class="text-gray-600">Gains concrets sous 3 mois</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="text-4xl mb-4">🛠️</div>
+          <h3 class="font-semibold mb-2">Simplicité d'usage</h3>
+          <p class="text-gray-600">Interface type ChatGPT sans complexité</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions sectorielles -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-4">Solutions Sectorielles</h2>
+      <p class="text-gray-600 text-center mb-16 max-w-2xl mx-auto">
+        Des solutions d'IA adaptées à votre secteur d'activité, avec des résultats mesurables
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map(service => (
+          <ServiceCard {...service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact mesurable -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-16">Impact Mesurable</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {impacts.map(impact => (
+          <ImpactCard {...impact} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Partenaires -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-16">Nos Partenaires Stratégiques</h2>
+      <div class="flex justify-center items-center gap-12 flex-wrap">
+        <img src="/images/mistral-ai-logo.svg" alt="Mistral AI" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+        <img src="/images/france-num-logo.svg" alt="France Num" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+        <img src="/images/cci-france-logo.svg" alt="CCI France" class="h-12 w-auto grayscale hover:grayscale-0 transition-all">
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Pricing -->
+<section id="pricing" class="py-20 bg-gray-50">
+	<div class="container mx-auto px-4">
+	  <div class="text-center max-w-3xl mx-auto mb-16">
+		<h2 class="text-3xl font-bold mb-4">Solutions Adaptées à Chaque Besoin</h2>
+		<p class="text-gray-600">Des modèles open source performants à coût maîtrisé</p>
+	  </div>
+  
+	  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+		<!-- Starter Plan -->
+		<PricingCard
+		  title="Starter"
+		  price="300"
+		  description="Solution idéale pour démarrer avec l'IA souveraine"
+		  features={[
+			{ text: "Modèle Mistral 7B", included: true },
+			{ text: "Hébergement en France", included: true },
+			{ text: "1 cas d'usage", included: true },
+			{ text: "Support en français", included: true },
+			{ text: "Formation 3h incluse", included: true },
+			{ text: "Données chiffrées AES-256", included: true },
+			{ text: "Modèles fine-tunés", included: false }
+		  ]}
+		/>
+  
+		<!-- Business Plan -->
+		<PricingCard
+		  title="Business"
+		  price="800"
+		  description="Pour les PME ayant plusieurs cas d'usage"
+		  popular={true}
+		  features={[
+			{ text: "Modèle Mistral 7B", included: true },
+			{ text: "Hébergement dédié France", included: true },
+			{ text: "3 cas d'usage", included: true },
+			{ text: "Support prioritaire 24/5", included: true },
+			{ text: "Formation 8h incluse", included: true },
+			{ text: "Données chiffrées AES-256", included: true },
+			{ text: "Modèles fine-tunés", included: true }
+		  ]}
+		/>
+  
+		<!-- Enterprise Plan -->
+		<PricingCard
+		  title="Enterprise"
+		  price="Sur mesure"
+		  description="Solution complète pour grandes entreprises"
+		  features={[
+			{ text: "Modèles au choix", included: true },
+			{ text: "Hébergement sur site", included: true },
+			{ text: "Cas d'usage illimités", included: true },
+			{ text: "Support dédié 24/7", included: true },
+			{ text: "Formation illimitée", included: true },
+			{ text: "Sécurité renforcée", included: true },
+			{ text: "Modèles personnalisés", included: true }
+		  ]}
+		  ctaText="Nous contacter"
+		/>
+	  </div>
+  
+	  <!-- Comparaison avec Solutions Traditionnelles -->
+	  <div class="mt-20 max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+		<div class="px-6 py-8">
+		  <h3 class="text-2xl font-bold text-center mb-8">Comparaison des Solutions</h3>
+		  <div class="overflow-x-auto">
+			<table class="w-full">
+			  <thead>
+				<tr class="border-b-2 border-gray-200">
+				  <th class="py-3 px-4 text-left">Caractéristiques</th>
+				  <th class="py-3 px-4 text-left text-primary">Alephia (Mistral 7B)</th>
+				  <th class="py-3 px-4 text-left text-gray-500">Solutions Cloud (GPT-4)</th>
+				</tr>
+			  </thead>
+			  <tbody>
+				<tr class="border-b border-gray-200">
+				  <td class="py-3 px-4">Coût mensuel</td>
+				  <td class="py-3 px-4 font-semibold text-primary">300€</td>
+				  <td class="py-3 px-4">1200€+</td>
+				</tr>
+				<tr class="border-b border-gray-200">
+				  <td class="py-3 px-4">Hébergement</td>
+				  <td class="py-3 px-4 font-semibold text-primary">100% France</td>
+				  <td class="py-3 px-4">Cloud étranger</td>
+				</tr>
+				<tr class="border-b border-gray-200">
+				  <td class="py-3 px-4">Confidentialité</td>
+				  <td class="py-3 px-4 font-semibold text-primary">Totale</td>
+				  <td class="py-3 px-4">Limitée</td>
+				</tr>
+				<tr class="border-b border-gray-200">
+				  <td class="py-3 px-4">Support</td>
+				  <td class="py-3 px-4 font-semibold text-primary">Local en français</td>
+				  <td class="py-3 px-4">International en anglais</td>
+				</tr>
+			  </tbody>
+			</table>
+		  </div>
+		</div>
+	  </div>
+  
+	  <!-- Garanties -->
+	  <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+		<div class="flex items-center gap-4">
+		  <div class="bg-primary/10 rounded-full p-3">
+			<Icon name="shield" class="w-6 h-6 text-primary" />
+		  </div>
+		  <div>
+			<h4 class="font-semibold">RGPD Compliant</h4>
+			<p class="text-sm text-gray-600">100% conforme aux normes</p>
+		  </div>
+		</div>
+		<div class="flex items-center gap-4">
+		  <div class="bg-primary/10 rounded-full p-3">
+			<Icon name="clock" class="w-6 h-6 text-primary" />
+		  </div>
+		  <div>
+			<h4 class="font-semibold">Déploiement 72h</h4>
+			<p class="text-sm text-gray-600">Installation rapide</p>
+		  </div>
+		</div>
+		<div class="flex items-center gap-4">
+		  <div class="bg-primary/10 rounded-full p-3">
+			<Icon name="trending-up" class="w-6 h-6 text-primary" />
+		  </div>
+		  <div>
+			<h4 class="font-semibold">ROI sous 3 mois</h4>
+			<p class="text-sm text-gray-600">Résultats garantis</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="bg-primary text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
+      <p class="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
+      <button class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg">
+        Démarrer mon audit gratuit
+      </button>
+      <p class="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>
+    </div>
+  </section>
+</Layout>
