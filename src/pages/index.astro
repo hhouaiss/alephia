@@ -115,12 +115,30 @@ const impacts = [
   </section>
 
   <!-- Stats mis à jour -->
-  <section class="py-16 bg-neutral-100">
+  <section class="py-20 bg-neutral-100" aria-label="Statistiques clés">
     <div class="container mx-auto px-4">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">L'IA Française en Chiffres</h2>
+        <p class="text-gray-600 text-lg">
+          Découvrez l'impact concret de l'IA souveraine sur la performance des entreprises françaises
+        </p>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {stats.map(stat => (
           <StatCard {...stat} />
         ))}
+      </div>
+
+      <div class="text-center mt-12">
+        <a 
+          href="/etude-impact" 
+          class="inline-flex items-center justify-center px-8 py-4 bg-primary text-white rounded-xl hover:bg-primary-dark transition-colors"
+        >
+          Télécharger l'étude complète
+          <Icon name="download" class="w-5 h-5 ml-2" />
+        </a>
+        <p class="text-sm text-gray-500 mt-3">Rapport détaillé 2024 - Gratuit</p>
       </div>
     </div>
   </section>
