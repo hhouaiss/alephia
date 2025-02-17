@@ -1,11 +1,12 @@
 ---
 import Icon from './Icon.astro';
+import type { IconName } from '../../utils/icons';
 
 interface Props {
   number: string;
   label: string;
   description: string;
-  icon?: string;
+  icon?: IconName;  // Updated to use IconName type
 }
 
 const { number, label, description, icon = 'trending-up' } = Astro.props;
