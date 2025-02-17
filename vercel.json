@@ -1,0 +1,10 @@
+{
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "framework": "astro",
+    "build": {
+      "env": {
+        "NODE_OPTIONS": "--max_old_space_size=4096 --max-http-header-size=81920"
+      }
+    }
+  }
