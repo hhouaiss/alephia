@@ -1,12 +1,10 @@
-import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel/static";
-
-import react from "@astrojs/react";
+import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: "https://alephia.com",
   integrations: [tailwind(), react()],
-  output: "static",
+  output: 'server',
   adapter: vercel(),
 });
