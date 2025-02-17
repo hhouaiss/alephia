@@ -1,18 +1,13 @@
 ---
 import { icons } from '../../utils/icons';
+import type { IconName } from '../../utils/icons';
 
 interface Props {
-  name: string;
+  name: IconName;
   class?: string;
 }
 
 const { name, class: className } = Astro.props;
-
-const IconComponent = icons[name as keyof typeof icons];
 ---
 
-{
-  IconComponent && (
-    <IconComponent className={className} />
-  )
-}
+<span class={className} set:html={icons[name]} />
