@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run astro build",
+    "build": "ulimit -n 65536 && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
