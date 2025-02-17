@@ -5,6 +5,7 @@ import ServiceCard from '../components/shared/ServiceCard.astro';
 import PricingCard from '../components/shared/PricingCard.astro';
 import Icon from '../components/shared/Icon.astro';
 import ImpactCard from '../components/shared/ImpactCard.astro';
+import AuditModal from '../components/shared/AuditModal.astro';
 
 // Statistiques mises à jour
 const stats = [
@@ -73,7 +74,8 @@ const impacts = [
 ];
 ---
 
-<Layout title="Alephia - l’IA qui vous appartient">
+<Layout title="Alephia - l'IA qui vous appartient">
+  <AuditModal />
   <!-- Hero Section Mise à jour -->
   <section class="pt-40 pb-28 bg-gradient-to-b from-primary to-primary-dark text-white relative overflow-hidden">
     <div class="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
@@ -96,18 +98,23 @@ const impacts = [
         </p>
         
         <!-- CTA Form -->
+        <!-- Update the CTA Form section -->
         <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 max-w-2xl mx-auto border border-white/10 shadow-xl">
-          <form class="flex flex-col md:flex-row gap-4">
+          <div class="flex flex-col md:flex-row gap-4">
             <input 
               type="email" 
               placeholder="Votre email professionnel" 
               class="flex-1 px-6 py-4 rounded-xl text-gray-900 bg-white/95 focus:ring-2 focus:ring-secondary focus:bg-white transition-all duration-200"
             >
-            <button class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105">
+            <button 
+              type="button"
+              onclick="openModal()"
+              class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105"
+            >
               Audit IA gratuit
             </button>
-          </form>
-          <p class="text-sm mt-4 text-gray-300">Analyse RGPD incluse - Compatible France Relance</p>
+          </div>
+          <p class="text-sm mt-4 text-gray-300">Réponse sous 24h • Sans engagement</p>
         </div>
       </div>
     </div>
@@ -348,7 +355,12 @@ const impacts = [
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
       <p class="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
-      <button class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg">
+      <!-- Also update the final CTA button -->
+      <button 
+        type="button"
+        onclick="openModal()"
+        class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
+      >
         Démarrer mon audit gratuit
       </button>
       <p class="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>

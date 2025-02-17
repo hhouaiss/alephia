@@ -1,0 +1,196 @@
+---
+const sectors = [
+  "Artisanat",
+  "Commerce",
+  "Services",
+  "Industrie",
+  "Santé",
+  "Transport",
+  "Construction",
+  "Agriculture",
+  "Autre"
+];
+---
+
+<div 
+  id="audit-modal" 
+  class="fixed inset-0 z-50 hidden"
+>
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm"></div>
+  
+  <div class="fixed inset-0 flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-2xl max-w-2xl w-full p-8">
+      <button 
+        onclick="closeModal()" 
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Step 1: Form -->
+      <div id="form-step" class="space-y-6">
+        <div class="text-center">
+          <h2 class="text-2xl font-bold text-gray-900">Votre diagnostic IA arrive !</h2>
+          <p class="mt-2 text-gray-600">Pour personnaliser votre audit, dites-nous en plus :</p>
+        </div>
+
+        <form id="audit-form" class="space-y-6">
+          <!-- Company Size -->
+          <div>
+            <label class="font-medium text-gray-900 block mb-3">Taille de votre entreprise</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {['1-10', '11-50', '51-250', '250+'].map(size => (
+                <label class="relative flex cursor-pointer rounded-lg border p-4 hover:border-primary focus-within:ring-2 focus-within:ring-primary">
+                  <input type="radio" name="company-size" value={size} class="sr-only" required>
+                  <span class="flex flex-1">
+                    <span class="flex flex-col">
+                      <span class="block text-sm font-medium text-gray-900">{size}</span>
+                    </span>
+                  </span>
+                  <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-primary" aria-hidden="true"></span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Sector -->
+          <div>
+            <label for="sector" class="font-medium text-gray-900 block mb-2">Secteur d'activité</label>
+            <select id="sector" name="sector" required class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary">
+              <option value="">Sélectionnez votre secteur</option>
+              {sectors.map(sector => (
+                <option value={sector}>{sector}</option>
+              ))}
+            </select>
+          </div>
+
+          <!-- Objective -->
+          <div>
+            <label class="font-medium text-gray-900 block mb-3">Votre principal objectif avec l'IA</label>
+            <div class="space-y-4">
+              {[
+                'Automatiser des tâches internes',
+                'Améliorer le service client',
+                'Analyser nos données',
+                'Autre'
+              ].map(objective => (
+                <label class="relative flex cursor-pointer rounded-lg border p-4 hover:border-primary focus-within:ring-2 focus-within:ring-primary">
+                  <input type="radio" name="objective" value={objective} class="sr-only" required>
+                  <span class="flex flex-1">
+                    <span class="flex flex-col">
+                      <span class="block text-sm font-medium text-gray-900">{objective}</span>
+                    </span>
+                  </span>
+                  <span class="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent peer-checked:border-primary" aria-hidden="true"></span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-primary text-white py-4 px-8 rounded-xl hover:bg-primary-dark transition-colors font-medium">
+            Valider et recevoir mon diagnostic
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: Confirmation -->
+      <div id="confirmation-step" class="space-y-6 hidden">
+        <div class="text-center">
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900">Merci ! Votre diagnostic est en cours de préparation</h2>
+        </div>
+
+        <div class="bg-gray-50 rounded-xl p-6 space-y-4">
+          <p class="font-medium">Ce que vous allez recevoir :</p>
+          <ul class="space-y-3">
+            {[
+              'Analyse de votre potentiel d\'adoption IA',
+              'Recommandations personnalisées',
+              'Estimation des gains de productivité',
+              'Exemples de cas d\'usage pour votre secteur'
+            ].map(item => (
+              <li class="flex items-center">
+                <svg class="h-5 w-5 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p class="text-center text-gray-600">
+          Un expert Alephia vous contactera sous 24h pour vous présenter votre diagnostic.
+        </p>
+
+        <a 
+          href="https://calendly.com/your-link" 
+          target="_blank"
+          class="block w-full bg-secondary text-primary py-4 px-8 rounded-xl hover:bg-secondary-light transition-colors font-medium text-center"
+        >
+          Réserver directement mon créneau avec un expert
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  function openModal() {
+    document.getElementById('audit-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('audit-modal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Close on backdrop click
+  document.getElementById('audit-modal')?.addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+</script>
+
+<script>
+  function closeModal() {
+    const modal = document.getElementById('audit-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('audit-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    try {
+      // Here you can add your backend integration
+      // For example, using fetch to send data to your API
+      /*
+      await fetch('/api/audit-requests', {
+        method: 'POST',
+        body: formData
+      });
+      */
+      
+      // Show confirmation
+      document.getElementById('form-step')?.classList.add('hidden');
+      document.getElementById('confirmation-step')?.classList.remove('hidden');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Une erreur est survenue. Veuillez réessayer.');
+    }
+  });
+</script>
