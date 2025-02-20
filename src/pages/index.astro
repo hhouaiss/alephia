@@ -7,6 +7,7 @@ import Icon from '../components/shared/Icon.astro';
 import ImpactCard from '../components/shared/ImpactCard.astro';
 import AuditModal from '../components/shared/AuditModal.astro';
 import UseCasesSection from '../components/sections/UseCasesSection.astro';
+import ValuesSection from '../components/sections/ValuesSection.astro';
 
 // Statistiques mises à jour
 const stats = [
@@ -153,33 +154,8 @@ const impacts = [
   </section>
 
   <!-- Valeurs fondamentales -->
-  <section class="py-20">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-16">Nos Valeurs Fondamentales</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-          <div class="text-4xl mb-4">🔒</div>
-          <h3 class="font-semibold mb-2">Confidentialité maximale</h3>
-          <p class="text-gray-600">Zéro donnée exposée aux GAFAM</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-          <div class="text-4xl mb-4">🇫🇷</div>
-          <h3 class="font-semibold mb-2">Souveraineté numérique</h3>
-          <p class="text-gray-600">Stack technique française certifiée</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-          <div class="text-4xl mb-4">📈</div>
-          <h3 class="font-semibold mb-2">ROI mesurable</h3>
-          <p class="text-gray-600">Gains concrets sous 3 mois</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-          <div class="text-4xl mb-4">🛠️</div>
-          <h3 class="font-semibold mb-2">Simplicité d'usage</h3>
-          <p class="text-gray-600">Interface type ChatGPT sans complexité</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  
+  <ValuesSection />
 
   <!-- Solutions sectorielles -->
   <section class="py-20 bg-gray-50">
