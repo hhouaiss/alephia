@@ -1,6 +1,7 @@
 ---
 import Navigation from '../components/layout/Navigation.astro';
 import Footer from '../components/layout/Footer.astro';
+import StickyButton from '../components/shared/StickyButton.astro';
 
 interface Props {
   title: string;
@@ -9,11 +10,10 @@ interface Props {
 
 const { 
   title, 
-  description = "Alephia - Solutions d'Intelligence Artificielle pour Entreprises" 
+  description = "Hébergez votre propre IA en France et boostez votre productivité. Sécurité, performance et conformité RGPD garanties." 
 } = Astro.props;
 ---
 
-<!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -29,5 +29,6 @@ const {
       <slot />
     </main>
     <Footer />
+    <StickyButton />
   </body>
 </html>

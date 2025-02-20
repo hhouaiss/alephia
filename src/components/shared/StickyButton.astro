@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+---
+
+<div 
+  id="sticky-cta" 
+  class="fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-white via-white to-transparent translate-y-full opacity-0 transition-all duration-300"
+>
+  <div class="container mx-auto flex justify-center">
+    <button
+      type="button"
+      onclick="openModal()"
+      class="bg-secondary text-primary font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:bg-secondary-light transition-all duration-300 inline-flex items-center gap-2"
+    >
+      <span>Audit IA gratuit</span>
+      <Icon name="arrow-right" class="w-5 h-5" />
+    </button>
+  </div>
+</div>
+
+<script>
+  const stickyButton = document.getElementById('sticky-cta');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    
+    if (currentScroll > 500 && currentScroll > lastScroll) {
+      stickyButton?.classList.remove('translate-y-full', 'opacity-0');
+    } else {
+      stickyButton?.classList.add('translate-y-full', 'opacity-0');
+    }
+    
+    lastScroll = currentScroll;
+  });
+</script>

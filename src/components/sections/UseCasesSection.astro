@@ -1,0 +1,62 @@
+---
+import Icon from '../shared/Icon.astro';
+
+const useCases = [
+  {
+    icon: 'chart',
+    title: 'Analyse et reporting instantanés',
+    description: 'Transformez vos données en insights actionnables en quelques secondes. Générez des rapports détaillés automatiquement.'
+  },
+  {
+    icon: 'folder',
+    title: 'Gestion documentaire intelligente',
+    description: 'Classifiez, résumez et extrayez les informations clés de vos documents automatiquement.'
+  },
+  {
+    icon: 'settings',
+    title: 'Automatisation des tâches chronophages',
+    description: 'Libérez du temps en automatisant vos processus répétitifs avec une IA qui s\'adapte à vos besoins.'
+  },
+  {
+    icon: 'message',
+    title: 'Assistant métier sur-mesure',
+    description: 'Bénéficiez d\'un assistant IA spécialisé dans votre secteur, formé sur vos données et processus.'
+  }
+];
+---
+
+<section class="py-24 bg-gradient-to-b from-primary-dark/5 to-transparent">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center mb-16">
+      <h2 class="text-4xl font-bold mb-6">
+        Des cas d'usage concrets pour booster votre productivité
+      </h2>
+      <p class="text-xl text-gray-600">
+        Découvrez comment notre IA privée s'adapte à vos besoins spécifiques
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+      {useCases.map(useCase => (
+        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+          <div class="bg-primary/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <Icon name={useCase.icon as "chart" | "settings" | "arrow-right" | "trending-up" | "clock" | "shield" | "tools" | "mail" | "heart" | "download" | "rocket"} class="w-8 h-8 text-primary" />
+          </div>
+          <h3 class="text-xl font-semibold mb-4">{useCase.title}</h3>
+          <p class="text-gray-600 leading-relaxed">{useCase.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <button
+        type="button"
+        onclick="openModal()"
+        class="bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary-dark transition-all duration-300 inline-flex items-center gap-2 group"
+      >
+        Voir une démo
+        <Icon name="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+      </button>
+    </div>
+  </div>
+</section>
