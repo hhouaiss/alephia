@@ -4,31 +4,43 @@ import Icon from './Icon.astro';
 
 <div 
   id="sticky-cta" 
-  class="fixed bottom-0 left-0 right-0 z-40 p-4 bg-gradient-to-t from-white via-white to-transparent translate-y-full opacity-0 transition-all duration-300"
+  class="fixed bottom-6 left-0 right-0 z-40 translate-y-full opacity-0 transition-all duration-300 px-4"
 >
-  <div class="container mx-auto flex justify-center">
-    <button
-      type="button"
-      onclick="openModal()"
-      class="bg-secondary text-primary font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl hover:bg-secondary-light transition-all duration-300 inline-flex items-center gap-2"
-    >
-      <span>Audit IA gratuit</span>
-      <Icon name="arrow-right" class="w-5 h-5" />
-    </button>
+  <div class="container mx-auto max-w-lg">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-4 flex items-center justify-between">
+      <div class="flex-1 pl-2">
+        <p class="font-medium text-gray-800">Prêt à booster votre productivité ?</p>
+        <p class="text-sm text-gray-500">Diagnostic personnalisé gratuit</p>
+      </div>
+      <button
+        type="button"
+        onclick="openModal()"
+        class="bg-secondary text-primary font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg hover:bg-secondary-light transition-all duration-300 inline-flex items-center gap-2 whitespace-nowrap"
+      >
+        <span>Audit IA gratuit</span>
+        <Icon name="arrow-right" class="w-5 h-5" />
+      </button>
+    </div>
   </div>
 </div>
 
 <script>
   const stickyButton = document.getElementById('sticky-cta');
   let lastScroll = 0;
+  let isVisible = false;
 
   window.addEventListener('scroll', () => {
     const currentScroll = window.scrollY;
     
-    if (currentScroll > 500 && currentScroll > lastScroll) {
+    // Show after scrolling down 500px
+    if (currentScroll > 500 && !isVisible) {
       stickyButton?.classList.remove('translate-y-full', 'opacity-0');
-    } else {
+      isVisible = true;
+    } 
+    // Hide when scrolling back to top
+    else if (currentScroll < 300 && isVisible) {
       stickyButton?.classList.add('translate-y-full', 'opacity-0');
+      isVisible = false;
     }
     
     lastScroll = currentScroll;
