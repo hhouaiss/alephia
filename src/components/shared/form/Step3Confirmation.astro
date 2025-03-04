@@ -3,11 +3,16 @@ import Icon from '../Icon.astro';
 ---
 
 <div class="text-center space-y-8 py-4">
-  <h3 class="text-2xl md:text-3xl font-bold text-gray-900 max-w-md mx-auto leading-tight">
-    Merci <span id="user-first-name" class="text-primary"></span>! Votre diagnostic IA personnalisé est en préparation
-  </h3>
+  <!-- Header Section -->
+  <div class="mb-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 max-w-md mx-auto leading-tight">
+      Merci <span id="user-first-name" class="text-primary"></span>! Votre diagnostic IA personnalisé est en préparation
+    </h3>
+    <p class="text-gray-600 mt-2 font-medium">Prêt sous 24h</p>
+  </div>
   
-  <div class="bg-gray-50 rounded-xl p-6 max-w-md mx-auto border border-gray-100">
+  <!-- Diagnostic Content Section -->
+  <div class="bg-gray-50 rounded-xl p-6 max-w-md mx-auto border border-gray-100 shadow-sm">
     <p class="font-semibold mb-4 text-left text-gray-800">Ce que votre diagnostic contiendra:</p>
     <ul class="space-y-4 text-gray-700 text-left">
       <li class="flex items-start">
@@ -43,31 +48,45 @@ import Icon from '../Icon.astro';
     </ul>
   </div>
   
-  <div class="space-y-4 mt-10 max-w-md mx-auto">
+  <!-- Call-to-Action Section -->
+  <div class="mt-8 max-w-md mx-auto">
     <button
-      onclick="scheduleCall()"
-      class="w-full bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary-dark transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+      id="booking-button"
+      class="w-full bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 hover:scale-[1.02] font-medium"
     >
-      <Icon name="calendar" class="w-5 h-5" />
-      <span>Réserver directement mon créneau avec un expert (15 min)</span>
+      <span class="text-xl">📅</span>
+      <span>Réserver mon créneau prioritaire avec un expert (15 min)</span>
     </button>
-    <button
-      onclick="closeModal()"
-      class="w-full text-gray-600 hover:text-primary transition-colors py-3 font-medium"
-    >
-      Je préfère recevoir le diagnostic par email d'abord
-    </button>
+    <p class="text-gray-600 text-sm mt-3">
+      Sans engagement - Vous recevrez une copie de votre diagnostic par email
+    </p>
+    <p class="text-amber-600 text-sm font-medium mt-2">
+      Nos créneaux sont limités à 5 par semaine
+    </p>
   </div>
   
-  <div class="mt-8 pt-6 border-t border-gray-200 max-w-md mx-auto">
-    <p class="text-sm text-gray-500">
+  <!-- Footer Information -->
+  <div class="mt-10 pt-6 border-t border-gray-200 max-w-md mx-auto">
+    <p class="text-sm text-gray-500 mb-3">
       Un expert Alephia vous contactera sous 24h. Vous pouvez aussi nous joindre directement au <span class="font-medium">01.XX.XX.XX.XX</span>.
     </p>
+    <p class="text-sm font-medium text-gray-700">
+      Rejoignez les 50+ entreprises qui ont déjà bénéficié de notre audit IA
+    </p>
+    
+    <!-- Social Sharing -->
+    <div class="flex justify-center space-x-4 mt-4">
+      <a href="#" class="text-gray-400 hover:text-blue-600 transition-colors">
+        <Icon name="linkedin" class="w-5 h-5" />
+      </a>
+      <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors">
+        <Icon name="mail" class="w-5 h-5" />
+      </a>
+    </div>
   </div>
 </div>
 
 <script>
-  // Existing script remains unchanged
   document.addEventListener('DOMContentLoaded', () => {
     // Function to update user data in the confirmation
     function updateUserData() {
@@ -102,6 +121,7 @@ import Icon from '../Icon.astro';
           const step3 = document.getElementById('step-3');
           if (step3 && !step3.classList.contains('hidden')) {
             updateUserData();
+            playConfetti();
           }
         }
       });
@@ -114,11 +134,51 @@ import Icon from '../Icon.astro';
     
     // Also try to update immediately in case we're already on step 3
     updateUserData();
+    
+    // Booking button functionality
+    const bookingButton = document.getElementById('booking-button');
+    bookingButton?.addEventListener('click', () => {
+      // Log conversion event
+      logConversion();
+      
+      // Open calendar booking interface
+      openCalendar();
+    });
+    
+    // Simple confetti animation
+    function playConfetti() {
+      // This is a placeholder - you might want to add a proper confetti library
+      console.log('Playing confetti animation');
+    }
+    
+    // Log conversion to Supabase
+    function logConversion() {
+      // Track completion in localStorage
+      localStorage.setItem('auditCompleted', 'true');
+      localStorage.setItem('auditCompletedDate', new Date().toISOString());
+      
+      // Analytics tracking
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'audit_completion', {
+          'event_category': 'conversion',
+          'event_label': window.formData.sector
+        });
+      }
+      
+      console.log('Conversion logged');
+    }
+    
+    // Open calendar booking
+    function openCalendar() {
+      // This would typically open Calendly or similar
+      // For now, we'll use a placeholder alert
+      alert('Nous allons vous rediriger vers notre calendrier de réservation.');
+      
+      // In production, you might use:
+      // window.open('https://calendly.com/your-account/audit-ia', '_blank');
+      
+      // Close modal after booking is initiated
+      window.closeModal();
+    }
   });
-
-  // Schedule call function
-  window.scheduleCall = () => {
-    alert('Nous vous contacterons prochainement pour planifier votre rendez-vous.');
-    window.closeModal();
-  };
 </script>

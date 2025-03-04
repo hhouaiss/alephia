@@ -17,30 +17,29 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
   <div class="fixed inset-0 overflow-y-auto">
     <div class="flex min-h-full items-center justify-center p-4">
       <div class="relative w-full max-w-2xl bg-white rounded-2xl shadow-xl">
-        <!-- Close button - Fixed visibility -->
+        <!-- Close button -->
         <button
           type="button"
           id="modal-close-button"
-          class="absolute right-4 top-4 z-10 p-2 text-gray-600 hover:text-gray-800 rounded-full hover:bg-gray-100 transition-colors"
+          class="absolute right-4 top-4 z-10 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors"
           aria-label="Fermer"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
+          <Icon name="x" class="w-6 h-6" />
         </button>
 
-        <!-- Rest of modal content -->
         <div class="p-6 sm:p-8">
-          <!-- Header -->
-          <div class="text-center mb-8">
+          <!-- Header - Only show on steps 1 and 2 -->
+          <div id="modal-header" class="text-center mb-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-2">
               Audit IA personnalisé gratuit
             </h2>
             <p class="text-gray-600">3 étapes - 2 minutes</p>
           </div>
 
-          <StepIndicator />
+          <!-- Step indicator - Only show on steps 1 and 2 -->
+          <div id="step-indicator-container">
+            <StepIndicator />
+          </div>
 
           <!-- Form steps -->
           <div class="mt-8 relative">
@@ -61,39 +60,10 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
 </div>
 
 <script>
-  // Make sure window.formData exists
-  window.formData = window.formData || {};
-  
-  // Initialize modal functionality
+  // Add this to your existing script
   document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('audit-modal');
-    const closeButton = document.getElementById('modal-close-button');
-    
-    // Close button functionality
-    closeButton?.addEventListener('click', () => {
-      modal?.classList.add('hidden');
-    });
-    
-    // Global open modal function
-    window.openModal = () => {
-      modal?.classList.remove('hidden');
-      
-      // Auto-fill email from localStorage
-      const savedEmail = localStorage.getItem('userEmail');
-      if (savedEmail) {
-        const emailInput = document.querySelector('#step-2 input[name="email"]');
-        if (emailInput) {
-          (emailInput as HTMLInputElement).value = savedEmail;
-        }
-      }
-      
-      // Show first step
-      showStep(1);
-    };
-    
-    // Global step navigation
-    // In your showStep function
-    window.showStep = (step) => {
+    // Original showStep function
+    window.showStep = window.showStep || function(step) {
       // Hide all steps
       document.querySelectorAll('[id^="step-"]').forEach(el => {
         el.classList.add('hidden');
@@ -105,39 +75,97 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
         stepElement.classList.remove('hidden');
       }
       
-      // Update step indicator
+      // Hide header on step 3
+      const modalHeader = document.getElementById('modal-header');
+      if (modalHeader) {
+        if (step === 3) {
+          modalHeader.classList.add('hidden');
+        } else {
+          modalHeader.classList.remove('hidden');
+        }
+      }
+      
+      // Update step indicators
       if (typeof window.updateStepIndicators === 'function') {
         window.updateStepIndicators(step);
       }
-      
-      currentStep = step;
-    };
-    
-    // Update step indicator
-    function updateStepIndicator(step) {
-      const indicators = document.querySelectorAll('.step-indicator');
-      indicators.forEach((indicator, index) => {
-        if (index + 1 <= step) {
-          indicator.classList.add('active');
-        } else {
-          indicator.classList.remove('active');
-        }
-      });
-      
-      // Update progress bar
-      const progressBar = document.getElementById('progress-bar');
-      if (progressBar) {
-        progressBar.style.width = `${((step - 1) / 2) * 100}%`;
-      }
-    }
-    
-    // Global form submission
-    window.submitForm = () => {
-      // Here you would normally send data to Supabase
-      console.log('Form data submitted:', window.formData);
-      
-      // For now, just proceed to step 3
-      window.showStep(3);
     };
   });
+</script>
+
+<script>
+  // Make sure window.formData exists
+  window.formData = window.formData || {};
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('audit-modal');
+      const closeButton = document.getElementById('modal-close-button');
+      
+      // Close button functionality
+      closeButton?.addEventListener('click', () => {
+        modal?.classList.add('hidden');
+      });
+      
+      // Global open modal function
+      window.openModal = () => {
+        modal?.classList.remove('hidden');
+        
+        // Auto-fill email from localStorage
+        const savedEmail = localStorage.getItem('userEmail');
+        if (savedEmail) {
+          const emailInput = document.querySelector('#step-2 input[name="email"]');
+          if (emailInput) {
+            (emailInput as HTMLInputElement).value = savedEmail;
+          }
+        }
+        
+        // Show first step
+        showStep(1);
+      };
+      
+      // Global close modal function
+      window.closeModal = () => {
+        modal?.classList.add('hidden');
+      };
+      
+      // Global step navigation
+      window.showStep = (step) => {
+        // Hide all steps
+        document.querySelectorAll('[id^="step-"]').forEach(el => {
+          el.classList.add('hidden');
+        });
+        
+        // Show requested step
+        const stepElement = document.getElementById(`step-${step}`);
+        if (stepElement) {
+          stepElement.classList.remove('hidden');
+        }
+        
+        // Hide header and step indicator on step 3
+        const modalHeader = document.getElementById('modal-header');
+        const stepIndicator = document.getElementById('step-indicator-container');
+        
+        if (step === 3) {
+          if (modalHeader) modalHeader.classList.add('hidden');
+          if (stepIndicator) stepIndicator.classList.add('hidden');
+        } else {
+          if (modalHeader) modalHeader.classList.remove('hidden');
+          if (stepIndicator) stepIndicator.classList.remove('hidden');
+        }
+        
+        // Update step indicators if not on step 3
+        if (step !== 3 && typeof window.updateStepIndicators === 'function') {
+          window.updateStepIndicators(step);
+        }
+      };
+      
+      // Global form submission
+      window.submitForm = () => {
+        // Here you would normally send data to Supabase
+        console.log('Form data submitted:', window.formData);
+        
+        // For now, just proceed to step 3
+        window.showStep(3);
+      };
+    });
 </script>
