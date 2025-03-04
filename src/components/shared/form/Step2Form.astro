@@ -1,0 +1,231 @@
+---
+const aiObjectives = [
+  "Automatiser des tâches internes",
+  "Améliorer le service client",
+  "Analyser nos données",
+  "Autre"
+];
+
+const aiExperiences = [
+  "Non",
+  "Oui",
+  "En cours d'évaluation"
+];
+
+const deploymentTimelines = [
+  "1-3 mois",
+  "3-6 mois",
+  "+6 mois",
+  "Indécis"
+];
+
+const concerns = [
+  "Sécurité des données",
+  "Coût",
+  "Intégration",
+  "Formation des équipes",
+  "Conformité RGPD",
+  "Performance"
+];
+---
+
+<form id="step2-form" class="space-y-6">
+  <!-- Personal Information -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+      <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">
+        Prénom
+      </label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+      />
+    </div>
+    <div>
+      <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">
+        Nom
+      </label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+      />
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+      Email professionnel
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+    />
+  </div>
+
+  <!-- Phone -->
+  <div>
+    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+      Numéro de téléphone (optionnel)
+    </label>
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+    />
+  </div>
+
+  <!-- Main AI Objective -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      Votre principal objectif avec l'IA
+    </label>
+    <div class="space-y-2">
+      {aiObjectives.map(objective => (
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="mainObjective"
+            value={objective}
+            required
+            class="mr-2 text-primary focus:ring-primary"
+          />
+          <span>{objective}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <!-- AI Experience -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      Avez-vous déjà utilisé des solutions d'IA?
+    </label>
+    <div class="space-y-2">
+      {aiExperiences.map(experience => (
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="aiExperience"
+            value={experience}
+            required
+            class="mr-2 text-primary focus:ring-primary"
+          />
+          <span>{experience}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <!-- Deployment Timeline -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      Quand souhaitez-vous déployer cette solution?
+    </label>
+    <div class="space-y-2">
+      {deploymentTimelines.map(timeline => (
+        <label class="flex items-center">
+          <input
+            type="radio"
+            name="deploymentTimeline"
+            value={timeline}
+            required
+            class="mr-2 text-primary focus:ring-primary"
+          />
+          <span>{timeline}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <!-- Main Concerns -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      Préoccupations principales
+    </label>
+    <div class="space-y-2">
+      {concerns.map(concern => (
+        <label class="flex items-center">
+          <input
+            type="checkbox"
+            name="concerns"
+            value={concern}
+            class="mr-2 text-primary focus:ring-primary"
+          />
+          <span>{concern}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <!-- At the end of the form -->
+  <div class="flex justify-between mt-8">
+    <button
+      type="button"
+      id="step2-back-button"
+      class="text-gray-600 hover:text-primary transition-colors"
+    >
+      Retour
+    </button>
+    <button
+      type="submit"
+      id="step2-submit-button"
+      class="bg-primary text-white px-8 py-3 rounded-xl hover:bg-primary-dark transition-colors"
+    >
+      Voir mon diagnostic
+    </button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('step2-form');
+      const backButton = document.getElementById('step2-back-button');
+      
+      // Back button functionality
+      backButton?.addEventListener('click', () => {
+        if (typeof window.showStep === 'function') {
+          window.showStep(1);
+        }
+      });
+      
+      // Form submission
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target as HTMLFormElement);
+        const data = Object.fromEntries(formData);
+        
+        // Handle multiple checkbox values for concerns
+        data.concerns = formData.getAll('concerns');
+        
+        // Store in global form data
+        Object.assign(window.formData, data);
+        
+        // Submit form
+        if (typeof window.submitForm === 'function') {
+          window.submitForm();
+        }
+      });
+    });
+  </script>
+</form>
+
+<script>
+  // Auto-fill email if available
+  const savedEmail = localStorage.getItem('userEmail');
+  if (savedEmail) {
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    if (emailInput) emailInput.value = savedEmail;
+  }
+</script>

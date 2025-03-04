@@ -28,7 +28,34 @@ const {
     <main class="flex-grow">
       <slot />
     </main>
-    <Footer />
     <StickyButton />
+    <Footer />
+    
+    <script>
+      // Global functions for form handling
+      window.addEventListener('DOMContentLoaded', () => {
+        // Handle home page email form
+        const auditButton = document.getElementById('audit-button');
+        auditButton?.addEventListener('click', () => {
+          const emailInput = document.getElementById('home-email-input') as HTMLInputElement;
+          if (emailInput?.value) {
+            localStorage.setItem('userEmail', emailInput.value);
+          }
+          if (typeof window.openModal === 'function') {
+            window.openModal();
+          }
+        });
+        
+        // Handle final CTA button
+        const finalCta = document.querySelector('button[onclick="openModal()"]');
+        if (finalCta) {
+          finalCta.addEventListener('click', () => {
+            if (typeof window.openModal === 'function') {
+              window.openModal();
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>

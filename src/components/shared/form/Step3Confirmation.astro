@@ -1,0 +1,124 @@
+---
+import Icon from '../Icon.astro';
+---
+
+<div class="text-center space-y-8 py-4">
+  <h3 class="text-2xl md:text-3xl font-bold text-gray-900 max-w-md mx-auto leading-tight">
+    Merci <span id="user-first-name" class="text-primary"></span>! Votre diagnostic IA personnalisé est en préparation
+  </h3>
+  
+  <div class="bg-gray-50 rounded-xl p-6 max-w-md mx-auto border border-gray-100">
+    <p class="font-semibold mb-4 text-left text-gray-800">Ce que votre diagnostic contiendra:</p>
+    <ul class="space-y-4 text-gray-700 text-left">
+      <li class="flex items-start">
+        <div class="bg-primary/10 rounded-full p-1 mr-3 mt-0.5 flex-shrink-0">
+          <Icon name="check" class="w-4 h-4 text-primary" />
+        </div>
+        <span>Analyse de maturité IA pour <span id="user-sector" class="font-semibold text-primary"></span></span>
+      </li>
+      <li class="flex items-start">
+        <div class="bg-primary/10 rounded-full p-1 mr-3 mt-0.5 flex-shrink-0">
+          <Icon name="check" class="w-4 h-4 text-primary" />
+        </div>
+        <span>Opportunités d'implémentation prioritaires pour une entreprise de <span id="user-size" class="font-semibold text-primary"></span></span>
+      </li>
+      <li class="flex items-start">
+        <div class="bg-primary/10 rounded-full p-1 mr-3 mt-0.5 flex-shrink-0">
+          <Icon name="check" class="w-4 h-4 text-primary" />
+        </div>
+        <span>Estimation du ROI et gains de productivité potentiels</span>
+      </li>
+      <li class="flex items-start">
+        <div class="bg-primary/10 rounded-full p-1 mr-3 mt-0.5 flex-shrink-0">
+          <Icon name="check" class="w-4 h-4 text-primary" />
+        </div>
+        <span>Feuille de route recommandée pour l'adoption sécurisée de l'IA</span>
+      </li>
+      <li class="flex items-start">
+        <div class="bg-primary/10 rounded-full p-1 mr-3 mt-0.5 flex-shrink-0">
+          <Icon name="check" class="w-4 h-4 text-primary" />
+        </div>
+        <span><span id="user-objective" class="font-semibold text-primary"></span> adapté à votre secteur</span>
+      </li>
+    </ul>
+  </div>
+  
+  <div class="space-y-4 mt-10 max-w-md mx-auto">
+    <button
+      onclick="scheduleCall()"
+      class="w-full bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary-dark transition-colors shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+    >
+      <Icon name="calendar" class="w-5 h-5" />
+      <span>Réserver directement mon créneau avec un expert (15 min)</span>
+    </button>
+    <button
+      onclick="closeModal()"
+      class="w-full text-gray-600 hover:text-primary transition-colors py-3 font-medium"
+    >
+      Je préfère recevoir le diagnostic par email d'abord
+    </button>
+  </div>
+  
+  <div class="mt-8 pt-6 border-t border-gray-200 max-w-md mx-auto">
+    <p class="text-sm text-gray-500">
+      Un expert Alephia vous contactera sous 24h. Vous pouvez aussi nous joindre directement au <span class="font-medium">01.XX.XX.XX.XX</span>.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Existing script remains unchanged
+  document.addEventListener('DOMContentLoaded', () => {
+    // Function to update user data in the confirmation
+    function updateUserData() {
+      if (!window.formData) return;
+      
+      const firstName = document.getElementById('user-first-name');
+      const sector = document.getElementById('user-sector');
+      const size = document.getElementById('user-size');
+      const objective = document.getElementById('user-objective');
+
+      if (firstName && window.formData.firstName) {
+        firstName.textContent = window.formData.firstName;
+      }
+      
+      if (sector && window.formData.sector) {
+        sector.textContent = window.formData.sector;
+      }
+      
+      if (size && window.formData.companySize) {
+        size.textContent = window.formData.companySize;
+      }
+      
+      if (objective && window.formData.mainObjective) {
+        objective.textContent = window.formData.mainObjective;
+      }
+    }
+    
+    // Update when step 3 is shown
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const step3 = document.getElementById('step-3');
+          if (step3 && !step3.classList.contains('hidden')) {
+            updateUserData();
+          }
+        }
+      });
+    });
+    
+    const step3 = document.getElementById('step-3');
+    if (step3) {
+      observer.observe(step3, { attributes: true });
+    }
+    
+    // Also try to update immediately in case we're already on step 3
+    updateUserData();
+  });
+
+  // Schedule call function
+  window.scheduleCall = () => {
+    alert('Nous vous contacterons prochainement pour planifier votre rendez-vous.');
+    window.closeModal();
+  };
+</script>

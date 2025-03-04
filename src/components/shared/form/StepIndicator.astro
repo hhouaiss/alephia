@@ -1,0 +1,70 @@
+---
+const steps = [
+  { number: 1, title: "Profil entreprise" },
+  { number: 2, title: "Besoins IA" },
+  { number: 3, title: "Confirmation" }
+];
+---
+
+<div class="relative">
+  <div class="absolute top-4 w-full h-0.5 bg-gray-200">
+    <div id="progress-bar" class="h-full bg-primary transition-all duration-300" style="width: 33%"></div>
+  </div>
+  
+  <div class="relative flex justify-between">
+    {steps.map((step, index) => (
+      <div class="flex flex-col items-center step-container" data-step={step.number}>
+        <div class={`
+          w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium step-indicator
+          ${index === 0 ? 'bg-primary text-white' : 'bg-gray-200 text-gray-600'}
+        `}>
+          {step.number}
+        </div>
+        <span class="mt-2 text-sm font-medium text-gray-600">
+          {step.number}/3 {step.title}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Update step indicators when the current step changes
+  function updateStepIndicators(currentStep) {
+    const indicators = document.querySelectorAll('.step-indicator');
+    const containers = document.querySelectorAll('.step-container');
+    
+    containers.forEach((container, index) => {
+      const stepNumber = parseInt(container.getAttribute('data-step') || '1');
+      const indicator = container.querySelector('.step-indicator');
+      
+      if (stepNumber < currentStep) {
+        // Completed step
+        indicator?.classList.add('bg-primary', 'text-white');
+        indicator?.classList.remove('bg-gray-200', 'text-gray-600');
+      } else if (stepNumber === currentStep) {
+        // Current step
+        indicator?.classList.add('bg-primary', 'text-white');
+        indicator?.classList.remove('bg-gray-200', 'text-gray-600');
+      } else {
+        // Future step
+        indicator?.classList.add('bg-gray-200', 'text-gray-600');
+        indicator?.classList.remove('bg-primary', 'text-white');
+      }
+    });
+    
+    // Update progress bar
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+      progressBar.style.width = `${((currentStep - 1) / 2) * 100}%`;
+    }
+  }
+  
+  // Make the function available globally
+  window.updateStepIndicators = updateStepIndicators;
+  
+  // Initialize with step 1
+  document.addEventListener('DOMContentLoaded', () => {
+    updateStepIndicators(1);
+  });
+</script>

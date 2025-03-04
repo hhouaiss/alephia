@@ -105,19 +105,30 @@ const impacts = [
           <div class="flex flex-col md:flex-row gap-4">
             <input 
               type="email" 
+              id="home-email-input"
               placeholder="Votre email professionnel" 
               class="flex-1 px-6 py-4 rounded-xl text-gray-900 bg-white/95 focus:ring-2 focus:ring-secondary focus:bg-white transition-all duration-200"
             >
             <button 
               type="button"
-              onclick="openModal()"
+              id="audit-button"
               class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105"
             >
               Audit IA gratuit
             </button>
           </div>
-          <p class="text-sm mt-4 text-gray-300">Réponse sous 24h • Sans engagement</p>
+          <p class="text-sm mt-4 text-gray-300">Réponse sous 48h • Sans engagement</p>
         </div>
+        
+        <script>
+          function submitHomeEmail() {
+            const emailInput = document.getElementById('home-email-input') as HTMLInputElement;
+            if (emailInput?.value) {
+              localStorage.setItem('userEmail', emailInput.value);
+            }
+            openModal();
+          }
+        </script>
       </div>
     </div>
   </section>
