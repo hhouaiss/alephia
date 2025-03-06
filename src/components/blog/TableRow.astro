@@ -1,0 +1,13 @@
+---
+interface Props {
+  cells: string[];
+}
+
+const { cells } = Astro.props;
+---
+
+<tr class="border-b border-gray-200">
+  {cells.map(cell => (
+    <td class="py-3 px-4">{cell}</td>
+  ))}
+</tr>

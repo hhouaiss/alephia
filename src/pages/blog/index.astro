@@ -1,0 +1,208 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AuditModal from '../../components/shared/AuditModal.astro';
+import Icon from '../../components/shared/Icon.astro';
+
+// In a real implementation, you would fetch these from a CMS or markdown files
+const blogPosts = [
+  {
+    slug: 'ia-souveraine-avantages-entreprises-francaises',
+    title: 'IA souveraine : 5 avantages clés pour les entreprises françaises',
+    excerpt: 'Découvrez comment l\'IA souveraine peut transformer votre entreprise tout en préservant vos données sensibles.',
+    publishDate: '2023-11-15',
+    readTime: '6 min',
+    image: '/images/blog/ia-souveraine.jpg',
+    category: 'Stratégie IA'
+  },
+  {
+    slug: 'comparatif-modeles-ia-open-source-vs-proprietaires',
+    title: 'Modèles IA open source vs. propriétaires : le comparatif complet',
+    excerpt: 'Analyse détaillée des performances, coûts et implications éthiques des différents modèles d\'IA disponibles en 2024.',
+    publishDate: '2023-12-05',
+    readTime: '8 min',
+    image: '/images/blog/comparatif-modeles.jpg',
+    category: 'Technologie'
+  },
+  {
+    slug: 'rgpd-ia-guide-conformite',
+    title: 'RGPD et IA : guide pratique pour rester conforme',
+    excerpt: 'Comment déployer des solutions d\'IA tout en respectant les exigences du RGPD ? Notre guide complet pour les entreprises.',
+    publishDate: '2024-01-20',
+    readTime: '5 min',
+    image: '/images/blog/rgpd-ia.jpg',
+    category: 'Conformité'
+  },
+  {
+    slug: 'cas-usage-ia-pme-francaises',
+    title: '10 cas d\'usage concrets de l\'IA pour les PME françaises',
+    excerpt: 'Exemples réels d\'implémentation d\'IA qui ont transformé des PME françaises avec des résultats mesurables.',
+    publishDate: '2024-02-10',
+    readTime: '7 min',
+    image: '/images/blog/cas-usage-pme.jpg',
+    category: 'Cas d\'usage'
+  },
+  {
+    slug: 'mistral-ai-vs-gpt4-analyse',
+    title: 'Mistral AI vs GPT-4 : analyse comparative pour les entreprises',
+    excerpt: 'Performance, coût, confidentialité : notre analyse détaillée des deux modèles phares du marché.',
+    publishDate: '2024-03-01',
+    readTime: '9 min',
+    image: '/images/blog/mistral-vs-gpt.jpg',
+    category: 'Technologie'
+  },
+  {
+    slug: 'roi-projets-ia-entreprise',
+    title: 'Comment calculer le ROI de vos projets d\'IA en entreprise',
+    excerpt: 'Méthodologie pratique pour évaluer et maximiser le retour sur investissement de vos initiatives d\'IA.',
+    publishDate: '2024-03-15',
+    readTime: '6 min',
+    image: '/images/blog/roi-ia.jpg',
+    category: 'Business'
+  }
+];
+
+// Format date function
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString('fr-FR', options);
+}
+---
+
+<Layout title="Blog Alephia - Expertise IA souveraine pour entreprises">
+  <AuditModal />
+  
+  <!-- Blog Header -->
+  <div class="bg-primary text-white pt-40 pb-20">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Blog Alephia</h1>
+      <p class="text-xl max-w-3xl">
+        Expertise, conseils et actualités sur l'IA souveraine pour les entreprises françaises
+      </p>
+    </div>
+  </div>
+  
+  <!-- Categories Nav -->
+  <div class="bg-white border-b">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center space-x-6 overflow-x-auto py-4 whitespace-nowrap">
+        <a href="/blog" class="text-primary font-medium">Tous les articles</a>
+        <a href="/blog/category/strategie-ia" class="text-gray-600 hover:text-primary">Stratégie IA</a>
+        <a href="/blog/category/technologie" class="text-gray-600 hover:text-primary">Technologie</a>
+        <a href="/blog/category/conformite" class="text-gray-600 hover:text-primary">Conformité</a>
+        <a href="/blog/category/cas-usage" class="text-gray-600 hover:text-primary">Cas d'usage</a>
+        <a href="/blog/category/business" class="text-gray-600 hover:text-primary">Business</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Featured Post -->
+  <div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="text-primary font-medium">{blogPosts[0].category}</span>
+          <h2 class="text-3xl font-bold mt-2 mb-4">{blogPosts[0].title}</h2>
+          <p class="text-gray-600 mb-6">{blogPosts[0].excerpt}</p>
+          <div class="flex items-center text-sm text-gray-500 mb-6">
+            <span>{formatDate(blogPosts[0].publishDate)}</span>
+            <span class="mx-2">•</span>
+            <span>{blogPosts[0].readTime} de lecture</span>
+          </div>
+          <a 
+            href={`/blog/${blogPosts[0].slug}`}
+            class="inline-flex items-center bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            Lire l'article
+            <Icon name="arrow-right" class="w-4 h-4 ml-2" />
+          </a>
+        </div>
+        <div>
+          <img 
+            src={blogPosts[0].image} 
+            alt={blogPosts[0].title}
+            class="rounded-xl shadow-lg w-full h-auto object-cover aspect-video"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Blog Posts Grid -->
+  <div class="py-20">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-12 text-center">Articles récents</h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {blogPosts.slice(1).map(post => (
+          <a href={`/blog/${post.slug}`} class="group">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <div class="relative h-48 overflow-hidden">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium">
+                  {post.category}
+                </div>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{post.title}</h3>
+                <p class="text-gray-600 mb-4 line-clamp-2">{post.excerpt}</p>
+                <div class="flex items-center text-sm text-gray-500">
+                  <span>{formatDate(post.publishDate)}</span>
+                  <span class="mx-2">•</span>
+                  <span>{post.readTime} de lecture</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <!-- Newsletter Signup -->
+      <div class="mt-20 bg-gray-50 rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+          <h3 class="text-2xl font-bold mb-3">Restez informé</h3>
+          <p class="text-gray-600">
+            Recevez nos derniers articles et conseils sur l'IA souveraine directement dans votre boîte mail.
+          </p>
+        </div>
+        
+        <form class="flex flex-col md:flex-row gap-4">
+          <input 
+            type="email" 
+            placeholder="Votre email professionnel" 
+            class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
+            required
+          />
+          <button 
+            type="submit"
+            class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors whitespace-nowrap"
+          >
+            S'abonner
+          </button>
+        </form>
+        <p class="text-xs text-gray-500 mt-4 text-center">
+          En vous inscrivant, vous acceptez de recevoir nos emails. Vous pouvez vous désinscrire à tout moment.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- CTA Final -->
+  <section class="bg-primary text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
+      <p class="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
+      <button 
+        type="button"
+        onclick="openModal()"
+        class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
+      >
+        Démarrer mon audit gratuit
+      </button>
+      <p class="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>
+    </div>
+  </section>
+</Layout>

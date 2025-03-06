@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AuditModal from '../components/shared/AuditModal.astro';
+import Icon from '../components/shared/Icon.astro';
+import ValuesSection from '../components/sections/ValuesSection.astro';
+---
+
+<Layout title="À propos d'Alephia - Notre mission et nos valeurs">
+  <AuditModal />
+  
+  <!-- Page Header -->
+  <div class="bg-primary text-white pt-40 pb-20">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">À propos d'Alephia</h1>
+      <p class="text-xl max-w-3xl">Notre mission est de démocratiser l'accès à l'intelligence artificielle pour les entreprises françaises tout en garantissant la souveraineté des données.</p>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="prose prose-lg max-w-4xl mx-auto">
+        <h2>Notre mission</h2>
+        <p>
+          Chez Alephia, nous avons une mission claire : <strong>démocratiser l'accès à l'intelligence artificielle pour les entreprises françaises tout en garantissant la souveraineté des données</strong>.
+        </p>
+        <p>
+          Fondée en 2023 par une équipe d'experts en IA et en cybersécurité, Alephia est née d'un constat simple : les solutions d'IA actuelles obligent souvent les entreprises à faire un choix impossible entre performance et confidentialité.
+        </p>
+
+        <h2>Notre vision</h2>
+        <p>Nous croyons fermement que l'avenir de l'IA en entreprise doit être :</p>
+        <ul>
+          <li><strong>Souverain</strong> : vos données restent sous votre contrôle, en France</li>
+          <li><strong>Performant</strong> : des modèles d'IA de pointe adaptés à vos besoins</li>
+          <li><strong>Accessible</strong> : des solutions abordables pour toutes les tailles d'entreprise</li>
+          <li><strong>Éthique</strong> : une IA responsable, transparente et conforme au RGPD</li>
+        </ul>
+      </div>
+
+      <ValuesSection />
+
+      <div class="prose prose-lg max-w-4xl mx-auto mt-16">
+        <h2>Notre équipe</h2>
+        <p>Alephia réunit des experts passionnés par l'IA et engagés pour la souveraineté numérique française :</p>
+
+        <div class="grid md:grid-cols-2 gap-8 not-prose mt-8 mb-12">
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold mb-2">Thomas Dubois</h3>
+            <p class="text-primary font-medium mb-4">CEO & Co-fondateur</p>
+            <p class="text-gray-600">Expert en IA avec 15 ans d'expérience dans le déploiement de solutions d'entreprise</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold mb-2">Sophie Martin</h3>
+            <p class="text-primary font-medium mb-4">CTO & Co-fondatrice</p>
+            <p class="text-gray-600">Docteure en Machine Learning, anciennement chercheuse au CNRS</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold mb-2">Marc Lefevre</h3>
+            <p class="text-primary font-medium mb-4">Responsable Cybersécurité</p>
+            <p class="text-gray-600">Certifié CISSP avec une expertise en protection des données sensibles</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="text-xl font-semibold mb-2">Émilie Rousseau</h3>
+            <p class="text-primary font-medium mb-4">Directrice des Opérations</p>
+            <p class="text-gray-600">Spécialiste en transformation digitale des PME françaises</p>
+          </div>
+        </div>
+
+        <h2>Nos partenaires technologiques</h2>
+        <p>Nous collaborons avec les meilleurs acteurs français et européens pour vous offrir des solutions d'IA souveraines :</p>
+        <ul>
+          <li><strong>Mistral AI</strong> - Modèles de langage français de pointe</li>
+          <li><strong>OVHcloud</strong> - Hébergement 100% français</li>
+          <li><strong>ANSSI</strong> - Conformité aux standards de sécurité</li>
+        </ul>
+
+        <h2>Notre engagement pour la souveraineté numérique</h2>
+        <p>
+          Dans un monde où les données sont devenues le nouvel or noir, nous pensons que les entreprises françaises doivent pouvoir bénéficier des avancées de l'IA sans compromettre leur indépendance technologique.
+        </p>
+        <p>C'est pourquoi nous avons développé une approche unique :</p>
+        <ol>
+          <li><strong>Hébergement 100% français</strong> de tous nos modèles d'IA</li>
+          <li><strong>Aucune donnée partagée</strong> avec des serveurs étrangers</li>
+          <li><strong>Conformité totale au RGPD</strong> et aux réglementations européennes</li>
+          <li><strong>Transparence complète</strong> sur le fonctionnement de nos modèles</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Final -->
+  <section class="bg-primary text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
+      <p class="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
+      <button 
+        type="button"
+        onclick="openModal()"
+        class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
+      >
+        Démarrer mon audit gratuit
+      </button>
+      <p class="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>
+    </div>
+  </section>
+</Layout>

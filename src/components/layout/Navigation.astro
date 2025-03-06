@@ -3,8 +3,7 @@ import Icon from '../shared/Icon.astro';
 
 const links = [
   { text: 'Accueil', href: '/' },
-  { text: 'Services', href: '/services' },
-  { text: 'Tarifs', href: '#pricing' },
+  { text: 'Services', href: '#use-cases' },
   { text: 'À propos', href: '/about' },
   { text: 'Blog', href: '/blog' },
 ];
@@ -112,5 +111,55 @@ const links = [
         }
       });
     }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          const headerOffset = 80;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          // Smooth scroll animation
+          const startPosition = window.pageYOffset;
+          const distance = offsetPosition - startPosition;
+          const duration = 1000; // Increased duration for smoother effect
+          let start = null;
+
+          function animation(currentTime) {
+            if (start === null) start = currentTime;
+            const timeElapsed = currentTime - start;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Easing function for smoother animation
+            const ease = t => t < 0.5 
+              ? 4 * t * t * t 
+              : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+
+            window.scrollTo(0, startPosition + (distance * ease(progress)));
+
+            if (timeElapsed < duration) {
+              requestAnimationFrame(animation);
+            }
+          }
+
+          requestAnimationFrame(animation);
+          
+          // Close mobile menu if open
+          const mobileMenu = document.getElementById('mobile-menu');
+          if (mobileMenu) {
+            mobileMenu.classList.add('hidden');
+          }
+        }
+      });
+    });
   });
 </script>
