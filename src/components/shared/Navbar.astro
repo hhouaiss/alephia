@@ -29,12 +29,13 @@ const navItems = [
       </div>
 
       <!-- CTA Button -->
-      <a 
-        href="/contact"
+      <button 
+        type="button"
+        onclick="openModal()"
         class="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg hidden md:block"
       >
         Démarrer un projet
-      </a>
+      </button>
 
       <!-- Mobile Menu Button -->
       <button 
@@ -60,12 +61,13 @@ const navItems = [
           {item.label}
         </a>
       ))}
-      <a 
-        href="/contact"
-        class="block px-4 py-2 text-center bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
-      >
-        Démarrer un projet
-      </a>
+      <button 
+            type="button"
+            onclick="openModal()"
+            class="block w-full px-4 py-2 text-center bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            Démarrer un projet
+          </button>
     </div>
   </div>
 </nav>
