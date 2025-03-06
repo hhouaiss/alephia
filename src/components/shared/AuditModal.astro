@@ -192,7 +192,6 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
           const { data, error } = await supabase
             .from('audit_submissions')
             .insert([formattedData])
-            .select();
           
           if (error) {
             console.error('Supabase error:', error);
