@@ -8,13 +8,13 @@ import ValuesSection from '../components/sections/ValuesSection.astro';
 
 <div class="prose prose-lg max-w-4xl mx-auto">
 
-# À propos d'Alephia
+# À propos d'Alefia
 
 ## Notre mission
 
-Chez Alephia, nous avons une mission claire : **démocratiser l'accès à l'intelligence artificielle pour les entreprises françaises tout en garantissant la souveraineté des données**.
+Chez Alefia, nous avons une mission claire : **démocratiser l'accès à l'intelligence artificielle pour les entreprises françaises tout en garantissant la souveraineté des données**.
 
-Fondée en 2023 par une équipe d'experts en IA et en cybersécurité, Alephia est née d'un constat simple : les solutions d'IA actuelles obligent souvent les entreprises à faire un choix impossible entre performance et confidentialité.
+Fondée en 2023 par une équipe d'experts en IA et en cybersécurité, Alefia est née d'un constat simple : les solutions d'IA actuelles obligent souvent les entreprises à faire un choix impossible entre performance et confidentialité.
 
 ## Notre vision
 
@@ -33,7 +33,7 @@ Nous croyons fermement que l'avenir de l'IA en entreprise doit être :
 
 ## Notre équipe
 
-Alephia réunit des experts passionnés par l'IA et engagés pour la souveraineté numérique française :
+Alefia réunit des experts passionnés par l'IA et engagés pour la souveraineté numérique française :
 
 - **Thomas Dubois** - CEO & Co-fondateur  
   Expert en IA avec 15 ans d'expérience dans le déploiement de solutions d'entreprise
