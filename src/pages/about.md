@@ -6,7 +6,7 @@ title: À propos d'Alephia - Notre mission et nos valeurs
 import Icon from '../components/shared/Icon.astro';
 import ValuesSection from '../components/sections/ValuesSection.astro';
 
-<div className="prose prose-lg max-w-4xl mx-auto">
+<div class="prose prose-lg max-w-4xl mx-auto">
 
 # À propos d'Alephia
 
@@ -29,7 +29,7 @@ Nous croyons fermement que l'avenir de l'IA en entreprise doit être :
 
 <ValuesSection />
 
-<div className="prose prose-lg max-w-4xl mx-auto mt-16">
+<div class="prose prose-lg max-w-4xl mx-auto mt-16">
 
 ## Notre équipe
 
@@ -69,17 +69,17 @@ C'est pourquoi nous avons développé une approche unique :
 </div>
 
 {/* CTA Final Section */}
-<section className="bg-primary text-white py-20 mt-20">
-  <div className="container mx-auto px-4 text-center">
-    <h2 className="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
-    <p className="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
+<section class="bg-primary text-white py-20 mt-20">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
+    <p class="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
     <button 
       type="button"
-      onClick="openModal()"
-      className="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
+      onclick="openModal()"
+      class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
     >
       Démarrer mon audit gratuit
     </button>
-    <p className="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>
+    <p class="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>
   </div>
 </section>

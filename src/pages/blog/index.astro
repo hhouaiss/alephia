@@ -3,69 +3,30 @@ import Layout from '../../layouts/Layout.astro';
 import AuditModal from '../../components/shared/AuditModal.astro';
 import Icon from '../../components/shared/Icon.astro';
 
-// In a real implementation, you would fetch these from a CMS or markdown files
-const blogPosts = [
-  {
-    slug: 'ia-souveraine-avantages-entreprises-francaises',
-    title: 'IA souveraine : 5 avantages clés pour les entreprises françaises',
-    excerpt: 'Découvrez comment l\'IA souveraine peut transformer votre entreprise tout en préservant vos données sensibles.',
-    publishDate: '2023-11-15',
-    readTime: '6 min',
-    image: '/images/blog/ia-souveraine.jpg',
-    category: 'Stratégie IA'
-  },
-  {
-    slug: 'comparatif-modeles-ia-open-source-vs-proprietaires',
-    title: 'Modèles IA open source vs. propriétaires : le comparatif complet',
-    excerpt: 'Analyse détaillée des performances, coûts et implications éthiques des différents modèles d\'IA disponibles en 2024.',
-    publishDate: '2023-12-05',
-    readTime: '8 min',
-    image: '/images/blog/comparatif-modeles.jpg',
-    category: 'Technologie'
-  },
-  {
-    slug: 'rgpd-ia-guide-conformite',
-    title: 'RGPD et IA : guide pratique pour rester conforme',
-    excerpt: 'Comment déployer des solutions d\'IA tout en respectant les exigences du RGPD ? Notre guide complet pour les entreprises.',
-    publishDate: '2024-01-20',
-    readTime: '5 min',
-    image: '/images/blog/rgpd-ia.jpg',
-    category: 'Conformité'
-  },
-  {
-    slug: 'cas-usage-ia-pme-francaises',
-    title: '10 cas d\'usage concrets de l\'IA pour les PME françaises',
-    excerpt: 'Exemples réels d\'implémentation d\'IA qui ont transformé des PME françaises avec des résultats mesurables.',
-    publishDate: '2024-02-10',
-    readTime: '7 min',
-    image: '/images/blog/cas-usage-pme.jpg',
-    category: 'Cas d\'usage'
-  },
-  {
-    slug: 'mistral-ai-vs-gpt4-analyse',
-    title: 'Mistral AI vs GPT-4 : analyse comparative pour les entreprises',
-    excerpt: 'Performance, coût, confidentialité : notre analyse détaillée des deux modèles phares du marché.',
-    publishDate: '2024-03-01',
-    readTime: '9 min',
-    image: '/images/blog/mistral-vs-gpt.jpg',
-    category: 'Technologie'
-  },
-  {
-    slug: 'roi-projets-ia-entreprise',
-    title: 'Comment calculer le ROI de vos projets d\'IA en entreprise',
-    excerpt: 'Méthodologie pratique pour évaluer et maximiser le retour sur investissement de vos initiatives d\'IA.',
-    publishDate: '2024-03-15',
-    readTime: '6 min',
-    image: '/images/blog/roi-ia.jpg',
-    category: 'Business'
-  }
-];
+// Fetch all blog posts from the markdown files
+const allPosts = await Astro.glob('../blog/*.md');
+
+// Sort posts by date (newest first)
+const blogPosts = allPosts
+  .map(post => ({
+    slug: post.url?.split('/').pop() || '',
+    title: post.frontmatter.title,
+    excerpt: post.frontmatter.description,
+    publishDate: post.frontmatter.publishDate,
+    readTime: `${post.frontmatter.readTime} min`,
+    image: post.frontmatter.image,
+    category: post.frontmatter.category
+  }))
+  .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
 // Format date function
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString('fr-FR', options);
 }
+
+// Get unique categories for the navigation
+const categories = [...new Set(blogPosts.map(post => post.category))];
 ---
 
 <Layout title="Blog Alephia - Expertise IA souveraine pour entreprises">
@@ -86,11 +47,14 @@ function formatDate(dateString) {
     <div class="container mx-auto px-4">
       <div class="flex items-center space-x-6 overflow-x-auto py-4 whitespace-nowrap">
         <a href="/blog" class="text-primary font-medium">Tous les articles</a>
-        <a href="/blog/category/strategie-ia" class="text-gray-600 hover:text-primary">Stratégie IA</a>
-        <a href="/blog/category/technologie" class="text-gray-600 hover:text-primary">Technologie</a>
-        <a href="/blog/category/conformite" class="text-gray-600 hover:text-primary">Conformité</a>
-        <a href="/blog/category/cas-usage" class="text-gray-600 hover:text-primary">Cas d'usage</a>
-        <a href="/blog/category/business" class="text-gray-600 hover:text-primary">Business</a>
+        {categories.map(category => (
+          <a 
+            href={`/blog/category/${category.toLowerCase().replace(/\s+/g, '-')}`} 
+            class="text-gray-600 hover:text-primary"
+          >
+            {category}
+          </a>
+        ))}
       </div>
     </div>
   </div>
