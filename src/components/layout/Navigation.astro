@@ -3,7 +3,7 @@ import Icon from '../shared/Icon.astro';
 
 const links = [
   { text: 'Accueil', href: '/' },
-  { text: 'Services', href: '#use-cases' },
+  { text: 'Services', href: '/#use-cases' },
   { text: 'À propos', href: '/about' },
   { text: 'Blog', href: '/blog' },
 ];
@@ -116,50 +116,70 @@ const links = [
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Handle both pure hash links and root-relative hash links
+    document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
+        const href = this.getAttribute('href');
         
-        if (targetElement) {
-          const headerOffset = 80;
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          // Smooth scroll animation
-          const startPosition = window.pageYOffset;
-          const distance = offsetPosition - startPosition;
-          const duration = 1000; // Increased duration for smoother effect
-          let start = null;
-
-          function animation(currentTime) {
-            if (start === null) start = currentTime;
-            const timeElapsed = currentTime - start;
-            const progress = Math.min(timeElapsed / duration, 1);
-            
-            // Easing function for smoother animation
-            const ease = t => t < 0.5 
-              ? 4 * t * t * t 
-              : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-
-            window.scrollTo(0, startPosition + (distance * ease(progress)));
-
-            if (timeElapsed < duration) {
-              requestAnimationFrame(animation);
-            }
-          }
-
-          requestAnimationFrame(animation);
+        // If we're already on the homepage and the link is a root-relative hash
+        if (href.startsWith('/#') && window.location.pathname === '/') {
+          e.preventDefault();
+          const targetId = href.substring(1); // Remove the leading slash
+          const targetElement = document.querySelector(targetId);
           
-          // Close mobile menu if open
-          const mobileMenu = document.getElementById('mobile-menu');
-          if (mobileMenu) {
-            mobileMenu.classList.add('hidden');
+          if (targetElement) {
+            scrollToElement(targetElement);
+          }
+        } 
+        // If it's a pure hash link
+        else if (href.startsWith('#')) {
+          e.preventDefault();
+          const targetElement = document.querySelector(href);
+          
+          if (targetElement) {
+            scrollToElement(targetElement);
           }
         }
+        // Otherwise, let the browser handle the navigation normally
       });
     });
+    
+    // Helper function for smooth scrolling
+    function scrollToElement(element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      // Smooth scroll animation
+      const startPosition = window.pageYOffset;
+      const distance = offsetPosition - startPosition;
+      const duration = 1000; // Increased duration for smoother effect
+      let start = null;
+
+      function animation(currentTime) {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // Easing function for smoother animation
+        const ease = t => t < 0.5 
+          ? 4 * t * t * t 
+          : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+
+        window.scrollTo(0, startPosition + (distance * ease(progress)));
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animation);
+        }
+      }
+
+      requestAnimationFrame(animation);
+      
+      // Close mobile menu if open
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.add('hidden');
+      }
+    }
   });
 </script>

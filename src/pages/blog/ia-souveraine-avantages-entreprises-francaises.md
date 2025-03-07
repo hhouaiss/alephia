@@ -3,9 +3,9 @@ layout: ../../layouts/BlogPostLayout.astro
 title: "IA souveraine : 5 avantages clés pour les entreprises françaises"
 description: "Découvrez comment l'IA souveraine peut transformer votre entreprise tout en préservant vos données sensibles et en garantissant votre indépendance technologique."
 publishDate: "2023-11-15"
-author: "Thomas Dubois"
-authorRole: "CEO & Co-fondateur"
-authorImage: "/images/team/thomas-dubois.jpg"
+author: "Hassan Houaiss"
+authorRole: "CEO & fondateur"
+authorImage: "/images/team/hassanhouaiss.jpg"
 image: "/images/blog/ia-souveraine.jpg"
 imageAlt: "Serveurs de données sécurisés avec drapeau français"
 category: "Stratégie IA"
@@ -86,23 +86,27 @@ De plus, les modèles open source comme Mistral offrent un excellent rapport qua
 
 ### 5. Support local et expertise française
 
-<div class="bg-gradient-to-r from-primary to-primary-dark text-white p-8 rounded-xl my-12">
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-    <div>
-      <h4 class="text-xl font-bold mb-2">Besoin d'un accompagnement personnalisé ?</h4>
-      <p class="text-white/90">
-        Nos experts en IA souveraine sont disponibles pour vous guider dans votre transformation digitale.
-      </p>
+<div class="not-prose">
+  <div class="bg-gradient-to-r from-primary to-primary-dark text-white p-8 rounded-xl my-12">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <h4 class="text-xl font-bold mb-2 text-white">Besoin d'un accompagnement personnalisé ?</h4>
+        <p class="text-white">
+          Nos experts en IA souveraine sont disponibles pour vous guider dans votre transformation digitale.
+        </p>
+      </div>
+      <button 
+        type="button" 
+        onclick="openModal()"
+        class="whitespace-nowrap bg-white text-primary font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+      >
+        Demander un audit
+      </button>
     </div>
-    <button 
-      type="button" 
-      onclick="openModal()"
-      class="whitespace-nowrap bg-white text-primary font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors"
-    >
-      Demander un audit
-    </button>
   </div>
 </div>
+
+L'un des avantages majeurs des solutions d'IA souveraines réside dans la proximité...
 
 L'un des avantages majeurs des solutions d'IA souveraines réside dans la proximité avec les équipes de développement et de support. Bénéficier d'un accompagnement en français, par des experts comprenant parfaitement votre contexte métier et réglementaire, constitue un atout considérable pour la réussite de vos projets d'IA.
 
