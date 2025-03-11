@@ -20,168 +20,66 @@ import Icon from '../components/shared/Icon.astro';
   <!-- Contact Section -->
   <section class="py-20">
     <div class="container mx-auto px-4">
-      <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-        <!-- Contact Form -->
-        <div class="bg-white rounded-2xl shadow-xl p-8">
-          <h2 class="text-2xl font-bold mb-6">Envoyez-nous un message</h2>
+      <div class="max-w-4xl mx-auto">
+        <!-- Contact Information -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-12">
+          <h2 class="text-2xl font-bold mb-8 text-center">Nos coordonnées</h2>
           
-          <form class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
-                <input 
-                  type="text" 
-                  id="firstName" 
-                  name="firstName" 
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                  required
-                />
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <Icon name="map-pin" class="w-6 h-6 text-primary" />
               </div>
               <div>
-                <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
-                <input 
-                  type="text" 
-                  id="lastName" 
-                  name="lastName" 
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                  required
-                />
+                <h3 class="font-semibold text-lg">Adresse</h3>
+                <p class="text-gray-600 mt-1">
+                  35 Rue du Faubourg Poissonnière<br />
+                  75009 Paris, France
+                </p>
               </div>
-            </div>
-            
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email professionnel</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                required
-              />
-            </div>
-            
-            <div>
-              <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Entreprise</label>
-              <input 
-                type="text" 
-                id="company" 
-                name="company" 
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                required
-              />
-            </div>
-            
-            <div>
-              <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Sujet</label>
-              <select 
-                id="subject" 
-                name="subject" 
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                required
-              >
-                <option value="" disabled selected>Sélectionnez un sujet</option>
-                <option value="demo">Demande de démonstration</option>
-                <option value="pricing">Informations tarifaires</option>
-                <option value="technical">Support technique</option>
-                <option value="partnership">Proposition de partenariat</option>
-                <option value="other">Autre demande</option>
-              </select>
-            </div>
-            
-            <div>
-              <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-              <textarea 
-                id="message" 
-                name="message" 
-                rows="5" 
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary"
-                required
-              ></textarea>
             </div>
             
             <div class="flex items-start">
-              <input 
-                type="checkbox" 
-                id="consent" 
-                name="consent" 
-                class="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                required
-              />
-              <label for="consent" class="ml-2 block text-sm text-gray-600">
-                J'accepte que mes données soient traitées conformément à la <a href="/privacy" class="text-primary hover:underline">politique de confidentialité</a> d'Alefia.
-              </label>
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <Icon name="mail" class="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg">Email</h3>
+                <a href="mailto:hello@alefia.fr" class="text-primary hover:underline mt-1 block">
+                  hello@alefia.fr
+                </a>
+              </div>
             </div>
             
-            <button 
-              type="submit" 
-              class="w-full bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-colors"
-            >
-              Envoyer le message
-            </button>
-          </form>
-        </div>
-        
-        <!-- Contact Information -->
-        <div class="flex flex-col justify-between">
-          <div>
-            <h2 class="text-2xl font-bold mb-6">Nos coordonnées</h2>
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <Icon name="phone" class="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg">Téléphone</h3>
+                <a href="tel:+33123456789" class="text-primary hover:underline mt-1 block">
+                  +33 1 23 45 67 89
+                </a>
+              </div>
+            </div>
             
-            <div class="space-y-8">
-              <div class="flex items-start">
-                <div class="bg-primary/10 p-3 rounded-full mr-4">
-                  <Icon name="map-pin" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-lg">Adresse</h3>
-                  <p class="text-gray-600 mt-1">
-                    35 Rue du Faubourg Poissonnière<br />
-                    75009 Paris, France
-                  </p>
-                </div>
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <Icon name="clock" class="w-6 h-6 text-primary" />
               </div>
-              
-              <div class="flex items-start">
-                <div class="bg-primary/10 p-3 rounded-full mr-4">
-                  <Icon name="mail" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-lg">Email</h3>
-                  <a href="mailto:contact@alefia.fr" class="text-primary hover:underline mt-1 block">
-                    contact@alefia.fr
-                  </a>
-                </div>
-              </div>
-              
-              <div class="flex items-start">
-                <div class="bg-primary/10 p-3 rounded-full mr-4">
-                  <Icon name="phone" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-lg">Téléphone</h3>
-                  <a href="tel:+33123456789" class="text-primary hover:underline mt-1 block">
-                    +33 1 23 45 67 89
-                  </a>
-                </div>
-              </div>
-              
-              <div class="flex items-start">
-                <div class="bg-primary/10 p-3 rounded-full mr-4">
-                  <Icon name="clock" class="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-lg">Horaires</h3>
-                  <p class="text-gray-600 mt-1">
-                    Lundi - Vendredi: 9h00 - 18h00<br />
-                    Fermé les week-ends et jours fériés
-                  </p>
-                </div>
+              <div>
+                <h3 class="font-semibold text-lg">Horaires</h3>
+                <p class="text-gray-600 mt-1">
+                  Lundi - Vendredi: 9h00 - 18h00<br />
+                  Fermé les week-ends et jours fériés
+                </p>
               </div>
             </div>
           </div>
           
-          <div class="mt-12">
+          <div class="mt-12 text-center">
             <h3 class="font-semibold text-lg mb-4">Suivez-nous</h3>
-            <div class="flex space-x-4">
+            <div class="flex justify-center space-x-4">
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="bg-gray-100 hover:bg-primary hover:text-white p-3 rounded-full transition-colors">
                 <Icon name="linkedin" class="w-5 h-5" />
               </a>
@@ -193,6 +91,13 @@ import Icon from '../components/shared/Icon.astro';
               </a>
             </div>
           </div>
+        </div>
+        
+        <div class="text-center mb-12">
+          <p class="text-lg text-gray-700 mb-6">Pour toute demande commerciale ou technique, n'hésitez pas à nous contacter directement par email ou téléphone.</p>
+          <a href="mailto:hello@alefia.fr" class="inline-block bg-primary hover:bg-primary-dark text-white font-medium py-3 px-8 rounded-lg transition-colors">
+            Nous écrire
+          </a>
         </div>
       </div>
     </div>
@@ -316,56 +221,6 @@ import Icon from '../components/shared/Icon.astro';
         }
       });
     });
-    
-    // Form submission handling
-    const contactForm = document.querySelector('form');
-    if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const formValues = Object.fromEntries(formData.entries());
-        
-        try {
-          // Send data to our API endpoint
-          const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formValues),
-          });
-          
-          const result = await response.json();
-          
-          if (response.ok) {
-            // Show success message
-            const formContainer = contactForm.parentElement;
-            formContainer.innerHTML = `
-              <div class="text-center py-8">
-                <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-6">
-                  <h3 class="font-bold text-xl mb-2">Message envoyé avec succès !</h3>
-                  <p>Merci de nous avoir contactés. Notre équipe vous répondra dans les plus brefs délais.</p>
-                </div>
-                <button 
-                  type="button"
-                  onclick="window.location.reload()"
-                  class="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-colors"
-                >
-                  Envoyer un autre message
-                </button>
-              </div>
-            `;
-          } else {
-            throw new Error(result.message || 'Une erreur est survenue');
-          }
-        } catch (error) {
-          console.error('Error submitting form:', error);
-          alert('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer.');
-        }
-      });
-    }
   });
 </script>
 
@@ -378,13 +233,6 @@ import Icon from '../components/shared/Icon.astro';
   .bg-white.rounded-xl button + div {
     transition: all 0.3s ease-in-out;
     overflow: hidden;
-  }
-  
-  /* Form Styles */
-  form input:focus,
-  form textarea:focus,
-  form select:focus {
-    outline: none;
   }
 </style>
 
