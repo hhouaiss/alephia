@@ -320,30 +320,50 @@ import Icon from '../components/shared/Icon.astro';
     // Form submission handling
     const contactForm = document.querySelector('form');
     if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
+      contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         // Get form data
         const formData = new FormData(contactForm);
+        const formValues = Object.fromEntries(formData.entries());
         
-        // Here you would typically send the data to your backend
-        // For now, we'll just show a success message
-        const formContainer = contactForm.parentElement;
-        formContainer.innerHTML = `
-          <div class="text-center py-8">
-            <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-6">
-              <h3 class="font-bold text-xl mb-2">Message envoyé avec succès !</h3>
-              <p>Merci de nous avoir contactés. Notre équipe vous répondra dans les plus brefs délais.</p>
-            </div>
-            <button 
-              type="button"
-              onclick="window.location.reload()"
-              class="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-colors"
-            >
-              Envoyer un autre message
-            </button>
-          </div>
-        `;
+        try {
+          // Send data to our API endpoint
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formValues),
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok) {
+            // Show success message
+            const formContainer = contactForm.parentElement;
+            formContainer.innerHTML = `
+              <div class="text-center py-8">
+                <div class="bg-green-100 text-green-800 p-4 rounded-lg mb-6">
+                  <h3 class="font-bold text-xl mb-2">Message envoyé avec succès !</h3>
+                  <p>Merci de nous avoir contactés. Notre équipe vous répondra dans les plus brefs délais.</p>
+                </div>
+                <button 
+                  type="button"
+                  onclick="window.location.reload()"
+                  class="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                >
+                  Envoyer un autre message
+                </button>
+              </div>
+            `;
+          } else {
+            throw new Error(result.message || 'Une erreur est survenue');
+          }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+          alert('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer.');
+        }
       });
     }
   });
