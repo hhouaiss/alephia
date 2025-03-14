@@ -5,8 +5,8 @@ description: "Découvrez comment l'IA souveraine peut transformer votre entrepri
 publishDate: "2023-11-15"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
-authorImage: "/images/team/hassanhouaiss.jpg"
-image: "/images/blog/ia-souveraine.jpg"
+authorImage: "/images/optimized/team/hassanhouaiss.webp"
+image: "/images/optimized/blog/ia-souveraine.webp"
 imageAlt: "Serveurs de données sécurisés avec drapeau français"
 category: "Stratégie IA"
 readTime: 6
@@ -36,7 +36,7 @@ Les entreprises manipulant des données sensibles (santé, finance, défense) b�
 
 ### 2. Conformité RGPD simplifiée
 
-![Conformité RGPD avec l'IA souveraine](/images/blog/rgpd-compliance.jpg)
+![Conformité RGPD avec l'IA souveraine](/images/optimized/blog/rgpd-compliance.webp)
 
 L'adoption d'une IA souveraine simplifie considérablement la mise en conformité avec le Règlement Général sur la Protection des Données (RGPD). Les solutions développées en France intègrent nativement les principes de "privacy by design" et respectent les exigences européennes en matière de traitement des données personnelles.
 

@@ -5,8 +5,8 @@ description: "Découvrez les avantages et inconvénients des modèles de langage
 publishDate: "2023-11-22"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
-authorImage: "/images/team/hassanhouaiss.jpg"
-image: "/images/blog/llm-comparison.jpg"
+authorImage: "/images/optimized/team/hassanhouaiss.webp"
+image: "/images/optimized/blog/llm-comparison.webp"
 imageAlt: "Comparaison entre solutions IA open source et propriétaires"
 category: "Stratégie IA"
 readTime: 7
@@ -42,7 +42,7 @@ Les modèles comme Mistral (solution française) ou LLama peuvent être finement
 
 ### Les avantages des solutions propriétaires à considérer
 
-![Comparaison des solutions IA](/images/blog/proprietary-vs-opensource.jpg)
+![Comparaison des solutions IA](/images/optimized/blog/proprietary-vs-opensource.webp)
 
 #### 1. Une mise en place simplifiée
 
