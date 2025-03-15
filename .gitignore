@@ -24,8 +24,13 @@ pnpm-debug.log*
 .idea/
 
 # image files
-public/images/blog
-public/images/optimized 
+public/images/blog/*.jpg
+public/images/blog/*.png
+public/images/blog/*.jpeg
+public/images/optimized/**/*.webp
 
 # script files
 /scripts/optimize-images.js
+
+# Vercel
+.vercel
