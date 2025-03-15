@@ -33,4 +33,4 @@ public/images/optimized/**/*.webp
 /scripts/optimize-images.js
 
 # Vercel
-.vercel
+.vercel 
