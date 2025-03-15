@@ -25,6 +25,7 @@ pnpm-debug.log*
 
 # image files
 public/images/blog
+public/images/optimized 
 
 # script files
 /scripts/optimize-images.js
