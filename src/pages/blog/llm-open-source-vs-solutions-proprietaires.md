@@ -5,8 +5,8 @@ description: "Découvrez les avantages et inconvénients des modèles de langage
 publishDate: "2023-11-22"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
-authorImage: "/images/optimized/team/hassanhouaiss.webp"
-image: "/images/optimized/blog/llm-comparison.webp"
+authorImage: "/images/team/hassanhouaiss.jpg"
+image: "https://images.pexels.com/photos/1933900/pexels-photo-1933900.jpeg"
 imageAlt: "Comparaison entre solutions IA open source et propriétaires"
 category: "Stratégie IA"
 readTime: 7
