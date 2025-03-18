@@ -16,6 +16,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "@vercel/analytics": "^1.5.0",
     "astro": "^5.2.5",
     "astro-icon": "^1.1.5",
     "glob": "^11.0.1",

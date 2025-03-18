@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AuditModal from '../components/shared/AuditModal.astro';
+import Icon from '../components/shared/Icon.astro';
+---
+
+<Layout title="Carrières - Alefia | IA souveraine pour entreprises françaises" 
+  description="Rejoignez Alefia et participez à la révolution de l'IA souveraine en France. Découvrez notre culture et nos valeurs.">
+  <AuditModal />
+  
+  <!-- Page Header -->
+  <div class="bg-primary text-white pt-40 pb-20">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Carrières</h1>
+      <p class="text-xl max-w-3xl">
+        Rejoignez l'aventure Alefia et participez à la démocratisation de l'IA souveraine en France.
+      </p>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="prose prose-lg mx-auto">
+          <h2>Notre culture</h2>
+          <p>
+            Chez Alefia, nous sommes passionnés par l'innovation et l'impact positif que l'IA peut avoir sur les entreprises françaises. Notre mission est de rendre l'intelligence artificielle accessible, souveraine et sécurisée pour toutes les organisations.
+          </p>
+          
+          <h2>Nos valeurs</h2>
+          <ul>
+            <li><strong>Excellence</strong> - Nous visons l'excellence dans tout ce que nous faisons</li>
+            <li><strong>Innovation</strong> - Nous repoussons constamment les limites de ce qui est possible</li>
+            <li><strong>Souveraineté</strong> - Nous défendons l'indépendance technologique française</li>
+            <li><strong>Éthique</strong> - Nous développons des solutions d'IA responsables et transparentes</li>
+          </ul>
+        </div>
+        
+        <!-- No Open Positions Section -->
+        <div class="bg-gray-50 rounded-xl p-8 my-12 text-center">
+          <h2 class="text-2xl font-bold mb-4">Aucun poste ouvert actuellement</h2>
+          <p class="text-gray-600 mb-6">
+            Nous n'avons pas de postes ouverts pour le moment, mais nous sommes toujours à la recherche de talents exceptionnels pour rejoindre notre équipe à l'avenir.
+          </p>
+          <p class="text-gray-600 mb-8">
+            Revenez consulter cette page régulièrement ou contactez-nous directement pour nous faire part de votre intérêt.
+          </p>
+          <a href="/contact" class="inline-block bg-primary hover:bg-primary-dark text-white font-medium py-3 px-8 rounded-lg transition-colors">
+            Nous contacter
+          </a>
+        </div>
+        
+        <!-- Why Join Us -->
+        <div class="prose prose-lg mx-auto mt-12">
+          <h2>Pourquoi nous rejoindre ?</h2>
+          <p>
+            Rejoindre Alefia, c'est participer à une aventure entrepreneuriale passionnante dans un secteur en pleine croissance. C'est l'opportunité de travailler sur des technologies de pointe et d'avoir un impact réel sur la transformation numérique des entreprises françaises.
+          </p>
+          
+          <div class="grid md:grid-cols-2 gap-6 not-prose mt-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <div class="flex items-center mb-4">
+                <div class="bg-primary/10 p-2 rounded-full mr-3">
+                  <Icon name="zap" class="w-5 h-5 text-primary" />
+                </div>
+                <h3 class="font-semibold text-lg">Innovation</h3>
+              </div>
+              <p class="text-gray-600">Travaillez avec les technologies d'IA les plus avancées et contribuez à façonner l'avenir de l'IA souveraine.</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+              <div class="flex items-center mb-4">
+                <div class="bg-primary/10 p-2 rounded-full mr-3">
+                  <Icon name="users" class="w-5 h-5 text-primary" />
+                </div>
+                <h3 class="font-semibold text-lg">Impact</h3>
+              </div>
+              <p class="text-gray-600">Aidez les entreprises françaises à se transformer grâce à l'IA et contribuez à la souveraineté numérique de notre pays.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="bg-gray-50 py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-6">Intéressé par notre mission ?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Même si nous n'avons pas de postes ouverts actuellement, n'hésitez pas à nous contacter pour nous faire part de votre intérêt.
+      </p>
+      <a href="/contact" class="inline-block bg-primary hover:bg-primary-dark text-white font-medium py-3 px-8 rounded-lg transition-colors">
+        Contactez-nous
+      </a>
+    </div>
+  </section>
+</Layout>
