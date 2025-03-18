@@ -1,9 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/shared/Icon.astro';
+import AuditModal from '../../components/shared/AuditModal.astro';
 ---
 
 <Layout title="Guide d'implémentation de solutions IA - Alefia | IA souveraine pour entreprises françaises">
+  <AuditModal />
+  
   <section class="bg-gradient-to-b from-gray-50 to-white pt-24 pb-16">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto text-center">
@@ -183,12 +186,13 @@ import Icon from '../../components/shared/Icon.astro';
       <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
         Nos experts vous accompagnent à chaque étape pour garantir le succès de votre projet.
       </p>
-      <a 
-        href="/contact" 
+      <button 
+        type="button"
+        onclick="openModal()"
         class="inline-block bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3 rounded-lg transition-colors"
       >
         Demander un audit gratuit
-      </a>
+      </button>
     </div>
   </section>
 
