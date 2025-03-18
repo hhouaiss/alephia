@@ -1,0 +1,42 @@
+---
+// Get all blog posts
+const allPosts = await Astro.glob('../../pages/blog/*.md');
+
+// Get the current post path
+const currentPath = Astro.url.pathname;
+
+// Filter out the current post and sort by date
+const otherPosts = allPosts
+  .filter(post => post.url !== currentPath)
+  .sort((a, b) => new Date(b.frontmatter.publishDate).getTime() - new Date(a.frontmatter.publishDate).getTime());
+
+// Get up to 2 related posts
+const relatedPosts = otherPosts.slice(0, 2);
+
+// Check if we have any related posts to display
+const hasRelatedPosts = relatedPosts.length > 0;
+---
+
+{hasRelatedPosts && (
+  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mt-12">
+    <h3 class="text-2xl font-bold mb-6">Articles similaires</h3>
+    <div class="space-y-6">
+      {relatedPosts.map((post) => (
+        <a href={post.url} class="flex items-start gap-4 group">
+          <div class="w-20 h-20 flex-shrink-0 overflow-hidden rounded-md">
+            <img 
+              src={post.frontmatter.image} 
+              alt={post.frontmatter.imageAlt || post.frontmatter.title} 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+          <div>
+            <h4 class="font-semibold text-lg group-hover:text-primary transition-colors">
+              {post.frontmatter.title}
+            </h4>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+)} 

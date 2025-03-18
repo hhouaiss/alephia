@@ -36,7 +36,7 @@ Les entreprises manipulant des données sensibles (santé, finance, défense) b�
 
 ### 2. Conformité RGPD simplifiée
 
-![Conformité RGPD avec l'IA souveraine](/images/blog/rgpd-compliance.jpg)
+![Conformité RGPD avec l'IA souveraine](/images/optimized/blog/rgpd-compliance.webp)
 
 L'adoption d'une IA souveraine simplifie considérablement la mise en conformité avec le Règlement Général sur la Protection des Données (RGPD). Les solutions développées en France intègrent nativement les principes de "privacy by design" et respectent les exigences européennes en matière de traitement des données personnelles.
 
@@ -110,10 +110,8 @@ L'un des avantages majeurs des solutions d'IA souveraines réside dans la proxim
 
 L'un des avantages majeurs des solutions d'IA souveraines réside dans la proximité avec les équipes de développement et de support. Bénéficier d'un accompagnement en français, par des experts comprenant parfaitement votre contexte métier et réglementaire, constitue un atout considérable pour la réussite de vos projets d'IA.
 
-## Conclusion : l'IA souveraine, un choix stratégique pour l'avenir
+## Conclusion
 
-À l'heure où la transformation digitale s'accélère, le choix d'une IA souveraine représente bien plus qu'une simple décision technique : c'est un positionnement stratégique pour l'avenir de votre entreprise.
+L'IA souveraine représente bien plus qu'une simple alternative aux solutions américaines. C'est un choix stratégique qui allie conformité, sécurité et performance pour les entreprises françaises. Si vous souhaitez explorer davantage ce sujet, n'hésitez pas à consulter notre article sur [le choix entre LLM open source et solutions propriétaires pour votre PME](/blog/llm-open-source-vs-solutions-proprietaires).
 
-En optant pour des solutions d'IA développées et hébergées en France, vous garantissez non seulement la protection de vos données sensibles, mais vous contribuez également à l'émergence d'un écosystème technologique français innovant et compétitif.
-
-Chez Alephia, nous sommes convaincus que la souveraineté numérique est la clé d'une transformation digitale réussie et durable pour les entreprises françaises. Notre mission est de vous accompagner dans cette démarche, en vous proposant des solutions d'IA performantes, éthiques et 100% souveraines.
+Chez Alefia, nous sommes convaincus que l'avenir de l'IA en France passe par des solutions souveraines, et nous nous engageons à accompagner les entreprises dans cette transition technologique majeure.
