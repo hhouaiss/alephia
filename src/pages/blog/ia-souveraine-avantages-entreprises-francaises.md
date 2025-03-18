@@ -5,8 +5,8 @@ description: "Découvrez comment l'IA souveraine peut transformer votre entrepri
 publishDate: "2023-11-15"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
-authorImage: "/images/optimized/team/hassanhouaiss.webp"
-image: "/images/optimized/blog/ia-souveraine.webp"
+authorImage: "/images/team/hassanhouaiss.jpg"
+image: "/images/blog/ia-souveraine.jpg"
 imageAlt: "Serveurs de données sécurisés avec drapeau français"
 category: "Stratégie IA"
 readTime: 6
