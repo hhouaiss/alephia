@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogPostLayout.astro
 title: "IA souveraine : 5 avantages clés pour les entreprises françaises"
 description: "Découvrez comment l'IA souveraine peut transformer votre entreprise tout en préservant vos données sensibles et en garantissant votre indépendance technologique."
-publishDate: "2023-11-15"
+publishDate: "2025-03-11"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
 authorImage: "/images/team/hassanhouaiss.jpg"
