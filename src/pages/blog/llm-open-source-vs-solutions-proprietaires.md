@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogPostLayout.astro
 title: "LLM open source vs solutions propriétaires : quel choix pour votre PME française ?"
 description: "Découvrez les avantages et inconvénients des modèles de langage open source et propriétaires pour votre PME, et comment faire le choix le plus adapté à vos besoins spécifiques."
-publishDate: "2023-11-22"
+publishDate: "2025-03-18"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
 authorImage: "/images/team/hassanhouaiss.jpg"
