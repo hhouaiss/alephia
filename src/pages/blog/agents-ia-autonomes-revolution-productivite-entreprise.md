@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogPostLayout.astro
 title: "Agents IA autonomes : Comment révolutionner la productivité de votre entreprise"
 description: "Découvrez comment les agents IA autonomes peuvent transformer vos processus métier, automatiser les tâches répétitives et améliorer la prise de décision dans votre entreprise française."
-publishDate: "2025-25-15"
+publishDate: "2025-03-25"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
 authorImage: "/images/team/hassanhouaiss.jpg"

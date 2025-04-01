@@ -48,7 +48,7 @@ L'adoption de l'IA ne doit pas compromettre la sécurité de votre entreprise ni
 
 ### Réaliser un audit de sécurité
 
-Avant toute implémentation, identifiez les failles potentielles dans votre infrastructure actuelle et évaluez les risques liés à l'[intégration d'une solution IA](/src/pages/blog/agents-ia-autonomes-revolution-productivite-entreprise.md).
+Avant toute implémentation, identifiez les failles potentielles dans votre infrastructure actuelle et évaluez les risques liés à l'[intégration d'une solution IA](/blog/agents-ia-autonomes-revolution-productivite-entreprise).
 
 ### Garantir la conformité au RGPD
 
@@ -59,7 +59,7 @@ La réglementation européenne impose des contraintes strictes sur le traitement
 
 ### Choisir des modèles open-source
 
-Les solutions propriétaires des géants technologiques américains ou chinois présentent des risques pour [la souveraineté de vos données](/src/pages/blog/ia-souveraine-avantages-entreprises-francaises.md). Les modèles open-source comme Mistral AI ou Llama offrent une alternative crédible et maîtrisable.
+Les solutions propriétaires des géants technologiques américains ou chinois présentent des risques pour [la souveraineté de vos données](/blog/ia-souveraine-avantages-entreprises-francaises). Les modèles open-source comme Mistral AI ou Llama offrent une alternative crédible et maîtrisable.
 
 ![Sécurité des données et IA souveraine](https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg)
 
