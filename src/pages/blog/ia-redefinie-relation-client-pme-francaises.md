@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogPostLayout.astro
 title: "Comment l'IA redéfinit la relation client dans les PME françaises"
 description: "Découvrez comment l'intelligence artificielle souveraine transforme la gestion de la relation client pour les PME françaises, avec des solutions concrètes et adaptées à leurs ressources."
-publishDate: "2024-05-15"
+publishDate: "2025-04-11"
 author: "Hassan Houaiss"
 authorRole: "CEO & fondateur"
 authorImage: "/images/team/hassanhouaiss.jpg"
@@ -15,7 +15,7 @@ tags: ["IA souveraine", "Relation client", "PME", "Automatisation", "CRM"]
 
 Dans un monde où les attentes clients sont en constante augmentation, les PME doivent trouver des moyens intelligents et efficaces d'offrir une expérience client de qualité, sans disposer des ressources d'un grand groupe. C'est dans ce contexte que l'intelligence artificielle (IA), en particulier dans sa forme privée et souveraine, devient un atout majeur.
 
-Chez Alefia, nous aidons les PME et ETI françaises à intégrer des solutions d'[IA générative open-source](/blog/comprendre-ia-generative-entreprise), hébergées en France, pour améliorer leur relation client tout en garantissant la confidentialité de leurs données.
+Chez Alefia, nous aidons les PME et ETI françaises à intégrer des solutions d'[IA générative open-source](/src/pages/blog/llm-open-source-vs-solutions-proprietaires.md), hébergées en France, pour améliorer leur relation client tout en garantissant la confidentialité de leurs données.
 
 ## Les défis des PME dans la gestion de la relation client
 
@@ -123,9 +123,9 @@ Nous identifions les zones de friction dans votre relation client actuelle :
 ### 2. Choix technologique souverain
 
 Nous privilégions systématiquement :
-- **Modèles IA open-source** ([Mistral AI](/blog/mistral-ai-modele-francais), Llama, etc.)
+- **Modèles IA open-source** ([Mistral AI](https://mistral.ai), Llama, etc.)
 - **Hébergement en France** sur vos serveurs ou chez des hébergeurs français
-- Solutions conformes au [RGPD](/blog/securite-donnees-ia-entreprise) et aux exigences de souveraineté numérique
+- Solutions conformes au [RGPD](/src/pages/blog/ia-souveraine-avantages-entreprises-francaises.md) et aux exigences de souveraineté numérique
 
 ### 3. Intégration dans votre écosystème existant
 
@@ -177,7 +177,7 @@ Les bénéfices sont multiples :
   <p class="font-semibold mt-2">Thomas Durand, Directeur Commercial chez InnoTech Solutions</p>
 </div>
 
-Alefia est là pour vous accompagner dans cette transformation. [Contactez-nous](/about) pour un audit gratuit de votre gestion client et une démo personnalisée de nos solutions d'IA souveraine.
+Alefia est là pour vous accompagner dans cette transformation. [Contactez-nous](/contact) pour un audit gratuit de votre gestion client et une démo personnalisée de nos solutions d'IA souveraine.
 
 <div class="not-prose">
   <div class="bg-gray-50 p-8 rounded-xl my-12 border border-gray-200">
