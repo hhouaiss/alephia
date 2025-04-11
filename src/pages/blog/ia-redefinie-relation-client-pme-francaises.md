@@ -15,7 +15,7 @@ tags: ["IA souveraine", "Relation client", "PME", "Automatisation", "CRM"]
 
 Dans un monde où les attentes clients sont en constante augmentation, les PME doivent trouver des moyens intelligents et efficaces d'offrir une expérience client de qualité, sans disposer des ressources d'un grand groupe. C'est dans ce contexte que l'intelligence artificielle (IA), en particulier dans sa forme privée et souveraine, devient un atout majeur.
 
-Chez Alefia, nous aidons les PME et ETI françaises à intégrer des solutions d'[IA générative open-source](/src/pages/blog/llm-open-source-vs-solutions-proprietaires.md), hébergées en France, pour améliorer leur relation client tout en garantissant la confidentialité de leurs données.
+Chez Alefia, nous aidons les PME et ETI françaises à intégrer des solutions d'[IA générative open-source](/blog/llm-open-source-vs-solutions-proprietaires), hébergées en France, pour améliorer leur relation client tout en garantissant la confidentialité de leurs données.
 
 ## Les défis des PME dans la gestion de la relation client
 
@@ -125,7 +125,7 @@ Nous identifions les zones de friction dans votre relation client actuelle :
 Nous privilégions systématiquement :
 - **Modèles IA open-source** ([Mistral AI](https://mistral.ai), Llama, etc.)
 - **Hébergement en France** sur vos serveurs ou chez des hébergeurs français
-- Solutions conformes au [RGPD](/src/pages/blog/ia-souveraine-avantages-entreprises-francaises.md) et aux exigences de souveraineté numérique
+- Solutions conformes au [RGPD](/blog/ia-souveraine-avantages-entreprises-francaises) et aux exigences de souveraineté numérique
 
 ### 3. Intégration dans votre écosystème existant
 
