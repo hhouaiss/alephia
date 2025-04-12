@@ -50,13 +50,16 @@ import Icon from '../Icon.astro';
   
   <!-- Call-to-Action Section -->
   <div class="mt-8 max-w-md mx-auto">
-    <button
+    <a
       id="booking-button"
-      class="w-full bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 hover:scale-[1.02] font-medium"
+      href="https://calendar.notion.so/meet/hassanhouaiss/alefia"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="w-full bg-primary text-white px-8 py-4 rounded-xl hover:bg-primary-dark transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 hover:scale-[1.02] font-medium cursor-pointer"
     >
       <span class="text-xl">📅</span>
       <span>Réserver mon créneau prioritaire avec un expert (15 min)</span>
-    </button>
+    </a>
     <p class="text-gray-600 text-sm mt-3">
       Sans engagement - Vous recevrez une copie de votre diagnostic par email
     </p>
@@ -137,12 +140,17 @@ import Icon from '../Icon.astro';
     
     // Booking button functionality
     const bookingButton = document.getElementById('booking-button');
-    bookingButton?.addEventListener('click', () => {
+    bookingButton?.addEventListener('click', (e) => {
       // Log conversion event
       logConversion();
       
-      // Open calendar booking interface
-      openCalendar();
+      // No need to call openCalendar() as the link will handle navigation
+      // But we still want to close the modal after clicking
+      setTimeout(() => {
+        if (typeof window.closeModal === 'function') {
+          window.closeModal();
+        }
+      }, 500);
     });
     
     // Simple confetti animation
