@@ -1,0 +1,158 @@
+---
+// Import the standard layout and components
+import MainLayout from '../layouts/Layout.astro'; 
+import Navigation from '../components/layout/Navigation.astro';
+import Footer from '../components/layout/Footer.astro';
+
+// Define the demo data
+const demos = [
+  {
+    name: "MailMind",
+    description: "Analyse et compréhension automatique des emails professionnels.",
+    link: "/demos/mailmind",
+    icon: "📧"
+  },
+  {
+    name: "SmartRecap",
+    description: "Résumé de réunions en quelques secondes grâce à l'IA.",
+    link: "/demos/smartrecap",
+    icon: "📝"
+  },
+  {
+    name: "ClassifierPro",
+    description: "Classement intelligent de documents internes.",
+    link: "/demos/classifierpro",
+    icon: "📂"
+  }
+];
+
+// SEO Meta Data
+const pageTitle = "Nos Demos – Alefia";
+const pageDescription = "Découvrez les outils d'IA développés par Alefia pour les PME : analyse d'emails, résumé de réunions, classement de documents. Essayez nos démos !";
+---
+
+<MainLayout title={pageTitle} description={pageDescription}>
+  <main class="py-16 sm:py-24 px-4 mt-20">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Page Header -->
+      <div class="text-center mb-12 sm:mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          Nos Démos IA pour PME
+        </h1>
+        <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+          Explorez comment Alefia intègre l'intelligence artificielle pour optimiser les processus des PME. Ces démonstrations illustrent notre approche souveraine et l'impact concret de nos solutions sur votre productivité.
+        </p>
+      </div>
+
+      <!-- Why Try Our Demos Section -->
+      <div class="mb-16 bg-white rounded-2xl shadow-md p-8 border border-gray-100">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Pourquoi essayer nos démos ?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="flex flex-col items-center text-center">
+            <div class="bg-secondary/20 p-4 rounded-full mb-4">
+              <span class="text-3xl">🔒</span>
+            </div>
+            <h3 class="text-xl font-semibold text-primary mb-2">Souveraineté garantie</h3>
+            <p class="text-gray-600">Toutes nos solutions sont hébergées en France et respectent pleinement le RGPD.</p>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <div class="bg-secondary/20 p-4 rounded-full mb-4">
+              <span class="text-3xl">⚡</span>
+            </div>
+            <h3 class="text-xl font-semibold text-primary mb-2">Intégration facile</h3>
+            <p class="text-gray-600">Nos outils s'adaptent à vos systèmes existants sans perturber vos processus.</p>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <div class="bg-secondary/20 p-4 rounded-full mb-4">
+              <span class="text-3xl">📈</span>
+            </div>
+            <h3 class="text-xl font-semibold text-primary mb-2">ROI mesurable</h3>
+            <p class="text-gray-600">Des gains de productivité concrets et quantifiables pour votre entreprise.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {demos.map(demo => (
+          <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-[1.02] p-8 flex flex-col items-center text-center group border border-gray-100">
+            
+            <!-- Icon Placeholder -->
+            <div class="text-5xl mb-5 transition-transform duration-300 group-hover:scale-110">
+              {demo.icon}
+            </div>
+            
+            <!-- Tool Name -->
+            <h2 class="text-2xl font-semibold text-primary mb-3">
+              {demo.name}
+            </h2>
+            
+            <!-- Description -->
+            <p class="text-gray-600 mb-6 flex-grow">
+              {demo.description}
+            </p>
+            
+            <!-- Button -->
+            <a 
+              href={demo.link}
+              class="mt-auto inline-block bg-secondary hover:bg-secondary-light text-primary font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow hover:shadow-md"
+            >
+              Essayer la démo
+            </a>
+          </div>
+        ))}
+      </div>
+      
+      <!-- Testimonial Section -->
+      <div class="bg-primary/5 rounded-2xl p-8 mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Ce que nos clients en disent</h2>
+        <div class="max-w-3xl mx-auto">
+          <blockquote class="italic text-gray-700 text-lg text-center">
+            "Les outils d'Alefia ont transformé notre façon de traiter les emails clients. Nous gagnons plus de 15 heures par semaine sur le tri et la qualification des demandes, ce qui nous permet de nous concentrer sur les réponses à forte valeur ajoutée."
+          </blockquote>
+          <div class="flex items-center justify-center mt-6">
+            <div class="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
+            <div>
+              <p class="font-semibold text-gray-900">Marie Dupont</p>
+              <p class="text-gray-600 text-sm">Directrice Service Client, TechnoPlus</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- FAQ Section -->
+      <div class="mb-16">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Questions fréquentes</h2>
+        <div class="space-y-6 max-w-3xl mx-auto">
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <h3 class="text-xl font-semibold text-primary mb-2">Comment mes données sont-elles protégées ?</h3>
+            <p class="text-gray-600">Toutes nos solutions sont hébergées en France sur des serveurs sécurisés. Vos données ne quittent jamais le territoire européen et sont traitées conformément au RGPD.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <h3 class="text-xl font-semibold text-primary mb-2">Puis-je personnaliser ces outils pour mon entreprise ?</h3>
+            <p class="text-gray-600">Absolument. Nos démos illustrent les capacités de base, mais chaque solution est entièrement personnalisable selon vos processus, votre secteur et vos besoins spécifiques.</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 shadow-sm">
+            <h3 class="text-xl font-semibold text-primary mb-2">Quel est le délai de mise en place ?</h3>
+            <p class="text-gray-600">La plupart de nos solutions peuvent être déployées en 2 à 4 semaines, incluant la phase de personnalisation et de formation de vos équipes.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- CTA Section -->
+      <div class="bg-gradient-to-r from-primary to-primary-dark text-white rounded-2xl p-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Prêt à transformer votre entreprise avec l'IA ?</h2>
+        <p class="text-lg mb-6 max-w-2xl mx-auto">Nos experts peuvent vous accompagner dans l'identification des opportunités d'IA adaptées à votre secteur et à vos objectifs.</p>
+        <button 
+          type="button"
+          onclick="openModal()"
+          class="bg-white text-primary hover:bg-gray-100 font-semibold px-8 py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+        >
+          Demander une démo personnalisée
+        </button>
+      </div>
+      
+    </div>
+  </main>
+</MainLayout>
