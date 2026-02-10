@@ -32,5 +32,17 @@ public/images/optimized/**/*.webp
 # script files
 /scripts/optimize-images.js
 
+#mcp
+.mcp*
+
 # Vercel
 .vercel 
+
+#mdfiles
+*.md
+
+#database script
+*.sh
+run-migration.js
+supabase_migrations/001_create_audit_submissions.sql
+supabase_migrations/useful_queries.sql
