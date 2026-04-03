@@ -1,8 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import StepIndicator from './form/StepIndicator.astro';
 import Step1Form from './form/Step1Form.astro';
-import Step2Form from './form/Step2Form.astro';
 import Step3Confirmation from './form/Step3Confirmation.astro';
 ---
 
@@ -34,20 +32,12 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
             <p class="text-gray-500 text-sm">Analyse personnalisée de vos opportunités d'automatisation</p>
           </div>
 
-          <!-- Step indicator -->
-          <div id="step-indicator-wrapper" class="mb-8">
-            <StepIndicator />
-          </div>
-
-          <!-- Steps -->
+          <!-- Form -->
           <div id="step-1">
             <Step1Form />
           </div>
 
-          <div id="step-2" class="hidden">
-            <Step2Form />
-          </div>
-
+          <!-- Confirmation -->
           <div id="step-3" class="hidden">
             <Step3Confirmation />
           </div>
@@ -60,30 +50,22 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
 <script>
   window.formData = window.formData || {};
 
-  // Show/hide steps
   window.showStep = (step: number) => {
-    [1, 2, 3].forEach(n => {
-      const el = document.getElementById(`step-${n}`);
-      if (el) el.classList.toggle('hidden', n !== step);
-    });
-
+    const step1 = document.getElementById('step-1');
+    const step3 = document.getElementById('step-3');
     const header = document.getElementById('modal-header');
-    const indicator = document.getElementById('step-indicator-wrapper');
 
-    if (step === 3) {
-      if (header) header.classList.add('hidden');
-      if (indicator) indicator.classList.add('hidden');
-    } else {
-      if (header) header.classList.remove('hidden');
-      if (indicator) indicator.classList.remove('hidden');
-    }
-
-    if (typeof window.updateStepIndicators === 'function') {
-      window.updateStepIndicators(step);
+    if (step === 1) {
+      step1?.classList.remove('hidden');
+      step3?.classList.add('hidden');
+      header?.classList.remove('hidden');
+    } else if (step === 3) {
+      step1?.classList.add('hidden');
+      step3?.classList.remove('hidden');
+      header?.classList.add('hidden');
     }
   };
 
-  // Submit full form
   window.submitForm = async () => {
     try {
       await fetch('/api/audit', {
@@ -92,14 +74,23 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
         body: JSON.stringify(window.formData)
       });
 
-      if (window.formData.email) {
-        localStorage.setItem('userEmail', window.formData.email);
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'audit_form_submitted', {
+          event_category: 'lead',
+          event_label: 'audit_gratuit',
+          value: 150,
+          currency: 'EUR'
+        });
       }
 
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'audit_form_submit', {
-          event_category: 'conversion',
-          event_label: 'audit_gratuit'
+      // dataLayer push for GTM / Google Ads conversion
+      if (typeof window.dataLayer !== 'undefined') {
+        window.dataLayer.push({
+          event: 'audit_form_submitted',
+          event_category: 'lead',
+          event_label: 'audit_gratuit',
+          value: 150,
+          currency: 'EUR'
         });
       }
     } catch (err) {
@@ -112,16 +103,16 @@ import Step3Confirmation from './form/Step3Confirmation.astro';
   const resetModal = () => {
     window.formData = {};
     window.showStep(1);
-    document.getElementById('step1-form')?.reset();
-    document.getElementById('step2-form')?.reset();
+    const form = document.getElementById('step1-form') as HTMLFormElement;
+    form?.reset();
   };
 
-  // Open/close
   window.openModal = () => {
     const modal = document.getElementById('audit-modal');
     modal?.classList.remove('hidden');
     resetModal();
 
+    // Pre-fill email from localStorage
     const savedEmail = localStorage.getItem('userEmail');
     if (savedEmail) {
       const emailInput = document.getElementById('email') as HTMLInputElement;

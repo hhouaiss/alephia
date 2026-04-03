@@ -1,154 +1,82 @@
 ---
-const sectors = [
-  "Commerce",
-  "Services",
-  "Industrie",
-  "Artisanat",
-  "Santé",
-  "Finance",
-  "Transport",
-  "Construction",
-  "Agriculture",
-  "Autre"
-];
-
-const regions = [
-  "Île-de-France",
-  "Auvergne-Rhône-Alpes",
-  "Nouvelle-Aquitaine",
-  "Occitanie",
-  "Hauts-de-France",
-  "Grand Est",
-  "Provence-Alpes-Côte d'Azur",
-  "Pays de la Loire",
-  "Bretagne",
-  "Normandie",
-  "Bourgogne-Franche-Comté",
-  "Centre-Val de Loire",
-  "Corse"
-];
 ---
 
-<form id="step1-form" class="space-y-6">
-  <!-- Company Name -->
+<form id="step1-form" class="space-y-5">
   <div>
-    <label for="companyName" class="block text-sm font-medium text-gray-700 mb-1">
-      Nom de l'entreprise
+    <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">
+      Prénom <span class="text-red-500">*</span>
     </label>
     <input
       type="text"
-      id="companyName"
-      name="companyName"
+      id="firstName"
+      name="firstName"
       required
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+      placeholder="Votre prénom"
+      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
     />
   </div>
 
-  <!-- Company Size -->
   <div>
-    <label class="block text-sm font-medium text-gray-700 mb-2">
-      Taille de votre entreprise
+    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+      Email professionnel <span class="text-red-500">*</span>
     </label>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      {['1-10', '11-50', '51-250', '250+'].map(size => (
-        <label class="relative flex cursor-pointer">
-          <input
-            type="radio"
-            name="companySize"
-            value={size}
-            required
-            class="peer sr-only"
-          />
-          <div class="w-full px-4 py-2 text-sm border rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary text-center">
-            {size}
-          </div>
-        </label>
-      ))}
-    </div>
-  </div>
-
-  <!-- Sector -->
-  <div>
-    <label for="sector" class="block text-sm font-medium text-gray-700 mb-1">
-      Secteur d'activité
-    </label>
-    <select
-      id="sector"
-      name="sector"
+    <input
+      type="email"
+      id="email"
+      name="email"
       required
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
-    >
-      <option value="">Sélectionnez votre secteur</option>
-      {sectors.map(sector => (
-        <option value={sector}>{sector}</option>
-      ))}
-    </select>
+      placeholder="vous@entreprise.com"
+      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+    />
   </div>
 
-  <!-- Region -->
   <div>
-    <label for="region" class="block text-sm font-medium text-gray-700 mb-1">
-      Région
+    <label for="besoin" class="block text-sm font-medium text-gray-700 mb-1">
+      Votre besoin principal <span class="text-gray-400 font-normal">(optionnel)</span>
     </label>
-    <select
-      id="region"
-      name="region"
-      required
-      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
-    >
-      <option value="">Sélectionnez votre région</option>
-      {regions.map(region => (
-        <option value={region}>{region}</option>
-      ))}
-    </select>
+    <textarea
+      id="besoin"
+      name="besoin"
+      rows="3"
+      placeholder="Ex : automatiser mes devis, gérer mes emails clients, analyser mes données..."
+      class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-colors resize-none"
+    ></textarea>
   </div>
 
-  <!-- Tech Maturity -->
-  <div>
-    <label class="block text-sm font-medium text-gray-700 mb-2">
-      Niveau de maturité technologique
-    </label>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-      {['Débutant', 'Intermédiaire', 'Avancé'].map(level => (
-        <label class="relative flex cursor-pointer">
-          <input
-            type="radio"
-            name="techMaturity"
-            value={level}
-            required
-            class="peer sr-only"
-          />
-          <div class="w-full px-3 py-2.5 text-sm border rounded-lg peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:text-primary text-center whitespace-normal min-h-[42px] flex items-center justify-center">
-            {level}
-          </div>
-        </label>
-      ))}
-    </div>
-  </div>
+  <button
+    type="submit"
+    class="w-full bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-[1.01] text-base"
+  >
+    Recevoir mon audit gratuit
+  </button>
 
-  <!-- Navigation -->
-  <div class="flex justify-end mt-8">
-    <button
-      type="submit"
-      class="bg-primary text-white px-8 py-3 rounded-xl hover:bg-primary-dark transition-colors"
-    >
-      Continuer
-    </button>
-  </div>
+  <p class="text-center text-sm text-gray-500">
+    Réponse personnalisée sous 48h • Sans engagement • 100% gratuit
+  </p>
 </form>
 
 <script>
-  const form = document.getElementById('step1-form');
-  
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData);
-    
-    // Store in parent form data
-    Object.assign(window.formData, data);
-    
-    // Move to next step
-    window.showStep(2);
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pre-fill email from localStorage or URL param
+    const savedEmail = localStorage.getItem('userEmail');
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    if (emailInput && savedEmail) {
+      emailInput.value = savedEmail;
+    }
+
+    const form = document.getElementById('step1-form');
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      Object.assign(window.formData, Object.fromEntries(formData));
+
+      if (window.formData.email) {
+        localStorage.setItem('userEmail', window.formData.email as string);
+      }
+
+      if (typeof window.submitForm === 'function') {
+        window.submitForm();
+      }
+    });
   });
 </script>
