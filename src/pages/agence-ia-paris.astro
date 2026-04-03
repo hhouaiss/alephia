@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AuditModal from '../components/shared/AuditModal.astro';
+import Icon from '../components/shared/Icon.astro';
+
+const seoTitle = "Agence IA à Paris — Automatisation & Agents IA pour PME | Alefia";
+const seoDescription = "Alefia, agence d'intelligence artificielle à Paris. Automatisation de processus, agents IA sur mesure, intégration dans vos outils. PME, TPE, indépendants. Audit gratuit.";
+
+const expertises = [
+  { titre: "Agents IA sur mesure", desc: "Assistants métier, chatbots, agents autonomes — conçus pour vos processus spécifiques." },
+  { titre: "Automatisation de workflows", desc: "n8n, Make, Zapier — vos outils connectés, vos tâches répétitives éliminées." },
+  { titre: "Intégration IA dans vos outils", desc: "CRM, ERP, messagerie — l'IA s'intègre à votre environnement existant." },
+  { titre: "Formation & stratégie IA", desc: "Accompagnement de vos équipes pour une adoption durable et autonome." },
+];
+
+const clients = ["BNP Paribas", "Hello bank!", "Crédit Mutuel", "CIC", "Société Générale", "Wonderbox"];
+
+const secteurs = [
+  { label: "Artisans", href: "/automatisation-ia/artisan" },
+  { label: "Agences de communication", href: "/automatisation-ia/agence-communication" },
+  { label: "Cabinets comptables", href: "/automatisation-ia/cabinet-comptable" },
+  { label: "E-commerce", href: "/automatisation-ia/e-commerce" },
+  { label: "Coachs & Consultants", href: "/automatisation-ia/coach-consultant" },
+];
+
+const faqs = [
+  { q: "Qu'est-ce qu'une agence IA à Paris ?", a: "Une agence IA comme Alefia accompagne les entreprises parisiennes et françaises dans l'intégration de l'intelligence artificielle à leurs processus métier. Concrètement : automatisation de tâches répétitives, développement d'agents IA sur mesure, connexion de l'IA à vos outils existants (CRM, email, ERP)." },
+  { q: "Pourquoi choisir une agence IA basée à Paris ?", a: "Un partenaire local comprend mieux le tissu économique français, les contraintes RGPD, et peut intervenir en présentiel si nécessaire. Alefia accompagne des PME, TPE et indépendants en Île-de-France et dans toute la France." },
+  { q: "Combien coûte une agence IA à Paris ?", a: "L'audit initial est 100% gratuit. Les projets d'automatisation sont ensuite proposés sur devis selon le périmètre. La plupart de nos clients constatent un ROI positif en moins d'un mois grâce au temps récupéré." },
+  { q: "Quels secteurs accompagnez-vous en Île-de-France ?", a: "Artisans, agences de communication, cabinets comptables, e-commerce, coachs, consultants, prestataires de services, startups. Si votre secteur n'est pas listé, contactez-nous — nous avons probablement déjà travaillé avec des profils similaires." },
+  { q: "En combien de temps déployez-vous une solution IA ?", a: "Le premier agent IA est opérationnel en 48h après l'audit initial. Pas de projet de 6 mois : on commence par les automatisations à fort impact et faible complexité, vous voyez des résultats immédiatement." },
+  { q: "Faut-il avoir des compétences techniques pour utiliser vos solutions ?", a: "Non. Nos solutions sont conçues pour des équipes non-techniques. La formation dure moins de 2h et vos collaborateurs sont autonomes en quelques jours." },
+];
+---
+
+<Layout title={seoTitle} description={seoDescription}>
+  <AuditModal />
+
+  <!-- JSON-LD LocalBusiness — essentiel pour les requêtes locales -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "LocalBusiness"],
+    "name": "Alefia",
+    "description": "Agence d'intelligence artificielle à Paris. Automatisation IA et agents IA sur mesure pour PME, TPE et indépendants.",
+    "url": "https://alefia.co",
+    "telephone": "+33983699562",
+    "email": "hello@alefia.co",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "35 Rue du Faubourg Poissonnière",
+      "addressLocality": "Paris",
+      "postalCode": "75009",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 48.8731857,
+      "longitude": 2.3454683
+    },
+    "areaServed": ["Paris", "Île-de-France", "France"],
+    "serviceType": ["Automatisation IA", "Agents IA", "Intégration IA", "Formation IA"],
+    "priceRange": "Sur devis",
+    "openingHours": "Mo-Fr 09:00-18:00"
+  })} />
+
+  <!-- JSON-LD FAQPage -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
+  })} />
+
+  <!-- Hero -->
+  <section class="pt-40 pb-16 bg-gradient-to-b from-primary to-primary-dark text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+
+    <div class="container mx-auto px-4 relative">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="mb-6 inline-flex items-center bg-white/10 rounded-full px-5 py-2.5 backdrop-blur-sm border border-white/10">
+          <span class="text-sm font-medium">Agence IA — Paris 9e • +8 ans d'expérience</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          Agence d'intelligence artificielle<br/>
+          <span class="text-secondary bg-gradient-to-r from-secondary to-secondary-light bg-clip-text text-transparent">à Paris</span>
+        </h1>
+        <p class="text-xl text-gray-200 mb-4 max-w-3xl mx-auto leading-relaxed">
+          Alefia automatise vos processus métier avec des agents IA sur mesure — pour les PME, TPE et indépendants en Île-de-France et partout en France.
+        </p>
+        <p class="text-gray-300 mb-10 max-w-2xl mx-auto">
+          Workflows n8n/Make/Zapier, intégration IA dans vos outils, agents IA autonomes. Premier résultat en 48h.
+        </p>
+        <button
+          type="button"
+          onclick="openModal()"
+          class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-10 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105 text-lg"
+        >
+          Audit IA gratuit — Réponse sous 48h
+        </button>
+        <p class="text-sm mt-4 text-gray-300">Sans engagement • Paris & toute la France</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Définition d'entité (GEO) -->
+  <section class="py-8 bg-white border-b border-gray-100">
+    <div class="container mx-auto px-4 max-w-3xl text-center">
+      <p class="text-lg text-gray-600 leading-relaxed">
+        <strong>Alefia</strong> est une agence d'intelligence artificielle basée à Paris (75009), spécialisée dans l'automatisation IA et le développement d'agents IA pour les PME, TPE et indépendants. Fondée par un expert avec plus de 8 ans d'expérience en développement web et intégration IA, Alefia transforme les processus manuels répétitifs en workflows intelligents.
+      </p>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4 text-center">
+      <p class="text-gray-500 text-sm font-medium uppercase tracking-wide mb-6">Références clients</p>
+      <div class="flex flex-wrap justify-center items-center gap-4 max-w-3xl mx-auto">
+        {clients.map(c => (
+          <span class="bg-white border border-gray-200 rounded-lg px-6 py-2.5 font-semibold text-gray-700 shadow-sm">
+            {c}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Expertises -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-4">Ce que fait notre agence IA</h2>
+      <p class="text-gray-500 text-center mb-12 max-w-xl mx-auto">
+        De la stratégie à la mise en production — nous couvrons tout le spectre de l'intelligence artificielle appliquée.
+      </p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        {expertises.map(e => (
+          <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all">
+            <h3 class="font-semibold text-gray-900 mb-3">{e.titre}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{e.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Secteurs -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl font-bold text-center mb-4">Secteurs accompagnés à Paris et en France</h2>
+      <p class="text-gray-500 text-center mb-10 max-w-xl mx-auto">
+        Nos solutions d'automatisation IA s'adaptent à votre métier et votre taille.
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {secteurs.map(s => (
+          <a
+            href={s.href}
+            class="bg-white border border-gray-200 hover:border-primary hover:text-primary hover:shadow-md text-gray-700 px-5 py-4 rounded-xl text-sm font-medium transition-all flex items-center gap-2"
+          >
+            <Icon name="arrow-right" class="w-4 h-4 flex-shrink-0" />
+            {s.label}
+          </a>
+        ))}
+        <a
+          href="/contact"
+          class="bg-primary/5 border border-primary/20 hover:bg-primary/10 text-primary px-5 py-4 rounded-xl text-sm font-medium transition-all flex items-center gap-2"
+        >
+          <Icon name="arrow-right" class="w-4 h-4 flex-shrink-0" />
+          Votre secteur →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pourquoi Paris / local -->
+  <section class="py-16">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl font-bold text-center mb-12">Pourquoi travailler avec une agence IA parisienne ?</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        {[
+          { icon: "map-pin", titre: "Proximité & réactivité", desc: "Un expert basé à Paris, disponible en présentiel pour les ateliers de cadrage et les formations équipes en Île-de-France." },
+          { icon: "shield", titre: "Conformité RGPD & droit français", desc: "Connaissance précise du cadre juridique français et européen pour vos projets IA — un point critique souvent sous-estimé." },
+          { icon: "trending-up", titre: "Réseau local", desc: "Connections avec l'écosystème tech parisien, les partenaires IA français (n8n, Make) et les experts sectoriels locaux." },
+        ].map(item => (
+          <div class="bg-white rounded-xl shadow-md p-8 text-center border border-gray-100">
+            <div class="bg-primary/10 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6">
+              <Icon name={item.icon as "map-pin" | "shield" | "trending-up"} class="w-7 h-7 text-primary" />
+            </div>
+            <h3 class="font-semibold text-lg mb-3">{item.titre}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="text-3xl font-bold text-center mb-12">Questions fréquentes</h2>
+      <div class="space-y-4" id="faq-paris">
+        {faqs.map((item, i) => (
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <button
+              class="w-full px-6 py-5 text-left font-semibold flex justify-between items-center hover:bg-gray-50 transition-colors"
+              data-faq={i}
+            >
+              <span class="pr-4 text-base">{item.q}</span>
+              <Icon name="chevron-down" class="w-5 h-5 text-gray-400 flex-shrink-0 transition-transform" />
+            </button>
+            <div class="faq-body hidden px-6 pt-2 pb-6 border-t border-gray-100">
+              <p class="text-gray-600 leading-relaxed">{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="bg-primary text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Discutons de votre projet IA à Paris</h2>
+      <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+        Audit gratuit de 20 minutes — on identifie ensemble vos meilleures opportunités d'automatisation.
+      </p>
+      <button
+        type="button"
+        onclick="openModal()"
+        class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-10 py-4 rounded-xl transition-all hover:shadow-lg text-lg"
+      >
+        Démarrer mon audit gratuit
+      </button>
+      <p class="text-sm mt-4 text-gray-300">Réponse sous 48h • Paris & toute la France • Sans engagement</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.querySelectorAll('[data-faq]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling as HTMLElement;
+      const icon = btn.querySelector('svg') as unknown as HTMLElement;
+      const isOpen = !content.classList.contains('hidden');
+
+      document.querySelectorAll('.faq-body').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('[data-faq] svg').forEach(ic => (ic as HTMLElement).style.transform = 'rotate(0deg)');
+
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+</script>

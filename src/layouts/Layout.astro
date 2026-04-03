@@ -9,9 +9,9 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title, 
-  description = "Hébergez votre propre IA en France et boostez votre productivité. Sécurité, performance et conformité RGPD garanties." 
+const {
+  title,
+  description = "Automatisez vos processus métier avec des agents IA sur mesure. Workflows intelligents, intégration dans vos outils existants. Gagnez +10h/semaine. Audit IA gratuit — Réponse sous 48h."
 } = Astro.props;
 ---
 
@@ -38,6 +38,12 @@ const {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://alefia.co/og-image.jpg" />
     
+    <!-- SEO keywords -->
+    <meta name="keywords" content="automatisation IA, agents IA PME, agence IA Paris, automatisation workflow, n8n Make Zapier, intégration IA entreprise, agent IA sur mesure, automatisation processus métier" />
+    <meta name="author" content="Alefia" />
+    <meta name="geo.region" content="FR-75" />
+    <meta name="geo.placename" content="Paris" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
