@@ -172,7 +172,7 @@ export const POST: APIRoute = async ({ request }) => {
         }),
         resend.emails.send({
           from: 'Alefia Notifications <onboarding@resend.dev>',
-          to: 'hello@alefia.co',
+          to: 'alephia.hello@gmail.com',
           subject: `Nouvelle demande audit — ${data.firstName} (${data.email})`,
           html: notificationEmailHtml,
           replyTo: data.email,
