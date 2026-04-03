@@ -1,34 +1,37 @@
 ---
 import Icon from '../shared/Icon.astro';
+import type { IconName } from '../../utils/icons';
 
-const values = [
-  {
-    icon: 'shield',
-    title: 'Confidentialité maximale',
-    description: 'Zéro donnée exposée aux GAFAM',
-    color: 'blue'
-  },
-  {
-    icon: 'shield-check',
-    title: 'Souveraineté numérique',
-    description: 'Stack technique française certifiée',
-    color: 'red'
-  },
+type ColorKey = 'blue' | 'red' | 'green' | 'purple';
+
+const values: { icon: IconName; title: string; description: string; color: ColorKey }[] = [
   {
     icon: 'trending-up',
-    title: 'ROI mesurable',
-    description: 'Gains concrets sous 3 mois',
+    title: 'Résultats rapides',
+    description: 'Premier agent IA déployé en 48h. Vous voyez les gains dès la première semaine.',
     color: 'green'
   },
   {
     icon: 'settings',
-    title: 'Simplicité d\'usage',
-    description: 'Interface type ChatGPT sans complexité',
+    title: 'Sur mesure, pas générique',
+    description: 'Chaque automatisation est conçue pour vos processus spécifiques, pas pour une cible abstraite.',
     color: 'purple'
+  },
+  {
+    icon: 'shield',
+    title: 'Simple à utiliser',
+    description: 'Vos équipes n\'ont pas besoin de compétences techniques. On s\'occupe de tout, de A à Z.',
+    color: 'blue'
+  },
+  {
+    icon: 'heart',
+    title: 'Accompagnement humain',
+    description: 'Un expert dédié vous suit à chaque étape — de l\'audit jusqu\'à l\'adoption par vos équipes.',
+    color: 'red'
   }
 ];
 
-const colorVariants = {
+const colorVariants: Record<ColorKey, string> = {
   blue: 'bg-blue-50 text-blue-600',
   red: 'bg-red-50 text-red-600',
   green: 'bg-green-50 text-green-600',
@@ -40,10 +43,10 @@ const colorVariants = {
   <div class="container mx-auto px-4">
     <div class="text-center max-w-3xl mx-auto mb-16">
       <h2 class="text-4xl font-bold mb-6">
-        Nos Valeurs Fondamentales
+        Pourquoi choisir Alefia ?
       </h2>
       <p class="text-xl text-gray-600">
-        Une approche éthique et souveraine de l'intelligence artificielle
+        Une approche pragmatique de l'IA : des résultats concrets, pas des promesses.
       </p>
     </div>
 
@@ -54,12 +57,8 @@ const colorVariants = {
             <Icon name={value.icon} />
           </div>
           <div class="space-y-4">
-            <h3 class="text-xl font-semibold flex items-center gap-2">
-              <span>{value.title}</span>
-            </h3>
-            <p class="text-gray-600 leading-relaxed">
-              {value.description}
-            </p>
+            <h3 class="text-xl font-semibold">{value.title}</h3>
+            <p class="text-gray-600 leading-relaxed">{value.description}</p>
           </div>
         </div>
       ))}

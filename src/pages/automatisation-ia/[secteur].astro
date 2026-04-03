@@ -1,0 +1,217 @@
+---
+export const prerender = true;
+
+import { secteurs, getSecteurBySlug } from '../../data/secteurs';
+import Layout from '../../layouts/Layout.astro';
+import AuditModal from '../../components/shared/AuditModal.astro';
+import Icon from '../../components/shared/Icon.astro';
+
+export function getStaticPaths() {
+  return secteurs.map(s => ({ params: { secteur: s.slug } }));
+}
+
+const { secteur } = Astro.params;
+const data = getSecteurBySlug(secteur);
+
+if (!data) return Astro.redirect('/404');
+---
+
+<Layout title={data.metaTitle} description={data.metaDescription}>
+  <AuditModal />
+
+  <!-- JSON-LD FAQPage pour GEO -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": data.faq.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
+  })} />
+
+  <!-- JSON-LD Organization -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Alefia",
+    "description": "Agence spécialisée en automatisation IA et développement d'agents IA pour PME, TPE et indépendants.",
+    "url": "https://alefia.co",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Paris",
+      "addressCountry": "FR"
+    }
+  })} />
+
+  <!-- Hero -->
+  <section class="pt-40 pb-16 bg-gradient-to-b from-primary to-primary-dark text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+
+    <div class="container mx-auto px-4 relative">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="mb-6 inline-flex items-center bg-white/10 rounded-full px-5 py-2.5 backdrop-blur-sm border border-white/10">
+          <span class="text-sm font-medium">{data.hero.badge}</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">{data.hero.h1}</h1>
+        <p class="text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">{data.hero.subtitle}</p>
+        <button
+          type="button"
+          onclick="openModal()"
+          class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-10 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105 text-lg"
+        >
+          {data.cta}
+        </button>
+        <p class="text-sm mt-4 text-gray-300">Sans engagement • Réponse sous 48h • 100% gratuit</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro / Entité (GEO) -->
+  <section class="py-8 bg-white border-b border-gray-100">
+    <div class="container mx-auto px-4 max-w-3xl text-center">
+      <p class="text-lg text-gray-600 leading-relaxed">{data.intro}</p>
+    </div>
+  </section>
+
+  <!-- Problèmes -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="text-3xl font-bold mb-8 text-center">Vous reconnaissez-vous ?</h2>
+      <ul class="space-y-4">
+        {data.problemes.map(p => (
+          <li class="flex items-start gap-4 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+            <span class="text-red-400 font-bold text-xl flex-shrink-0 mt-0.5">✗</span>
+            <p class="text-gray-700">{p}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Solutions -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-4">Ce qu'on automatise pour vous</h2>
+      <p class="text-gray-500 text-center mb-10 max-w-xl mx-auto">Des agents IA opérationnels en 48h, conçus pour votre métier.</p>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        {data.solutions.map((s, i) => (
+          <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
+            <div class="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-5 text-primary font-bold text-xl">
+              {i + 1}
+            </div>
+            <h3 class="text-xl font-semibold mb-3 text-gray-900">{s.titre}</h3>
+            <p class="text-gray-600 leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Avant / Après -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <h2 class="text-3xl font-bold text-center mb-12">La différence en chiffres</h2>
+      <div class="grid md:grid-cols-3 gap-6 text-center">
+        <div class="bg-white/10 rounded-2xl p-8 border border-white/20">
+          <div class="text-red-300 text-xs font-semibold uppercase tracking-widest mb-4">Avant Alefia</div>
+          <p class="text-gray-200 leading-relaxed">{data.avantApres.avant}</p>
+        </div>
+        <div class="bg-secondary/20 rounded-2xl p-8 border border-secondary/40 flex flex-col items-center justify-center gap-3">
+          <div class="text-secondary text-4xl font-black">→</div>
+          <p class="text-secondary font-bold text-lg leading-snug">{data.avantApres.gain}</p>
+        </div>
+        <div class="bg-white/10 rounded-2xl p-8 border border-white/20">
+          <div class="text-green-300 text-xs font-semibold uppercase tracking-widest mb-4">Après Alefia</div>
+          <p class="text-gray-200 leading-relaxed">{data.avantApres.apres}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-3xl">
+      <h2 class="text-3xl font-bold text-center mb-12">Questions fréquentes</h2>
+      <div class="space-y-4" id="faq-list">
+        {data.faq.map((item, i) => (
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <button
+              class="w-full px-6 py-5 text-left font-semibold flex justify-between items-center hover:bg-gray-50 transition-colors"
+              data-faq-btn={i}
+            >
+              <span class="pr-4 text-base">{item.q}</span>
+              <Icon name="chevron-down" class="w-5 h-5 text-gray-400 flex-shrink-0 transition-transform" />
+            </button>
+            <div class="faq-content hidden px-6 pt-2 pb-6 border-t border-gray-100">
+              <p class="text-gray-600 leading-relaxed">{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Liens internes (SEO maillage) -->
+  <section class="py-8 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4 max-w-3xl text-center">
+      <p class="text-gray-500 text-sm mb-4">Cas d'usage liés</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        {data.liens.map(lien => (
+          <a
+            href={lien.href}
+            class="bg-gray-50 border border-gray-200 hover:border-primary hover:text-primary text-gray-600 px-5 py-2 rounded-full text-sm transition-colors"
+          >
+            {lien.label} →
+          </a>
+        ))}
+        <a
+          href="/services/implementation-ia"
+          class="bg-gray-50 border border-gray-200 hover:border-primary hover:text-primary text-gray-600 px-5 py-2 rounded-full text-sm transition-colors"
+        >
+          Voir tous nos services →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="bg-primary text-white py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Prêt à récupérer du temps ?</h2>
+      <p class="text-xl text-gray-200 mb-10 max-w-2xl mx-auto">
+        Audit gratuit de vos processus — on vous dit exactement quoi automatiser et combien de temps vous récupérez.
+      </p>
+      <button
+        type="button"
+        onclick="openModal()"
+        class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-10 py-4 rounded-xl transition-all duration-200 hover:shadow-lg text-lg"
+      >
+        {data.cta}
+      </button>
+      <p class="text-sm mt-4 text-gray-300">Réponse personnalisée sous 48h • Sans engagement</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.querySelectorAll('[data-faq-btn]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const content = btn.nextElementSibling as HTMLElement;
+      const icon = btn.querySelector('svg') as HTMLElement;
+      const isOpen = !content.classList.contains('hidden');
+
+      // Close all
+      document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('[data-faq-btn] svg').forEach(ic => (ic as HTMLElement).style.transform = 'rotate(0deg)');
+
+      // Toggle clicked
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+</script>

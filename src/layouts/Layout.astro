@@ -9,9 +9,9 @@ interface Props {
   description?: string;
 }
 
-const { 
-  title, 
-  description = "Hébergez votre propre IA en France et boostez votre productivité. Sécurité, performance et conformité RGPD garanties." 
+const {
+  title,
+  description = "Automatisez vos processus métier avec des agents IA sur mesure. Workflows intelligents, intégration dans vos outils existants. Gagnez +10h/semaine. Audit IA gratuit — Réponse sous 48h."
 } = Astro.props;
 ---
 
@@ -25,19 +25,25 @@ const {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     
     <!-- SEO Meta Tags -->
-    <link rel="canonical" href={`https://alefia.fr${Astro.url.pathname}`} />
+    <link rel="canonical" href={`https://alefia.co${Astro.url.pathname}`} />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={`https://alefia.fr${Astro.url.pathname}`} />
+    <meta property="og:url" content={`https://alefia.co${Astro.url.pathname}`} />
     <meta property="og:site_name" content="Alefia" />
-    <meta property="og:image" content="https://alefia.fr/og-image.jpg" />
+    <meta property="og:image" content="https://alefia.co/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://alefia.fr/og-image.jpg" />
+    <meta name="twitter:image" content="https://alefia.co/og-image.jpg" />
     
+    <!-- SEO keywords -->
+    <meta name="keywords" content="automatisation IA, agents IA PME, agence IA Paris, automatisation workflow, n8n Make Zapier, intégration IA entreprise, agent IA sur mesure, automatisation processus métier" />
+    <meta name="author" content="Alefia" />
+    <meta name="geo.region" content="FR-75" />
+    <meta name="geo.placename" content="Paris" />
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

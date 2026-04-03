@@ -11,7 +11,8 @@ interface Props {
 
 const { number, label, description, icon = 'trending-up' } = Astro.props;
 const numericValue = number.replace(/[^0-9]/g, '');
-const suffix = number.replace(/[0-9]/g, '');
+const prefix = number.match(/^[^0-9]*/)?.[0] ?? '';
+const suffix = number.match(/[^0-9]*$/)?.[0] ?? '';
 ---
 
 <div class="relative group bg-white p-8 rounded-2xl shadow-lg text-center transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden">
@@ -24,9 +25,10 @@ const suffix = number.replace(/[0-9]/g, '');
     </div>
 
     <div class="text-6xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent mb-4">
-      <span 
-        class="number-counter inline-block" 
+      <span
+        class="number-counter inline-block"
         data-target={numericValue}
+        data-prefix={prefix}
         data-suffix={suffix}
       >
         {number}
@@ -50,14 +52,15 @@ const suffix = number.replace(/[0-9]/g, '');
   function animateValue(element: HTMLElement, start: number, end: number, duration: number) {
     if (start === end) return;
     
+    const prefix = element.dataset.prefix || '';
     const suffix = element.dataset.suffix || '';
     let startTimestamp: number | null = null;
-    
+
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
       const current = Math.floor(progress * (end - start) + start);
-      element.innerText = `${current}${suffix}`;
+      element.innerText = `${prefix}${current}${suffix}`;
       
       if (progress < 1) {
         window.requestAnimationFrame(step);

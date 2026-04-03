@@ -3,118 +3,108 @@ import Layout from '../layouts/Layout.astro';
 import AuditModal from '../components/shared/AuditModal.astro';
 import Icon from '../components/shared/Icon.astro';
 import ValuesSection from '../components/sections/ValuesSection.astro';
+
+const seoTitle = "À propos d'Alefia — Agence IA & Automatisation à Paris";
+const seoDescription = "Alefia est une agence spécialisée en automatisation IA et agents IA pour PME, TPE et indépendants. +8 ans d'expérience. Clients : BNP Paribas, Wonderbox, Crédit Mutuel.";
 ---
 
-<Layout title="À propos d'Alephia - Notre mission et nos valeurs">
+<Layout title={seoTitle} description={seoDescription}>
   <AuditModal />
-  
+
   <!-- Page Header -->
   <div class="bg-primary text-white pt-40 pb-20">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl md:text-5xl font-bold mb-6">À propos d'Alefia</h1>
-      <p class="text-xl max-w-3xl">Notre mission est de démocratiser l'accès à l'intelligence artificielle pour les entreprises françaises tout en garantissant la souveraineté des données.</p>
+      <p class="text-xl max-w-3xl text-gray-200">
+        Nous aidons les PME, TPE et indépendants à automatiser leurs processus métier avec l'IA — pour gagner du temps, réduire les coûts et se concentrer sur ce qui compte vraiment.
+      </p>
     </div>
   </div>
-  
+
   <!-- Main Content -->
   <div class="py-16">
     <div class="container mx-auto px-4">
       <div class="prose prose-lg max-w-4xl mx-auto">
+
         <h2>Notre mission</h2>
         <p>
-          Chez Alefia, nous avons une mission claire : <strong>démocratiser l'accès à l'intelligence artificielle pour les entreprises françaises tout en garantissant la souveraineté des données</strong>.
+          Chez Alefia, notre mission est claire : <strong>rendre l'automatisation IA accessible à toutes les entreprises</strong>, quelle que soit leur taille. Nous transformons les processus manuels et répétitifs en workflows intelligents qui travaillent pour vous — en permanence.
         </p>
         <p>
-          Fondée en 2023, Alefia est née d'un constat simple : les solutions d'IA actuelles obligent souvent les entreprises à faire un choix impossible entre performance et confidentialité.
+          Fondée par un expert avec plus de 8 ans d'expérience en développement web et intégration IA, Alefia est née d'un constat simple : la plupart des PME et TPE perdent des dizaines d'heures par semaine sur des tâches que l'IA peut automatiser en quelques jours.
         </p>
 
-        <h2>Notre vision</h2>
+        <h2>Notre approche</h2>
         <p>
-          L'explosion de l'intelligence artificielle marque une révolution technologique. Pourtant, les entreprises peinent à l'adopter efficacement en raison de la complexité des outils et des risques liés aux solutions SaaS américaines. C'est ici qu'intervient Alefia : nous aidons les entreprises françaises à intégrer l'IA en interne, en toute sécurité et conformité.
+          Nous ne vendons pas de la technologie pour la technologie. Nous vendons du <strong>temps retrouvé</strong> et des <strong>coûts réduits</strong>.
+        </p>
+        <p>
+          Chaque projet commence par un audit gratuit de vos processus. On identifie ensemble les tâches à automatiser en priorité, on déploie les premiers agents IA sous 48h, et on vous accompagne jusqu'à l'adoption complète par vos équipes.
         </p>
 
-        <!-- Replace team section with founder section -->
-        <h2>Le fondateur</h2>
-        <div class="not-prose bg-white rounded-xl shadow-md p-8 my-8">
-          <div class="flex items-start gap-6 mb-6">
-            <div class="flex-1">
-              <h3 class="text-2xl font-semibold mb-2">Hassan Houaiss</h3>
-              <p class="text-primary font-medium mb-4">CEO & Fondateur</p>
-              <p class="text-gray-600 mb-6">
-                Passionné par l'innovation et fort de 15 ans d'expérience dans le développement d'outils internes et la refonte de sites web pour de grandes entreprises, j'ai fondé Alefia avec une vision claire : rendre l'IA générative accessible, souveraine et sécurisée pour les PME, ETI et TPE françaises.
-              </p>
+        <h2>Nos domaines d'expertise</h2>
+
+        <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+          {[
+            { icon: 'settings', title: 'Agents IA sur mesure', desc: 'Claude Agents, assistants métier, chatbots intelligents adaptés à votre secteur.' },
+            { icon: 'chart', title: 'Automatisation de workflows', desc: 'n8n, Make, Zapier — vos outils connectés, vos processus automatisés.' },
+            { icon: 'tools', title: 'Intégration IA dans vos outils', desc: 'CRM, ERP, outils métier — l\'IA s\'intègre sans tout réinventer.' },
+            { icon: 'trending-up', title: 'Analyse de données IA', desc: 'Dashboards automatiques, reporting IA, insights actionnables.' },
+            { icon: 'heart', title: 'Formation & conseil IA', desc: 'Stratégie IA, formation de vos équipes, accompagnement sur la durée.' }
+          ].map(item => (
+            <div class="flex items-start gap-4 bg-gray-50 p-5 rounded-xl">
+              <div class="bg-primary/10 p-2 rounded-lg flex-shrink-0">
+                <Icon name={item.icon} class="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-900">{item.title}</h3>
+                <p class="text-gray-600 text-sm mt-1">{item.desc}</p>
+              </div>
             </div>
-          </div>
-          
-          <div class="border-t pt-6">
-            <h4 class="font-semibold text-lg mb-4">🚀 Parcours & Expertise</h4>
-            <ul class="space-y-3 text-gray-600">
-              <li class="flex items-start gap-2">
-                <Icon name="check-circle" class="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                <span>Ancien consultant pour BNP Paribas et Crédit Mutuel, avec une expertise dans le développement de solutions web et la gestion de données sensibles.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <Icon name="check-circle" class="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                <span>Spécialiste du déploiement d'outils internes, avec un focus sur la productivité et l'automatisation des workflows.</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <Icon name="check-circle" class="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                <span>Expert en intégration d'IA générative open-source, garantissant des solutions performantes, confidentielles et adaptées aux enjeux métier des entreprises.</span>
-              </li>
-            </ul>
-          </div>
+          ))}
+        </div>
+
+        <h2>Références clients</h2>
+        <p>
+          Nos interventions couvrent des secteurs variés, de la grande banque à l'e-commerce en passant par les services :
+        </p>
+
+        <div class="not-prose flex flex-wrap gap-3 my-6">
+          {['BNP Paribas', 'Hello bank!', 'Crédit Mutuel', 'CIC', 'Société Générale', 'Wonderbox'].map(client => (
+            <span class="bg-white border border-gray-200 rounded-lg px-5 py-2 font-semibold text-gray-700 shadow-sm">
+              {client}
+            </span>
+          ))}
         </div>
 
         <h2>Notre engagement</h2>
-        <p>Avec Alefia, nous mettons notre expertise au service des entreprises pour :</p>
+        <p>Avec Alefia, vous bénéficiez :</p>
         <ul>
-          <li><strong>Déployer des IA souveraines</strong>, hébergées en France ou on-premise</li>
-          <li><strong>Automatiser les processus internes</strong> pour gagner en efficacité</li>
-          <li><strong>Assurer une adoption fluide</strong>, grâce à des interfaces intuitives et sans complexité technique</li>
+          <li><strong>D'un déploiement rapide</strong> — premier résultat sous 48h, pas 6 mois</li>
+          <li><strong>D'une approche sans jargon</strong> — on traduit la technologie en bénéfices métier concrets</li>
+          <li><strong>D'un accompagnement humain</strong> — un expert dédié, pas un support anonyme</li>
+          <li><strong>De solutions pérennes</strong> — vos automatisations évoluent avec votre activité</li>
         </ul>
 
-        <div class="bg-gray-50 p-6 rounded-xl my-8">
-          <h3 class="text-xl font-semibold mb-4">📢 Notre ambition</h3>
-          <p class="text-gray-700">Faire d'Alefia la référence française en intégration d'IA d'ici 5 à 10 ans.</p>
-        </div>
-
-        <!-- Keep the partners section -->
-        <h2>Nos partenaires technologiques</h2>
-        <p>Nous collaborons avec les meilleurs acteurs français et européens pour vous offrir des solutions d'IA souveraines :</p>
-        <ul>
-          <li><strong>Mistral AI</strong> - Modèles de langage français de pointe</li>
-          <li><strong>OVHcloud</strong> - Hébergement 100% français</li>
-          <li><strong>ANSSI</strong> - Conformité aux standards de sécurité</li>
-        </ul>
-
-        <h2>Notre engagement pour la souveraineté numérique</h2>
-        <p>
-          Dans un monde où les données sont devenues le nouvel or noir, nous pensons que les entreprises françaises doivent pouvoir bénéficier des avancées de l'IA sans compromettre leur indépendance technologique.
-        </p>
-        <p>C'est pourquoi nous avons développé une approche unique :</p>
-        <ol>
-          <li><strong>Hébergement 100% français</strong> de tous nos modèles d'IA</li>
-          <li><strong>Aucune donnée partagée</strong> avec des serveurs étrangers</li>
-          <li><strong>Conformité totale au RGPD</strong> et aux réglementations européennes</li>
-          <li><strong>Transparence complète</strong> sur le fonctionnement de nos modèles</li>
-        </ol>
       </div>
     </div>
   </div>
 
+  <ValuesSection />
+
   <!-- CTA Final -->
   <section class="bg-primary text-white py-20">
     <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-6">Prêt à transformer votre entreprise ?</h2>
-      <p class="text-xl mb-8">Obtenez votre audit IA gratuit et découvrez votre potentiel d'optimisation</p>
-      <button 
+      <h2 class="text-3xl font-bold mb-6">Discutons de votre projet IA</h2>
+      <p class="text-xl mb-8 text-gray-200">Obtenez votre audit gratuit et découvrez vos opportunités d'automatisation.</p>
+      <button
         type="button"
         onclick="openModal()"
         class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
       >
         Démarrer mon audit gratuit
       </button>
-      <p class="text-sm mt-4 text-gray-300">Déploiement en 72h - Formation incluse</p>
+      <p class="text-sm mt-4 text-gray-300">Réponse personnalisée sous 48h • Sans engagement</p>
     </div>
   </section>
 </Layout>
