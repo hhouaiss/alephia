@@ -92,8 +92,15 @@ const {
           });
         }
 
-        // Auto-open modal from Google Ads UTM (?modal=open)
+        // Capture UTM params (Google Ads) et stockage en sessionStorage
         const params = new URLSearchParams(window.location.search);
+        const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        utmKeys.forEach(key => {
+          const val = params.get(key);
+          if (val) sessionStorage.setItem(key, val);
+        });
+
+        // Auto-open modal depuis Google Ads (?modal=open)
         if (params.get('modal') === 'open') {
           setTimeout(() => {
             if (typeof window.openModal === 'function') {

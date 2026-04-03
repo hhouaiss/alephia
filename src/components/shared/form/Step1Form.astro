@@ -74,6 +74,12 @@
         localStorage.setItem('userEmail', window.formData.email as string);
       }
 
+      // Ajouter les UTMs depuis sessionStorage (Google Ads tracking)
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(key => {
+        const val = sessionStorage.getItem(key);
+        if (val) window.formData[key] = val;
+      });
+
       if (typeof window.submitForm === 'function') {
         window.submitForm();
       }
