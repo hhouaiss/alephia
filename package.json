@@ -26,6 +26,7 @@
     "zwitch": "^2.0.4"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "@types/nodemailer": "^6.4.17",
     "glob": "^11.0.1",
     "sharp": "^0.33.5"
