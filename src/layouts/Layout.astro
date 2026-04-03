@@ -81,7 +81,7 @@ const {
             window.openModal();
           }
         });
-        
+
         // Handle final CTA button
         const finalCta = document.querySelector('button[onclick="openModal()"]');
         if (finalCta) {
@@ -90,6 +90,16 @@ const {
               window.openModal();
             }
           });
+        }
+
+        // Auto-open modal from Google Ads UTM (?modal=open)
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('modal') === 'open') {
+          setTimeout(() => {
+            if (typeof window.openModal === 'function') {
+              window.openModal();
+            }
+          }, 500);
         }
       });
     </script>
