@@ -297,6 +297,8 @@ html { scroll-behavior: smooth; }
 .nl-reviews p { font-size: 18px; font-weight: 500; line-height: 1.4; }
 .nl-reviews span { font-size: 14px; color: var(--ink-3); }
 .nl-reviews strong { color: var(--ink); font-weight: 600; }
+.nl-profiles { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 24px; }
+.nl-profiles .nl-link { margin-top: 0; }
 .nl-link {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 24px;
   font-size: 15px; font-weight: 600; color: var(--blue); text-decoration: underline; text-underline-offset: 3px;
@@ -432,10 +434,12 @@ html { scroll-behavior: smooth; }
 .nl-footer { background: var(--ink); color: rgba(255, 255, 255, 0.66); font-size: 15px; padding: 44px 0 110px; }
 @media (min-width: 768px) { .nl-footer { padding-bottom: 44px; } }
 .nl-footer-inner { display: grid; gap: 24px; }
-@media (min-width: 900px) { .nl-footer-inner { grid-template-columns: auto 1fr auto; align-items: center; gap: 48px; } }
+@media (min-width: 900px) { .nl-footer-inner { grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; } }
 .nl-footer .nl-logo { color: var(--white); }
 .nl-footer-brand p { margin-top: 4px; }
-.nl-footer-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.nl-footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.nl-footer-links a, .nl-footer-btn { white-space: nowrap; }
+@media (min-width: 1100px) { .nl-footer-links { flex-wrap: nowrap; } }
 @media (min-width: 900px) { .nl-footer-links { justify-content: center; } }
 .nl-footer-btn { color: inherit; font: inherit; }
 .nl-footer-links a, .nl-footer-btn, .nl-footer-mail { text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: 4px; transition: color 0.15s, text-decoration-color 0.15s; }

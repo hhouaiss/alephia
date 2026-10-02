@@ -5,15 +5,17 @@ export const SITE_URL = 'https://alefia.co';
 export const CONTACT_EMAIL = 'hassan@alefia.co';
 export const PRICE_FROM = '1 200 €';
 export const MALT_URL = 'https://www.malt.fr/profile/hassanhouaiss';
-export const LINKEDIN_URL = 'https://www.linkedin.com/company/alefia';
+// Profil LinkedIn de Hassan (affiché dans la section formateur)
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/hassanhouaiss';
 export const FORM_ANCHOR = '#demande';
 export const SLOGAN = 'Formation IA pour les équipes de TPE et PME.';
 
-// Extraits copiés mot pour mot depuis le profil Malt (relevés le 19/09/2026). Ne jamais reformuler.
+// Extraits copiés mot pour mot depuis le profil Malt (relevés le 19/09/2026). Ne jamais reformuler le texte.
+// Affichage demandé par Hassan : prénom seul, entreprise, "avis client" pour tous.
 export const reviews = [
-  { text: 'Formation de qualité, avec des exemples concrets et directement applicables à notre activité.', author: 'Sophie', company: 'Kosilum', kind: 'Avis client' },
-  { text: 'Hassan est une personne calme, sérieuse et digne de confiance.', author: 'Romain Viollet', company: '', kind: 'Recommandation' },
-  { text: 'Hassan est une personne à l’écoute avec un bon relationnel.', author: 'Lionel Saxer', company: 'Crédit Mutuel', kind: 'Recommandation' },
+  { text: 'Formation de qualité, avec des exemples concrets et directement applicables à notre activité.', author: 'Sophie', company: 'Kosilum' },
+  { text: 'Hassan est une personne calme, sérieuse et digne de confiance.', author: 'Romain', company: 'CIC' },
+  { text: 'Hassan est une personne à l’écoute avec un bon relationnel.', author: 'Lionel', company: 'Crédit Mutuel' },
 ];
 
 export const steps = [

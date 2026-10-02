@@ -1,6 +1,6 @@
 ---
-// Hassan + avis et recommandations Malt (verbatim)
-import { MALT_URL, reviews } from '../../data/offer';
+// Hassan, ses profils Malt et LinkedIn, et les avis clients Malt (verbatim)
+import { LINKEDIN_URL, MALT_URL, reviews } from '../../data/offer';
 
 interface Props { mist?: boolean }
 const { mist = true } = Astro.props;
@@ -25,17 +25,23 @@ const { mist = true } = Astro.props;
       </div>
     </div>
 
-    <ul class="nl-reviews" aria-label="Avis et recommandations Malt">
+    <ul class="nl-reviews" aria-label="Avis clients Malt">
       {reviews.map((r) => (
         <li>
           <p>«&nbsp;{r.text}&nbsp;»</p>
-          <span><strong>{r.author}{r.company && `, ${r.company}`}</strong> · {r.kind}</span>
+          <span><strong>{r.author}, {r.company}</strong>, avis client</span>
         </li>
       ))}
     </ul>
-    <a href={MALT_URL} target="_blank" rel="noopener noreferrer" class="nl-link">
-      <img src="/images/malt-logo.svg" alt="" width="46" height="16" />
-      Voir les avis et recommandations sur Malt
-    </a>
+    <div class="nl-profiles">
+      <a href={MALT_URL} target="_blank" rel="noopener noreferrer" class="nl-link">
+        <img src="/images/malt-logo.svg" alt="" width="46" height="16" />
+        Voir les avis sur Malt
+      </a>
+      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" class="nl-link">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0a66c2"/><path fill="#fff" d="M6.94 9.5H4.5v9h2.44v-9ZM5.72 5.5a1.41 1.41 0 1 0 0 2.82 1.41 1.41 0 0 0 0-2.82ZM19.5 13.4c0-2.42-1.3-4.08-3.53-4.08-1.15 0-1.98.58-2.4 1.25V9.5h-2.35v9h2.44v-4.6c0-1.22.5-2.13 1.6-2.13 1.08 0 1.8.8 1.8 2.13v4.6h2.44v-5.1Z"/></svg>
+        Hassan sur LinkedIn
+      </a>
+    </div>
   </div>
 </section>
