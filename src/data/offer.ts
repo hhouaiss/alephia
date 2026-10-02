@@ -5,8 +5,9 @@ export const SITE_URL = 'https://alefia.co';
 export const CONTACT_EMAIL = 'hassan@alefia.co';
 export const PRICE_FROM = '1 200 €';
 export const MALT_URL = 'https://www.malt.fr/profile/hassanhouaiss';
-// Profil LinkedIn de Hassan (affiché dans la section formateur)
+// Profils LinkedIn et X de Hassan (affichés dans la section formateur)
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/hassanhouaiss';
+export const X_URL = 'https://x.com/HHouaiss';
 export const FORM_ANCHOR = '#demande';
 export const SLOGAN = 'Formation IA pour les équipes de TPE et PME.';
 
