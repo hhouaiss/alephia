@@ -1,18 +1,94 @@
 ---
-import Navigation from '../components/layout/Navigation.astro';
-import Footer from '../components/layout/Footer.astro';
-import StickyButton from '../components/shared/StickyButton.astro';
-import Analytics from '@vercel/analytics/astro'
 
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+  breadcrumbs?: { name: string; href: string }[];
 }
 
 const {
   title,
-  description = "Automatisez vos processus métier avec des agents IA sur mesure. Workflows intelligents, intégration dans vos outils existants. Gagnez +10h/semaine. Audit IA gratuit — Réponse sous 48h."
+  description = "Formation IA sur mesure pour les équipes de TPE et PME, sur vos vrais dossiers. À partir de 1 200 € la journée, éligible OPCO.",
+  image = '/og-image.jpg',
+  noindex = false,
+  ogType = 'website',
+  breadcrumbs = [],
 } = Astro.props;
+
+const SITE = 'https://alefia.co';
+
+// Vérification Google Search Console. Renseigner PUBLIC_GSC_VERIFICATION dans Vercel.
+const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION;
+// URL canonique sans slash final, alignée sur trailingSlash: 'never' et sur le sitemap
+const canonical =
+  Astro.url.pathname === '/'
+    ? `${SITE}/`
+    : new URL(Astro.url.pathname, SITE).href.replace(/\/$/, '');
+const ogImage = new URL(image, SITE).href;
+
+// Organisation globale : socle d'entités pour Google et les moteurs de réponse IA
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE}/#organization`,
+  name: 'Alefia',
+  alternateName: 'Alefia, formation IA pour TPE et PME',
+  url: SITE,
+  logo: `${SITE}/images/alephia-colored-logo.svg`,
+  image: ogImage,
+  email: 'hassan@alefia.co',
+  description:
+    "Alefia est un organisme de formation à l'intelligence artificielle basé à Paris. Il forme les équipes de TPE et PME à utiliser l'IA dans leur travail quotidien, sur leurs propres dossiers. Formations sur mesure, éligibles au financement OPCO.",
+  founder: {
+    '@type': 'Person',
+    name: 'Hassan Houaiss',
+    jobTitle: 'Fondateur et formateur IA',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Paris',
+    postalCode: '75000',
+    addressCountry: 'FR',
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'France',
+  },
+  knowsAbout: [
+    "Formation à l'intelligence artificielle",
+    'IA générative en entreprise',
+    'ChatGPT pour les équipes métier',
+    'Usage responsable des données avec l’IA',
+  ],
+  sameAs: ['https://www.linkedin.com/company/alefia'],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE}/#website`,
+  url: SITE,
+  name: 'Alefia',
+  inLanguage: 'fr-FR',
+  publisher: { '@id': `${SITE}/#organization` },
+};
+
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: new URL(crumb.href, SITE).href,
+        })),
+      }
+    : null;
 ---
 
 <!DOCTYPE html>
@@ -22,93 +98,69 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    
     <!-- SEO Meta Tags -->
-    <link rel="canonical" href={`https://alefia.co${Astro.url.pathname}`} />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:type" content="website" />
+    <link rel="canonical" href={canonical} />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+    />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="fr_FR" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={`https://alefia.co${Astro.url.pathname}`} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Alefia" />
-    <meta property="og:image" content="https://alefia.co/og-image.jpg" />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://alefia.co/og-image.jpg" />
-    
-    <!-- SEO keywords -->
-    <meta name="keywords" content="automatisation IA, agents IA PME, agence IA Paris, automatisation workflow, n8n Make Zapier, intégration IA entreprise, agent IA sur mesure, automatisation processus métier" />
+    <meta name="twitter:image" content={ogImage} />
+
     <meta name="author" content="Alefia" />
     <meta name="geo.region" content="FR-75" />
     <meta name="geo.placename" content="Paris" />
+    {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J93K257JMC"></script>
-    <script>
+
+    <!-- Données structurées globales -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
+
+    <script is:inline>
+      // Doit s'exécuter avant la config GA : refus par défaut, sauf accord enregistré de moins de 13 mois
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-J93K257JMC');
-    </script>
-  </head>
-  <body class="min-h-screen flex flex-col">
-    <Navigation />
-    <main class="flex-grow">
-      <slot />
-    </main>
-    <StickyButton />
-    <Footer />
-    
-    <script>
-      // Global functions for form handling
-      window.addEventListener('DOMContentLoaded', () => {
-        // Handle home page email form
-        const auditButton = document.getElementById('audit-button');
-        auditButton?.addEventListener('click', () => {
-          const emailInput = document.getElementById('home-email-input') as HTMLInputElement;
-          if (emailInput?.value) {
-            localStorage.setItem('userEmail', emailInput.value);
-          }
-          if (typeof window.openModal === 'function') {
-            window.openModal();
-          }
-        });
-
-        // Handle final CTA button
-        const finalCta = document.querySelector('button[onclick="openModal()"]');
-        if (finalCta) {
-          finalCta.addEventListener('click', () => {
-            if (typeof window.openModal === 'function') {
-              window.openModal();
-            }
-          });
-        }
-
-        // Capture UTM params (Google Ads) et stockage en sessionStorage
-        const params = new URLSearchParams(window.location.search);
-        const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-        utmKeys.forEach(key => {
-          const val = params.get(key);
-          if (val) sessionStorage.setItem(key, val);
-        });
-
-        // Auto-open modal depuis Google Ads (?modal=open)
-        if (params.get('modal') === 'open') {
-          setTimeout(() => {
-            if (typeof window.openModal === 'function') {
-              window.openModal();
-            }
-          }, 500);
-        }
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      var consentState = 'denied';
+      try {
+        var saved = JSON.parse(localStorage.getItem('alefia_consent') || 'null');
+        if (saved && saved.v === 'granted' && Date.now() - saved.t < 395 * 864e5) consentState = 'granted';
+      } catch (e) {}
+      window.gtag('consent', 'default', {
+        analytics_storage: consentState,
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
       });
     </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J93K257JMC"></script>
+    <script is:inline>
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-J93K257JMC');
+    </script>
+
+    <!-- Head additionnel fourni par la page (polices, préconnexions...) -->
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
   </body>
 </html>

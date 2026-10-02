@@ -46,3 +46,6 @@ public/images/optimized/**/*.webp
 run-migration.js
 supabase_migrations/001_create_audit_submissions.sql
 supabase_migrations/useful_queries.sql
+
+# Anciennes pages de l'offre automatisation, sorties du build (2026-10-02)
+_archive/

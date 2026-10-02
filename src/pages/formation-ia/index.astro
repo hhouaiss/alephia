@@ -1,0 +1,72 @@
+---
+// Hub des pages Formation IA par métier et par usage. Remplace /automatisation-ia et /automatiser.
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { formations } from '../../data/formations';
+import { PRICE_FROM } from '../../data/offer';
+
+const secteurs = formations.filter((f) => f.kind === 'secteur');
+const usages = formations.filter((f) => f.kind === 'usage');
+
+const breadcrumbs = [
+  { name: 'Accueil', href: '/' },
+  { name: 'Formations IA', href: '/formation-ia' },
+];
+---
+
+<SiteLayout
+  title="Formations IA par métier et par usage | Alefia"
+  description={`Formations IA sur mesure pour TPE et PME : artisans, agences, cabinets comptables, e-commerce, consultants. Devis, emails, relances, reporting. À partir de ${PRICE_FROM} la journée, éligibles OPCO.`}
+  breadcrumbs={breadcrumbs}
+  variant="formation-ia"
+  stickyCta={false}
+>
+  <main id="top">
+    <section class="nl-hero nl-page-hero">
+      <div class="nl-wrap">
+        <nav class="nl-crumbs" aria-label="Fil d’Ariane">
+          <a href="/">Accueil</a><span aria-hidden="true">/</span><span aria-current="page">Formations IA</span>
+        </nav>
+        <p class="nl-kicker">Formations IA</p>
+        <h1 class="nl-h1">Une formation IA construite sur <span class="nl-hl">votre métier.</span></h1>
+        <p class="nl-lead">Chaque formation part de vos tâches et de vos documents. Choisissez votre métier ou la tâche qui vous prend le plus de temps.</p>
+      </div>
+    </section>
+
+    <section class="nl-section">
+      <div class="nl-wrap">
+        <h2 class="nl-h2">Par métier</h2>
+        <ul class="nl-hub">
+          {secteurs.map((f) => (
+            <li>
+              <a href={`/formation-ia/${f.slug}`}>
+                <h3>{f.label}</h3>
+                <p>{f.lead}</p>
+                <span class="nl-hub-more">Voir la formation <span aria-hidden="true">→</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="nl-section nl-mist">
+      <div class="nl-wrap">
+        <h2 class="nl-h2">Par usage</h2>
+        <ul class="nl-hub">
+          {usages.map((f) => (
+            <li>
+              <a href={`/formation-ia/${f.slug}`}>
+                <h3>{f.label}</h3>
+                <p>{f.lead}</p>
+                <span class="nl-hub-more">Voir la formation <span aria-hidden="true">→</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="nl-actions">
+          <a href="/#demande" class="nl-btn" data-cta="hub">Parler de mon équipe <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</SiteLayout>

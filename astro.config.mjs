@@ -6,32 +6,41 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://alefia.co',
-  integrations: [tailwind(), react(), sitemap()],
-  output: 'server',
-  adapter: vercel(
-    {
-      webAnalytics: { enabled: true },
-      speedInsights: { enabled: true },
-      imageService: true,
-    }),
-    integrations: [
-      tailwind(),
-      react({
-        include: ['**/react/*'],
-      })
-    ],
-    vite: {
-      optimizeDeps: {
-        exclude: ['lucide-react']
+  trailingSlash: 'never',
+  // Site statique par défaut : meilleur TTFB et pages toujours crawlables.
+  // Seules les routes /api opt-out via `export const prerender = false`.
+  output: 'static',
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+    speedInsights: { enabled: true },
+    imageService: true,
+  }),
+  integrations: [
+    tailwind(),
+    react(),
+    sitemap({
+      // Seules la home et les pages /formation-ia sont indexées.
+      // Pages légales, 404 et ancienne home (/old) : noindex, exclues du sitemap.
+      filter: (page) => {
+        const path = new URL(page).pathname.replace(/\/$/, '') || '/';
+        return path === '/' || path === '/formation-ia' || path.startsWith('/formation-ia/');
       },
-      build: {
-        rollupOptions: {
-          output: {
-            manualChunks: {
-              'lucide': ['lucide-react']
-            }
-          }
-        }
-      }
-    }
+      changefreq: 'weekly',
+      lastmod: new Date(),
+    }),
+  ],
+  vite: {
+    optimizeDeps: {
+      exclude: ['lucide-react'],
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            lucide: ['lucide-react'],
+          },
+        },
+      },
+    },
+  },
 });

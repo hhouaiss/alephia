@@ -1,0 +1,22 @@
+---
+// Pied de page volontairement court : logo, slogan, liens, email.
+import { CONTACT_EMAIL, LINKEDIN_URL, MALT_URL, SLOGAN } from '../../data/offer';
+---
+
+<footer class="nl-footer">
+  <div class="nl-wrap nl-footer-inner">
+    <div class="nl-footer-brand">
+      <a href="/" class="nl-logo">alefia<span>.</span></a>
+      <p>{SLOGAN}</p>
+    </div>
+    <nav class="nl-footer-links" aria-label="Liens du pied de page">
+      <a href="/formation-ia">Formations par métier</a>
+      <a href={MALT_URL} target="_blank" rel="noopener noreferrer">Malt</a>
+      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="/legal">Mentions légales</a>
+      <a href="/privacy">Confidentialité</a>
+      <button type="button" class="nl-footer-btn" data-cookie-open>Gérer les cookies</button>
+    </nav>
+    <a href={`mailto:${CONTACT_EMAIL}`} class="nl-footer-mail">{CONTACT_EMAIL}</a>
+  </div>
+</footer>

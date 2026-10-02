@@ -1,0 +1,26 @@
+---
+// Prix d'appel, ce qui est compris, et accès direct au tunnel avec OPCO pré-coché
+import { FORM_ANCHOR, PRICE_FROM, included } from '../../data/offer';
+
+interface Props { mist?: boolean }
+const { mist = false } = Astro.props;
+---
+
+<section class:list={['nl-section', { 'nl-mist': mist }]} id="prix">
+  <div class="nl-wrap">
+    <div class="nl-price">
+      <div class="nl-price-main">
+        <p class="nl-kicker">Le prix</p>
+        <p class="nl-price-amount"><small>À partir de</small>{PRICE_FROM}</p>
+        <p class="nl-price-unit">la journée de formation. Devis exact après notre appel.</p>
+      </div>
+      <div class="nl-price-side">
+        <h3>Compris dans la formation</h3>
+        <ul class="nl-list nl-list-yes">
+          {included.map((t) => <li>{t}</li>)}
+        </ul>
+        <a href={FORM_ANCHOR} class="nl-btn nl-btn-amber" data-opco-cta data-cta="prix">Vérifier mon éligibilité OPCO <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>

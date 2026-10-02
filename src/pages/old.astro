@@ -1,0 +1,820 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/shared/Icon.astro';
+import { TRAINEE_COUNTS } from '../lib/formationLead';
+
+// Ancienne home (jusqu'au 2026-10-02), conservée sur /old et non indexée. Remplacée par src/pages/index.astro.
+// Landing "Formation IA". Une seule conversion, le formulaire #demande.
+// Tunnel : avis Malt dans le hero → comment ça se passe → prix et OPCO → formateur → FAQ → formulaire.
+
+const seoTitle = 'Formation IA sur mesure pour TPE et PME, éligible OPCO | Alefia';
+const seoDescription = "Formez votre équipe à l'IA sur ses propres dossiers. Formation sur mesure, à partir de 1 200 € la journée, éligible OPCO. On gère le dossier de A à Z.";
+
+const FORM_ANCHOR = '#demande';
+const CTA_LABEL = 'Être rappelé sous 24 h';
+const LINKEDIN_URL = 'https://www.linkedin.com/company/alefia';
+const CONTACT_EMAIL = 'hassan@alefia.co';
+const PHOTO_PORTRAIT = '/images/team/hassan-hero.webp';
+const PRICE_FROM = '1 200 €';
+const MALT_URL = 'https://www.malt.fr/profile/hassanhouaiss';
+// Référent handicap affiché dans le pied de page (obligation pour un organisme de formation)
+const REFERENT_HANDICAP = { name: 'Hassan Houaiss', email: CONTACT_EMAIL };
+
+// Avis et recommandations Malt, affichés autour de la photo du hero.
+// Extraits copiés mot pour mot depuis le profil Malt (relevés le 19/09/2026). Ne jamais reformuler.
+const reviews = [
+  { text: 'Formation de qualité, avec des exemples concrets et directement applicables à notre activité.', author: 'Sophie', company: 'Kosilum' },
+  { text: 'Hassan est une personne calme, sérieuse et digne de confiance.', author: 'Romain Viollet' },
+  { text: 'Hassan est une personne à l’écoute avec un bon relationnel.', author: 'Lionel Saxer', company: 'Crédit Mutuel' },
+];
+
+const steps = [
+  { title: 'On s’appelle', desc: '20 minutes pour comprendre votre activité et votre équipe.' },
+  { title: 'On cadre', desc: 'On choisit ensemble les sujets et les tâches à travailler.' },
+  { title: 'Je vous forme', desc: 'Une formation sur mesure, sur vos dossiers. Chez vous ou à distance.' },
+];
+
+const topics = [
+  'Écrire une demande claire à une IA',
+  'Rédiger plus vite : mails, devis, fiches produit',
+  'Résumer des documents et des réunions',
+  'Savoir ce qu’on ne donne jamais à une IA',
+];
+
+const nextSteps = [
+  { title: 'Je vous rappelle sous 24 h', desc: 'Un appel de 20 minutes.' },
+  { title: 'On cadre la formation', desc: 'Les sujets, la durée, le format.' },
+  { title: 'Vous recevez le programme et le devis', desc: 'Avec le dossier OPCO si vous êtes éligible.' },
+];
+
+const faq = [
+  {
+    q: 'Combien ça coûte ?',
+    a: `À partir de ${PRICE_FROM} la journée. Vous recevez le devis exact après notre appel.`,
+  },
+  {
+    q: 'Comment marche le financement OPCO ?',
+    a: 'Nos formations sont éligibles au financement OPCO. On s’occupe de toute la partie administrative, de A à Z.',
+  },
+  {
+    q: 'Faut-il des compétences techniques ?',
+    a: 'Non. La formation est faite pour les équipes métier : direction, commerce, marketing, administratif.',
+  },
+  {
+    q: 'Et nos données ?',
+    a: 'On fixe dès le début ce qu’on peut donner à une IA, et ce qu’on ne donne jamais.',
+  },
+  {
+    q: 'En présentiel ou à distance ?',
+    a: 'Les deux. Je me déplace en Île-de-France. Ailleurs, la formation se fait à distance.',
+  },
+  {
+    q: 'Quel délai avant de démarrer ?',
+    a: 'Deux à trois semaines sans OPCO. Trois à six semaines avec, le temps de valider le dossier.',
+  },
+];
+
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'Formation IA sur mesure pour TPE et PME',
+  description: "Formation à l'IA construite sur les tâches et les documents de l'entreprise, après un appel de cadrage.",
+  inLanguage: 'fr-FR',
+  provider: { '@type': 'Organization', name: 'Alefia', url: 'https://alefia.co' },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<Layout title={seoTitle} description={seoDescription} noindex={true}>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <!-- ================= HEADER ================= -->
+  <header id="al-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <a href="#top" class="font-display text-xl font-bold tracking-tight text-white">alefia</a>
+      <a href={FORM_ANCHOR} class="rounded-full bg-secondary px-4 py-2 text-sm font-semibold text-primary-dark transition-colors hover:bg-secondary-light sm:px-5 sm:py-2.5">
+        Être rappelé
+      </a>
+    </div>
+  </header>
+
+  <!-- ================= 1. HERO : promesse + photo entourée des avis Malt ================= -->
+  <section id="top" class="al-hero relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-20">
+    <div class="al-hero-glow" aria-hidden="true"></div>
+    <div class="al-hero-grid" aria-hidden="true"></div>
+
+    <div class="relative mx-auto grid max-w-6xl items-center gap-10 px-5 lg:grid-cols-[1fr_1fr] lg:gap-8">
+      <div>
+        <p class="font-data text-[12px] uppercase tracking-[0.18em] text-secondary">Formation IA · TPE et PME · Éligible OPCO</p>
+        <h1 class="mt-5 font-display text-[2.6rem] font-bold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-[4rem]">
+          Faites de l’IA <span class="text-secondary">un réflexe</span> dans votre entreprise.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
+          Des formations pratiques pour apprendre à l’utiliser concrètement dans son métier, dès le premier jour.
+        </p>
+
+        <div class="mt-9">
+          <a href={FORM_ANCHOR} class="al-btn-primary w-full sm:w-auto">{CTA_LABEL}</a>
+          <p class="mt-4 text-[14px] text-white/60">À partir de {PRICE_FROM} la journée · Éligible OPCO · Sans engagement</p>
+        </div>
+      </div>
+
+      <!-- Photo de Hassan, les avis Malt gravitent autour -->
+      <figure class="al-orbit" aria-labelledby="orbit-caption">
+        <div class="al-orbit-stage">
+          <div class="al-orbit-ring" aria-hidden="true"></div>
+          <img
+            src="/images/team/hassan-hero.webp"
+            alt="Hassan Houaiss en train d'animer une formation"
+            width="800"
+            height="800"
+            fetchpriority="high"
+            class="al-orbit-photo"
+          />
+          <ul class="al-orbit-reviews" aria-label="Avis et recommandations Malt">
+            {reviews.map((review, i) => (
+              <li class={`al-bubble al-bubble-${i + 1}`}>
+                <p class="text-[14px] leading-snug text-slate-700">«&nbsp;{review.text}&nbsp;»</p>
+                <div class="mt-2.5 flex items-center justify-between gap-3">
+                  <p class="text-[12.5px] font-semibold text-primary-dark">
+                    {review.author}{review.company && <span class="font-normal text-slate-500">, {review.company}</span>}
+                  </p>
+                  <img src="/images/malt-logo.svg" alt="Malt" width="46" height="16" class="h-4 w-auto flex-shrink-0" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <figcaption id="orbit-caption" class="mt-5 text-center text-[14px] leading-snug text-white/70">
+          <span class="font-semibold text-white">Hassan Houaiss, formateur IA</span> · 10 ans en banque (BNP Paribas, Crédit Mutuel)<br />
+          <a href={MALT_URL} target="_blank" rel="noopener noreferrer" class="text-secondary underline underline-offset-2 hover:text-secondary-light">Voir les avis et recommandations sur Malt</a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= 2. COMMENT ÇA SE PASSE ================= -->
+  <section id="deroule" class="al-section bg-white">
+    <div class="mx-auto max-w-6xl px-5">
+      <p class="al-kicker">Comment ça se passe</p>
+      <h2 class="al-h2 mt-3 max-w-3xl">Un appel, un cadrage, une formation faite pour vous.</h2>
+
+      <ol class="mt-10 grid gap-4 md:grid-cols-3">
+        {steps.map((step, i) => (
+          <li class="al-card">
+            <span class="al-step-num font-data" aria-hidden="true">{i + 1}</span>
+            <h3 class="mt-4 font-display text-lg font-semibold text-primary-dark">{step.title}</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">{step.desc}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="mt-12 max-w-3xl">
+        <p class="font-data text-[11px] uppercase tracking-[0.2em] text-slate-500">Exemples de sujets</p>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          {topics.map(item => (
+            <li class="flex gap-3 text-[15px] leading-snug text-slate-700">
+              <span class="al-tick" aria-hidden="true"><Icon name="check" class="h-3.5 w-3.5" /></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <a href={FORM_ANCHOR} class="al-btn-primary mt-10 w-full sm:w-auto">{CTA_LABEL}</a>
+    </div>
+  </section>
+
+  <!-- ================= 3. PRIX ET FINANCEMENT ================= -->
+  <section id="prix" class="al-section bg-white" style="padding-top: 0;">
+    <div class="mx-auto max-w-6xl px-5">
+      <div class="al-price grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-center md:gap-12">
+        <div>
+          <p class="font-data text-[12px] uppercase tracking-[0.18em] text-secondary">Le prix</p>
+          <p class="mt-4 font-display font-bold leading-none tracking-tight text-white">
+            <span class="block text-[15px] font-medium text-white/70">À partir de</span>
+            <span class="mt-2 block text-[3.2rem] text-secondary sm:text-[4.2rem]">{PRICE_FROM}</span>
+            <span class="mt-2 block text-[1.4rem] sm:text-[1.6rem]">la journée de formation</span>
+          </p>
+          <ul class="mt-7 space-y-3">
+            <li class="flex gap-3 text-[16px] leading-snug text-white/85">
+              <span class="al-tick" aria-hidden="true"><Icon name="check" class="h-3.5 w-3.5" /></span>
+              <span>Éligible au financement OPCO</span>
+            </li>
+            <li class="flex gap-3 text-[16px] leading-snug text-white/85">
+              <span class="al-tick" aria-hidden="true"><Icon name="check" class="h-3.5 w-3.5" /></span>
+              <span>On s'occupe de toute la partie administrative, de A à Z</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <a href={FORM_ANCHOR} data-opco-cta class="al-btn-primary w-full">Vérifier mon éligibilité OPCO</a>
+          <p class="mt-3 text-center text-[13px] text-white/60">Devis exact après notre appel</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. QUI VOUS FORME ================= -->
+  <section id="formateur" class="al-section bg-white" style="padding-top: 0;">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 md:grid-cols-[0.7fr_1.3fr] lg:gap-16">
+      <div class="al-portrait mx-auto w-full max-w-[280px] md:mx-0 md:max-w-[320px]">
+        <img
+          src={PHOTO_PORTRAIT}
+          alt="Portrait de Hassan Houaiss, fondateur d'Alefia"
+          loading="lazy"
+          width="800"
+          height="800"
+          class="h-full w-full object-cover object-top"
+        />
+      </div>
+
+      <div>
+        <p class="al-kicker">Qui vous forme</p>
+        <h2 class="al-h2 mt-3">Hassan Houaiss, fondateur d'Alefia</h2>
+        <div class="mt-6 space-y-4 text-[16px] leading-relaxed text-slate-700">
+          <p>J'ai passé 10 ans en banque, chez BNP Paribas et au Crédit Mutuel.</p>
+          <p>Aujourd'hui, je forme les équipes de TPE et PME à utiliser l'IA dans leur travail de tous les jours.</p>
+        </div>
+        <a href={MALT_URL} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-3 text-[14px] font-medium text-primary underline underline-offset-2 hover:text-primary-dark">
+          <img src="/images/malt-logo.svg" alt="" width="60" height="21" class="h-5 w-auto" />
+          Voir mon profil et mes avis
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. FAQ ================= -->
+  <section id="faq" class="al-section bg-[#f6f7fb]">
+    <div class="mx-auto max-w-3xl px-5">
+      <p class="al-kicker">Questions fréquentes</p>
+      <h2 class="al-h2 mt-3">Avant de vous lancer</h2>
+
+      <div class="al-accordion mt-10">
+        {faq.map(item => (
+          <details>
+            <summary>
+              <span class="font-display text-[17px] font-semibold leading-snug text-primary-dark">{item.q}</span>
+              <span class="al-chevron" aria-hidden="true"></span>
+            </summary>
+            <p class="pb-6 pr-8 text-[15px] leading-relaxed text-slate-600">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. FORMULAIRE ================= -->
+  <section id="demande" class="al-anchor al-dark relative overflow-hidden">
+    <div class="al-contact-glow" aria-hidden="true"></div>
+    <div class="relative mx-auto grid max-w-6xl gap-10 px-5 py-16 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:py-24">
+      <div>
+        <h2 class="font-display text-[2rem] font-bold leading-tight tracking-tight text-white sm:text-[2.6rem]">Parlons de votre formation</h2>
+        <p class="mt-4 max-w-md text-lg leading-relaxed text-white/70">1 minute pour remplir. Sans engagement.</p>
+
+        <ol class="mt-10 space-y-6">
+          {nextSteps.map((step, i) => (
+            <li class="flex gap-4">
+              <span class="al-step-num font-data" aria-hidden="true">{i + 1}</span>
+              <p class="text-[15px] leading-relaxed text-white/70">
+                <strong class="block font-semibold text-white">{step.title}</strong>
+                {step.desc}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="al-form-card">
+        <form id="fi-form" novalidate>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div class="al-field sm:col-span-2">
+              <label for="fi-fullName">Prénom et nom <span class="al-req" aria-hidden="true">*</span></label>
+              <input id="fi-fullName" name="fullName" type="text" required autocomplete="name" aria-describedby="fi-fullName-err" />
+              <p id="fi-fullName-err" class="al-error" data-error-for="fullName" hidden></p>
+            </div>
+
+            <div class="al-field">
+              <label for="fi-email">Email professionnel <span class="al-req" aria-hidden="true">*</span></label>
+              <input id="fi-email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="fi-email-err" />
+              <p id="fi-email-err" class="al-error" data-error-for="email" hidden></p>
+            </div>
+
+            <div class="al-field">
+              <label for="fi-phone">Téléphone <span class="al-req" aria-hidden="true">*</span></label>
+              <input id="fi-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" aria-describedby="fi-phone-err" />
+              <p id="fi-phone-err" class="al-error" data-error-for="phone" hidden></p>
+            </div>
+
+            <div class="al-field">
+              <label for="fi-company">Entreprise <span class="al-req" aria-hidden="true">*</span></label>
+              <input id="fi-company" name="company" type="text" required autocomplete="organization" aria-describedby="fi-company-err" />
+              <p id="fi-company-err" class="al-error" data-error-for="company" hidden></p>
+            </div>
+
+            <div class="al-field">
+              <label for="fi-traineesCount">Personnes à former <span class="al-opt">(facultatif)</span></label>
+              <select id="fi-traineesCount" name="traineesCount" aria-describedby="fi-traineesCount-err">
+                <option value="">Je ne sais pas encore</option>
+                {TRAINEE_COUNTS.map(v => <option value={v}>{v}</option>)}
+              </select>
+              <p id="fi-traineesCount-err" class="al-error" data-error-for="traineesCount" hidden></p>
+            </div>
+
+            <div class="al-field sm:col-span-2">
+              <label for="fi-tasks">Sur quoi voulez-vous former votre équipe ? <span class="al-opt">(facultatif)</span></label>
+              <textarea id="fi-tasks" name="tasks" rows="2" aria-describedby="fi-tasks-err" placeholder="Ex. : rédaction, service client, reporting…"></textarea>
+              <p id="fi-tasks-err" class="al-error" data-error-for="tasks" hidden></p>
+            </div>
+
+            <div class="sm:col-span-2 space-y-3">
+              <label class="al-check" for="fi-opco">
+                <input id="fi-opco" name="opco" type="checkbox" />
+                <span>Je veux vérifier mon éligibilité au financement OPCO</span>
+              </label>
+
+              <div>
+                <label class="al-check" for="fi-consent">
+                  <input id="fi-consent" name="consent" type="checkbox" required aria-describedby="fi-consent-err" />
+                  <span>
+                    J'accepte d'être recontacté au sujet de ma demande. <span class="al-req" aria-hidden="true">*</span>
+                    <a href="/privacy" target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-primary">Confidentialité</a>
+                  </span>
+                </label>
+                <p id="fi-consent-err" class="al-error" data-error-for="consent" hidden></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Champ piège anti-spam : invisible pour les humains -->
+          <div class="al-hp" aria-hidden="true">
+            <label for="fi-fax">Ne pas remplir</label>
+            <input id="fi-fax" name="fax_hp" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button type="submit" id="fi-submit" class="al-btn-primary mt-7 w-full">{CTA_LABEL}</button>
+          <p id="fi-global-error" class="al-error mt-3 text-center" role="alert" hidden></p>
+          <p class="mt-3 text-center text-[13px] text-slate-500">Rappel sous 24 h ouvrées · Sans engagement</p>
+        </form>
+
+        <div id="fi-confirm" class="py-6" tabindex="-1" hidden>
+          <span class="al-card-icon" aria-hidden="true"><Icon name="check" class="h-5 w-5 text-primary" /></span>
+          <p class="mt-5 font-display text-xl font-semibold text-primary-dark" role="status">
+            Merci, votre demande est bien reçue. Je vous rappelle sous 24 h ouvrées.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PIED DE PAGE ================= -->
+  <footer class="bg-primary-dark pb-24 text-white/60 md:pb-0">
+    <div class="mx-auto max-w-6xl px-5 py-10">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p class="font-display text-xl font-bold text-white">alefia.</p>
+          <p class="mt-1.5 text-[13px]">Hassan Houaiss · Villepinte (93) · Île-de-France</p>
+          <p class="mt-1.5 text-[13px]">Formations éligibles au financement OPCO.</p>
+        </div>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
+          <a href={MALT_URL} target="_blank" rel="noopener noreferrer" class="hover:text-white">Malt</a>
+          <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" class="hover:text-white">LinkedIn</a>
+          <a href="/blog" class="hover:text-white">Blog</a>
+          <a href="/legal" class="hover:text-white">Mentions légales</a>
+          <a href="/privacy" class="hover:text-white">Confidentialité</a>
+          <a href="#accessibilite" class="hover:text-white">Accessibilité handicap</a>
+        </div>
+      </div>
+
+      <div id="accessibilite" class="al-anchor mt-8 grid gap-4 border-t border-white/10 pt-6 text-[13px] leading-relaxed sm:grid-cols-2 sm:gap-10">
+        <p>
+          <span class="font-semibold text-white/80">Accessibilité aux personnes en situation de handicap.</span>
+          La formation peut être adaptée (supports, rythme, accueil ou format à distance). Signalez votre besoin à notre référent handicap, {REFERENT_HANDICAP.name}, à
+          <a href={`mailto:${REFERENT_HANDICAP.email}`} class="underline hover:text-white">{REFERENT_HANDICAP.email}</a>.
+        </p>
+        <p>
+          <span class="font-semibold text-white/80">Délais d'accès.</span>
+          Deux à trois semaines entre la demande et la formation sans OPCO, trois à six semaines avec.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CTA collant sur mobile, masqué quand le formulaire est visible -->
+  <div id="al-sticky" class="al-sticky md:hidden" aria-hidden="true">
+    <a href={FORM_ANCHOR} tabindex="-1" class="al-btn-primary w-full">{CTA_LABEL}</a>
+  </div>
+</Layout>
+
+<style is:global>
+  :root {
+    --al-blue: #10118b;
+    --al-blue-deep: #0a0b5e;
+    --al-ink: #0b0c2a;
+    --al-amber: #ffa500;
+    --al-line: rgba(16, 17, 139, 0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { background: #ffffff; color: var(--al-ink); overflow-x: hidden; }
+  [hidden] { display: none !important; }
+
+  .font-display { font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif; }
+  .font-data { font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace; }
+
+  /* --- Rythme --- */
+  .al-section { padding-top: 4.5rem; padding-bottom: 4.5rem; scroll-margin-top: 4rem; }
+  @media (min-width: 1024px) { .al-section { padding-top: 6rem; padding-bottom: 6rem; } }
+  .al-anchor { scroll-margin-top: 4rem; }
+
+  .al-kicker {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #c77f00;
+  }
+  .al-h2 {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.01em;
+    color: var(--al-ink);
+    font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.6rem);
+  }
+
+  /* --- Header --- */
+  #al-header { border-bottom: 1px solid transparent; }
+  #al-header.scrolled {
+    background: rgba(10, 11, 94, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* --- Fonds sombres --- */
+  .al-hero, .al-dark {
+    background:
+      radial-gradient(120% 90% at 85% 0%, #1c1da6 0%, transparent 55%),
+      linear-gradient(165deg, var(--al-blue) 0%, var(--al-blue-deep) 70%, #070848 100%);
+  }
+  .al-hero-glow {
+    position: absolute; top: -10%; right: -5%; width: 55%; height: 70%;
+    background: radial-gradient(closest-side, rgba(255, 165, 0, 0.22), transparent 70%);
+    filter: blur(60px); pointer-events: none;
+  }
+  .al-hero-grid {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.4;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(80% 70% at 50% 20%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(80% 70% at 50% 20%, #000 30%, transparent 80%);
+  }
+  .al-contact-glow {
+    position: absolute; bottom: -20%; left: 40%; width: 50%; height: 70%;
+    background: radial-gradient(closest-side, rgba(255,165,0,0.18), transparent 70%);
+    filter: blur(70px); pointer-events: none;
+  }
+
+  /* --- Boutons --- */
+  .al-btn-primary, .al-btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center; text-align: center;
+    font-weight: 600; font-size: 16px; padding: 15px 26px; border-radius: 0.85rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .al-btn-primary {
+    background: var(--al-amber); color: var(--al-blue-deep);
+    box-shadow: 0 16px 38px -20px rgba(255, 165, 0, 0.75);
+  }
+  .al-btn-primary:hover { background: #ffb733; }
+  .al-btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+  .al-btn-secondary { background: #fff; color: var(--al-blue); border: 1.5px solid var(--al-blue); }
+  .al-btn-secondary:hover { background: #eef0fb; }
+
+  /* --- Hero : photo et avis en orbite --- */
+  .al-orbit { margin: 0; }
+  .al-orbit-stage { position: relative; max-width: 460px; margin: 0 auto; }
+  .al-orbit-ring {
+    position: absolute; left: 50%; top: 52%; width: 88%; aspect-ratio: 1; transform: translate(-50%, -50%);
+    border-radius: 999px;
+    background: radial-gradient(closest-side, rgba(255, 165, 0, 0.35), rgba(255, 165, 0, 0.08) 70%, transparent);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 0 40px rgba(255, 255, 255, 0.03);
+  }
+  .al-orbit-photo {
+    position: relative; display: block; width: 100%; height: auto;
+    /* La photo source est coupée à droite et en bas : fondu sur ces deux bords */
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 97%), linear-gradient(to right, #000 74%, transparent 94%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 97%), linear-gradient(to right, #000 74%, transparent 94%);
+    mask-composite: intersect;
+  }
+  .al-orbit-reviews { display: grid; gap: 12px; margin-top: 8px; }
+  .al-bubble {
+    background: #fff; border-radius: 1rem; padding: 14px 16px;
+    box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.7);
+    border-top: 3px solid var(--al-amber);
+  }
+  /* Grand écran : les avis flottent autour de la photo */
+  @media (min-width: 1024px) {
+    .al-orbit-stage { max-width: 440px; }
+    .al-orbit-reviews { display: block; margin: 0; }
+    .al-bubble { position: absolute; width: 260px; animation: al-float 7s ease-in-out infinite; }
+    .al-bubble-1 { top: 4%; left: -34%; }
+    .al-bubble-2 { top: 38%; right: -22%; animation-delay: -2.3s; }
+    .al-bubble-3 { bottom: 6%; left: -26%; animation-delay: -4.6s; }
+  }
+  @media (min-width: 1280px) {
+    .al-bubble-1 { left: -40%; }
+    .al-bubble-2 { right: -26%; }
+  }
+  @keyframes al-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .al-bubble { animation: none; } }
+  .al-tick {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 999px; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--al-amber); color: var(--al-blue-deep);
+  }
+  .al-tick > span { display: flex; }
+  .al-tick svg { width: 100%; height: 100%; }
+
+  /* --- Cartes --- */
+  .al-card {
+    display: flex; flex-direction: column; height: 100%;
+    padding: 24px; border-radius: 1.1rem;
+    background: #fff; border: 1px solid var(--al-line);
+  }
+  .al-card-icon {
+    width: 40px; height: 40px; border-radius: 0.7rem;
+    display: flex; align-items: center; justify-content: center;
+    background: #eef0fb; border: 1px solid var(--al-line);
+  }
+
+  /* --- Prix --- */
+  .al-price {
+    position: relative; overflow: hidden; border-radius: 1.5rem; padding: 32px 26px;
+    background:
+      radial-gradient(60% 90% at 100% 0%, rgba(255, 165, 0, 0.22), transparent 60%),
+      linear-gradient(160deg, var(--al-blue) 0%, var(--al-blue-deep) 100%);
+    border-top: 4px solid var(--al-amber);
+    box-shadow: 0 40px 80px -40px rgba(10, 11, 94, 0.7);
+  }
+  @media (min-width: 768px) { .al-price { padding: 56px; } }
+
+  /* --- Qui vous forme : photo détourée sur fond de marque --- */
+  .al-portrait {
+    aspect-ratio: 4 / 5; overflow: hidden; border-radius: 1.25rem;
+    background:
+      radial-gradient(70% 55% at 50% 45%, rgba(255, 165, 0, 0.3), transparent 70%),
+      linear-gradient(165deg, var(--al-blue) 0%, var(--al-blue-deep) 100%);
+    box-shadow: 0 30px 60px -30px rgba(10, 11, 94, 0.6);
+  }
+
+  /* --- Étapes --- */
+  .al-step-num {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 500; color: var(--al-blue-deep); background: var(--al-amber);
+  }
+
+  /* --- FAQ en accordéon --- */
+  .al-accordion details { border-top: 1px solid var(--al-line); }
+  .al-accordion details:last-child { border-bottom: 1px solid var(--al-line); }
+  .al-accordion summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 0; cursor: pointer; list-style: none;
+  }
+  .al-accordion summary::-webkit-details-marker { display: none; }
+  .al-chevron {
+    flex-shrink: 0; width: 10px; height: 10px; margin-right: 6px;
+    border-right: 2px solid var(--al-blue); border-bottom: 2px solid var(--al-blue);
+    transform: rotate(45deg) translateY(-3px); transition: transform 0.2s ease;
+  }
+  .al-accordion details[open] .al-chevron { transform: rotate(-135deg) translateX(-3px); }
+
+  /* --- Formulaire --- */
+  .al-form-card {
+    background: #fff; border-radius: 1.25rem; padding: 22px;
+    box-shadow: 0 40px 90px -45px rgba(0, 0, 0, 0.85);
+  }
+  @media (min-width: 640px) { .al-form-card { padding: 34px; } }
+  .al-field label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: #1e293b; }
+  .al-req { color: #c2410c; }
+  .al-opt { font-weight: 400; color: #94a3b8; }
+  .al-field input, .al-field select, .al-field textarea {
+    width: 100%; padding: 12px 14px; min-height: 48px;
+    /* 16px minimum : évite le zoom automatique d'iOS au focus */
+    font-size: 16px; color: var(--al-ink);
+    border: 1px solid #cbd2e1; border-radius: 0.7rem; background: #fff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .al-field textarea { resize: vertical; line-height: 1.5; }
+  .al-field select {
+    appearance: none; -webkit-appearance: none; padding-right: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310118b' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; background-size: 18px;
+  }
+  .al-field input::placeholder, .al-field textarea::placeholder { color: #94a3b8; }
+  .al-field input:focus, .al-field select:focus, .al-field textarea:focus {
+    outline: none; border-color: var(--al-blue); box-shadow: 0 0 0 3px rgba(16, 17, 139, 0.15);
+  }
+  .al-field [aria-invalid="true"] { border-color: #dc2626; }
+  .al-field [aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15); }
+  .al-error { margin-top: 6px; font-size: 13px; line-height: 1.4; color: #b91c1c; }
+
+  .al-check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: #334155; cursor: pointer; }
+  .al-check input {
+    flex-shrink: 0; width: 22px; height: 22px; margin-top: 0;
+    accent-color: var(--al-blue); cursor: pointer;
+  }
+  .al-check input[aria-invalid="true"] { outline: 2px solid #dc2626; outline-offset: 2px; }
+
+  .al-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* --- CTA collant mobile --- */
+  .al-sticky {
+    position: fixed; inset: auto 0 0 0; z-index: 40;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(10, 11, 94, 0.94); backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    transform: translateY(110%); transition: transform 0.25s ease;
+  }
+  .al-sticky.is-visible { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .al-sticky { transition: none; } }
+
+  /* --- Focus visible --- */
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--al-amber); outline-offset: 3px; border-radius: 4px;
+  }
+</style>
+
+<script>
+  import { FIELD_ORDER, parseFormationLead, validateFormationLead } from '../lib/formationLead';
+  import type { FormationField } from '../lib/formationLead';
+
+  const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  const startedAt = Date.now();
+
+  const storage = {
+    get: (key: string) => { try { return sessionStorage.getItem(key); } catch { return null; } },
+    set: (key: string, value: string) => { try { sessionStorage.setItem(key, value); } catch { /* stockage indisponible */ } },
+  };
+
+  // Header : fond au défilement
+  const header = document.getElementById('al-header');
+  const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 20);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // CTA collant mobile : visible une fois le hero dépassé, masqué quand le formulaire est à l'écran
+  const sticky = document.getElementById('al-sticky');
+  const hero = document.getElementById('top');
+  const formSection = document.getElementById('demande');
+  if (sticky && hero && formSection && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let formVisible = false;
+    const update = () => {
+      const show = !heroVisible && !formVisible;
+      sticky.classList.toggle('is-visible', show);
+      sticky.setAttribute('aria-hidden', String(!show));
+      sticky.querySelector('a')?.setAttribute('tabindex', show ? '0' : '-1');
+    };
+    new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; update(); }).observe(hero);
+    new IntersectionObserver(([entry]) => { formVisible = entry.isIntersecting; update(); }).observe(formSection);
+  }
+
+  // Capture des UTM (campagnes) pour les joindre à la demande
+  const params = new URLSearchParams(window.location.search);
+  UTM_KEYS.forEach((key) => {
+    const value = params.get(key);
+    if (value) storage.set(key, value);
+  });
+
+  const form = document.getElementById('fi-form') as HTMLFormElement | null;
+  const confirmEl = document.getElementById('fi-confirm');
+  const submitBtn = document.getElementById('fi-submit') as HTMLButtonElement | null;
+  const globalError = document.getElementById('fi-global-error');
+  const opcoBox = document.getElementById('fi-opco') as HTMLInputElement | null;
+
+  // Boutons "Vérifier mon éligibilité OPCO" (ou lien ?opco=1) : case OPCO pré-cochée
+  if (params.get('opco') === '1' && opcoBox) opcoBox.checked = true;
+  document.querySelectorAll('[data-opco-cta]').forEach((el) => {
+    el.addEventListener('click', () => { if (opcoBox) opcoBox.checked = true; });
+  });
+
+  if (form) {
+    const readForm = () => {
+      const raw: Record<string, unknown> = {};
+      new FormData(form).forEach((value, key) => { raw[key] = value; });
+      return raw;
+    };
+
+    const setError = (name: FormationField, message?: string) => {
+      const field = form.elements.namedItem(name) as HTMLElement | null;
+      const errorEl = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
+      if (errorEl) {
+        errorEl.textContent = message ?? '';
+        errorEl.hidden = !message;
+      }
+      if (field) {
+        if (message) field.setAttribute('aria-invalid', 'true');
+        else field.removeAttribute('aria-invalid');
+      }
+    };
+
+    const applyErrors = (errors: Partial<Record<FormationField, string>>) => {
+      FIELD_ORDER.forEach((name) => setError(name, errors[name]));
+      const first = FIELD_ORDER.find((name) => errors[name]);
+      if (first) (form.elements.namedItem(first) as HTMLElement | null)?.focus();
+      return Boolean(first);
+    };
+
+    // Une fois un champ signalé en erreur, on revalide ce champ à chaque saisie
+    const revalidate = (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.getAttribute('aria-invalid') !== 'true') return;
+      const name = target.name as FormationField;
+      setError(name, validateFormationLead(parseFormationLead(readForm()))[name]);
+    };
+    form.addEventListener('input', revalidate);
+    form.addEventListener('change', revalidate);
+
+    const showConfirmation = () => {
+      form.hidden = true;
+      if (confirmEl) {
+        confirmEl.hidden = false;
+        confirmEl.focus();
+      }
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (globalError) globalError.hidden = true;
+
+      const raw = readForm();
+      // Champ piège rempli : on simule un succès sans rien envoyer
+      if (raw.fax_hp) { showConfirmation(); return; }
+
+      const lead = parseFormationLead(raw);
+      if (applyErrors(validateFormationLead(lead))) return;
+
+      const payload: Record<string, unknown> = { ...lead, fax_hp: '', elapsedMs: Date.now() - startedAt, sourcePage: window.location.pathname };
+      UTM_KEYS.forEach((key) => {
+        const value = storage.get(key);
+        if (value) payload[key] = value;
+      });
+
+      const defaultLabel = submitBtn?.textContent ?? 'Recevoir mon devis';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Envoi en cours…'; }
+
+      try {
+        const res = await fetch('/api/formation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.status === 400) {
+          const body = await res.json().catch(() => ({}));
+          if (body.errors && applyErrors(body.errors)) {
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = defaultLabel; }
+            return;
+          }
+        }
+        if (!res.ok) throw new Error(`status ${res.status}`);
+
+        const w = window as any;
+        const eventData = { event_category: 'lead', event_label: 'formation_ia', page_variant: 'old', opco: lead.opco };
+        if (typeof w.gtag === 'function') w.gtag('event', 'formation_form_submitted', eventData);
+        if (Array.isArray(w.dataLayer)) w.dataLayer.push({ event: 'formation_form_submitted', ...eventData });
+
+        showConfirmation();
+      } catch (err) {
+        console.error('Formation submit error:', err);
+        if (globalError) {
+          globalError.textContent = 'Une erreur est survenue. Réessayez ou écrivez-moi à hassan@alefia.co.';
+          globalError.hidden = false;
+        }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = defaultLabel; }
+      }
+    });
+  }
+</script>

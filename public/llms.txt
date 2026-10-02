@@ -1,0 +1,47 @@
+# Alefia
+
+> Alefia est un organisme de formation à l'intelligence artificielle basé à Paris. Il forme les équipes de TPE et PME à utiliser l'IA (ChatGPT et outils similaires) dans leur travail quotidien, sur leurs propres dossiers. Formations sur mesure, éligibles au financement OPCO.
+
+## Identité
+
+- Nom : Alefia
+- Site : https://alefia.co
+- Contact : hassan@alefia.co
+- Localisation : Paris. Formations en présentiel en Île-de-France, à distance partout ailleurs.
+- Formateur : Hassan Houaiss, fondateur d'Alefia. 10 ans d'expérience en banque, chez BNP Paribas et au Crédit Mutuel.
+
+## L'offre
+
+- Formation IA sur mesure pour les équipes métier : direction, commerce, marketing, administratif. Aucune compétence technique requise.
+- Prix : à partir de 1 200 € la journée. Devis exact après un appel de cadrage.
+- Financement : formations éligibles au financement OPCO. Alefia gère la partie administrative de A à Z.
+- Déroulé : un appel de 20 minutes, un cadrage des sujets et des tâches, puis la formation, construite sur les documents de l'entreprise.
+- Délai : deux à trois semaines sans OPCO, trois à six semaines avec.
+- Ce que la formation n'est pas : une formation pour développeurs, ou un catalogue standard identique pour tout le monde.
+
+## Formations par métier
+
+- [Artisans](https://alefia.co/formation-ia/artisans) : Formation IA pour artisans et petites entreprises du bâtiment. Devis, mails clients, relances : moins de temps au bureau. Éligible OPCO, à partir de 1 200 € la journée.
+- [Agences de communication](https://alefia.co/formation-ia/agences-communication) : Formation IA sur mesure pour agences de communication : briefs, contenus, recommandations, comptes rendus. Sur vos vrais dossiers clients. Éligible OPCO.
+- [Cabinets comptables](https://alefia.co/formation-ia/cabinets-comptables) : Formation IA pour cabinets d'expertise comptable : mails clients, synthèses, notes, documents. Avec des règles strictes sur la confidentialité. Éligible OPCO.
+- [E-commerce](https://alefia.co/formation-ia/e-commerce) : Formation IA pour équipes e-commerce : fiches produits, réponses clients, emails marketing, réseaux sociaux. Sur votre catalogue. Éligible OPCO.
+- [Coachs et consultants](https://alefia.co/formation-ia/coachs-consultants) : Formation IA pour coachs et consultants : propositions commerciales, contenus, comptes rendus de séance, prospection. Seul ou en petite équipe. Éligible OPCO.
+
+## Formations par usage
+
+- [Devis et propositions](https://alefia.co/formation-ia/devis) : Apprenez à votre équipe à rédiger devis, offres et propositions commerciales avec l'IA. Formation sur mesure, sur vos documents. Éligible OPCO.
+- [Relances clients](https://alefia.co/formation-ia/relances-clients) : Formez votre équipe à rédiger relances de devis, de factures et de clients avec l'IA. Des messages fermes et polis, prêts en une minute. Éligible OPCO.
+- [Emails](https://alefia.co/formation-ia/emails) : Formez votre équipe à rédiger, résumer et trier ses emails avec l'IA. Mails clients délicats, réponses types, résumés de longs échanges. Éligible OPCO.
+- [Comptes rendus et reporting](https://alefia.co/formation-ia/reporting) : Formez votre équipe à produire comptes rendus de réunion, synthèses et reportings avec l'IA. Clairs, structurés, envoyés le jour même. Éligible OPCO.
+- [Saisie et extraction de données](https://alefia.co/formation-ia/extraction-donnees) : Formez votre équipe à extraire des informations de documents, PDF et mails avec l'IA, pour moins de ressaisie. Avec des règles claires sur les données. Éligible OPCO.
+- [Prospection commerciale](https://alefia.co/formation-ia/prospection) : Formez vos commerciaux à utiliser l'IA pour préparer leurs rendez-vous, écrire leurs messages de prospection et suivre leurs prospects. Éligible OPCO.
+- [Accueil des nouveaux clients](https://alefia.co/formation-ia/onboarding-client) : Formez votre équipe à préparer avec l'IA les mails de bienvenue, guides, FAQ et suivis des nouveaux clients. Un accueil clair et soigné. Éligible OPCO.
+
+## Pages principales
+
+- [Accueil : Formation IA pour TPE et PME](https://alefia.co/) : présentation de la formation, prix, méthode, formateur, FAQ et formulaire de demande.
+- [Toutes les formations IA](https://alefia.co/formation-ia) : formations par métier et par usage.
+
+## Comment travailler avec Alefia
+
+Remplir le formulaire de demande sur la page d'accueil (4 questions, environ 1 minute). Hassan Houaiss rappelle sous 24 heures ouvrées pour un appel de 20 minutes, puis envoie le programme et le devis, avec le dossier OPCO si l'entreprise est éligible.

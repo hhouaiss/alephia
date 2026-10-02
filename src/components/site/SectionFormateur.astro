@@ -1,0 +1,41 @@
+---
+// Hassan + avis et recommandations Malt (verbatim)
+import { MALT_URL, reviews } from '../../data/offer';
+
+interface Props { mist?: boolean }
+const { mist = true } = Astro.props;
+---
+
+<section class:list={['nl-section', { 'nl-mist': mist }]} id="formateur">
+  <div class="nl-wrap">
+    <div class="nl-trainer">
+      <div class="nl-trainer-id">
+        <div class="nl-avatar">
+          <img src="/images/team/hassan-hero.webp" alt="" width="800" height="800" loading="lazy" />
+        </div>
+        <div>
+          <p class="nl-kicker">Qui vous forme</p>
+          <h2 class="nl-h2">Hassan Houaiss</h2>
+          <p class="nl-trainer-role">Fondateur d’Alefia, formateur IA</p>
+        </div>
+      </div>
+      <div class="nl-trainer-bio">
+        <p>J’ai passé 10 ans en banque, chez BNP Paribas et au Crédit Mutuel.</p>
+        <p>Aujourd’hui, je forme les équipes de TPE et PME à utiliser l’IA dans leur travail de tous les jours.</p>
+      </div>
+    </div>
+
+    <ul class="nl-reviews" aria-label="Avis et recommandations Malt">
+      {reviews.map((r) => (
+        <li>
+          <p>«&nbsp;{r.text}&nbsp;»</p>
+          <span><strong>{r.author}{r.company && `, ${r.company}`}</strong> · {r.kind}</span>
+        </li>
+      ))}
+    </ul>
+    <a href={MALT_URL} target="_blank" rel="noopener noreferrer" class="nl-link">
+      <img src="/images/malt-logo.svg" alt="" width="46" height="16" />
+      Voir les avis et recommandations sur Malt
+    </a>
+  </div>
+</section>

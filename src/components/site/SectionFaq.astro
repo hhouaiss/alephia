@@ -1,0 +1,24 @@
+---
+// FAQ en accordéons. Le balisage FAQPage (JSON-LD) est ajouté par la page avec faqSchema().
+import type { FaqItem } from '../../data/offer';
+
+interface Props { items: FaqItem[]; title?: string; mist?: boolean }
+const { items, title = 'Avant de vous lancer', mist = false } = Astro.props;
+---
+
+<section class:list={['nl-section', { 'nl-mist': mist }]} id="faq">
+  <div class="nl-wrap nl-split">
+    <div>
+      <p class="nl-kicker">Questions fréquentes</p>
+      <h2 class="nl-h2">{title}</h2>
+    </div>
+    <div class="nl-faq">
+      {items.map((item) => (
+        <details>
+          <summary>{item.q}<span aria-hidden="true"></span></summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

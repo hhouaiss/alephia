@@ -1,0 +1,107 @@
+---
+// Gabarit des pages au design Alefia (home, /formation-ia, pages légales).
+// Fournit : polices, feuille de style commune, barre du haut (remplaçable via le slot "header"),
+// pied de page, bandeau cookies, bouton retour en haut et CTA collant mobile.
+import Layout from './Layout.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
+import CookieBanner from '../components/site/CookieBanner.astro';
+import '../styles/alefia.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  breadcrumbs?: { name: string; href: string }[];
+  // Identifiant envoyé à Google Analytics avec chaque événement (page_variant)
+  variant: string;
+  // CTA collant mobile vers le formulaire #demande de la page
+  stickyCta?: boolean;
+  // Lien du bouton de la barre du haut : #demande si la page a le tunnel, sinon la home
+  ctaHref?: string;
+}
+
+const { title, description, noindex = false, breadcrumbs = [], variant, stickyCta = true, ctaHref = '/#demande' } = Astro.props;
+---
+
+<Layout title={title} description={description} noindex={noindex} breadcrumbs={breadcrumbs}>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet" />
+    <slot name="head" />
+  </Fragment>
+
+  <div class="nl" data-variant={variant}>
+    <slot name="header">
+      <header class="nl-top">
+        <div class="nl-wrap nl-top-inner">
+          <a href="/" class="nl-logo">alefia<span>.</span></a>
+          <a href={ctaHref} class="nl-top-cta" data-cta="header">Être rappelé</a>
+        </div>
+      </header>
+    </slot>
+
+    <slot />
+
+    <SiteFooter />
+
+    <!-- Retour en haut de page -->
+    <a href="#top" id="nl-totop" class="nl-totop" aria-label="Revenir en haut de la page" tabindex="-1" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </a>
+
+    <CookieBanner />
+
+    {stickyCta && (
+      <!-- CTA collant mobile, masqué sur le hero et sur le tunnel -->
+      <div id="nl-sticky" class="nl-sticky" aria-hidden="true">
+        <a href="#demande" tabindex="-1" class="nl-btn nl-btn-full" data-cta="sticky">Être rappelé sous 24 h <span aria-hidden="true">→</span></a>
+      </div>
+    )}
+  </div>
+</Layout>
+
+<script>
+  import { track } from '../lib/track';
+
+  document.querySelectorAll<HTMLElement>('[data-cta]').forEach((el) => {
+    el.addEventListener('click', () => track('cta_click', { event_category: 'funnel', location: el.dataset.cta }));
+  });
+
+  // ---------- CTA collant mobile : hors hero et hors tunnel ----------
+  const sticky = document.getElementById('nl-sticky');
+  const hero = document.querySelector('.nl-hero');
+  const funnelSection = document.getElementById('demande');
+  if (sticky && hero && funnelSection && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let funnelVisible = false;
+    const update = () => {
+      const show = !heroVisible && !funnelVisible;
+      sticky.classList.toggle('is-visible', show);
+      sticky.setAttribute('aria-hidden', String(!show));
+      sticky.querySelector('a')?.setAttribute('tabindex', show ? '0' : '-1');
+    };
+    new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; update(); }).observe(hero);
+    new IntersectionObserver(([e]) => { funnelVisible = e.isIntersecting; update(); }).observe(funnelSection);
+  }
+
+  // ---------- Retour en haut : visible une fois le premier écran dépassé ----------
+  const toTop = document.getElementById('nl-totop');
+  if (toTop) {
+    const onScroll = () => {
+      const show = window.scrollY > window.innerHeight * 0.9;
+      toTop.classList.toggle('is-visible', show);
+      toTop.setAttribute('aria-hidden', String(!show));
+      toTop.setAttribute('tabindex', show ? '0' : '-1');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      document.querySelector<HTMLElement>('.nl-logo')?.focus({ preventScroll: true });
+    });
+  }
+</script>

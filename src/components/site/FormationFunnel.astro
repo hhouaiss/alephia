@@ -1,0 +1,366 @@
+---
+// Tunnel de demande en 4 étapes (section #demande), POST /api/formation.
+// Utilisé par la home et les pages /formation-ia. Les boutons [data-quickstart] (réponse 1 dans le hero)
+// et [data-opco-cta] (OPCO pré-coché) de la page sont pris en charge par le script ci-dessous.
+import { OPCO_CHOICES, TOPIC_CHOICES, TRAINEE_COUNTS } from '../../lib/formationLead';
+import { CONTACT_EMAIL } from '../../data/offer';
+
+interface Props {
+  title?: string;
+  // Sujets pré-cochés à l'étape 2 (pages /formation-ia)
+  presetTopics?: readonly string[];
+}
+const { title = 'Parlons de votre formation.', presetTopics = [] } = Astro.props;
+---
+
+<!-- ============ LE TUNNEL ============ -->
+<section id="demande" class="nl-section nl-blue nl-anchor">
+  <div class="nl-wrap nl-funnel-grid">
+    <div class="nl-funnel-intro">
+      <p class="nl-kicker">Votre demande</p>
+      <h2 class="nl-h2">{title}</h2>
+      <p class="nl-funnel-lead">4 questions, 1 minute. Je vous rappelle sous 24 h ouvrées.</p>
+      <ol class="nl-next">
+        <li><strong>Je vous rappelle sous 24 h.</strong> Un appel de 20 minutes.</li>
+        <li><strong>On cadre la formation.</strong> Les sujets, la durée, le format.</li>
+        <li><strong>Vous recevez le programme et le devis.</strong> Avec le dossier OPCO si vous êtes éligible.</li>
+      </ol>
+    </div>
+
+    <div class="nl-funnel">
+      <div class="nl-funnel-head">
+        <span id="fn-step-label">Question 1 sur 4</span>
+        <button type="button" class="nl-back" id="fn-back" hidden>← Retour</button>
+      </div>
+      <div class="nl-progress" id="fn-progress" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+
+      <form id="fn-form" novalidate>
+        <!-- Étape 1 -->
+        <fieldset class="nl-step" data-step="1">
+          <legend class="nl-q">Combien de personnes voulez-vous former ?</legend>
+          <div class="nl-choices">
+            {TRAINEE_COUNTS.map((v) => (
+              <label class="nl-choice"><input type="radio" name="traineesCount" value={v} />{v}</label>
+            ))}
+            <label class="nl-choice nl-choice-wide"><input type="radio" name="traineesCount" value="" />Je ne sais pas encore</label>
+          </div>
+        </fieldset>
+
+        <!-- Étape 2 -->
+        <fieldset class="nl-step" data-step="2" hidden>
+          <legend class="nl-q">Sur quoi voulez-vous former votre équipe ?</legend>
+          <p class="nl-hint nl-hint-top">Plusieurs choix possibles.</p>
+          <div class="nl-choices">
+            {TOPIC_CHOICES.map((t) => (
+              <label class="nl-choice nl-choice-multi"><input type="checkbox" name="topic" value={t} checked={presetTopics.includes(t)} />{t}</label>
+            ))}
+          </div>
+          <div class="nl-field nl-field-extra">
+            <label for="fn-tasks">Autre chose ? <span class="nl-opt">(facultatif)</span></label>
+            <textarea id="fn-tasks" name="tasksExtra" rows="2" placeholder="Ex. : rédiger nos réponses aux appels d’offres"></textarea>
+          </div>
+          <button type="button" class="nl-btn nl-btn-full" data-next>Continuer <span aria-hidden="true">→</span></button>
+        </fieldset>
+
+        <!-- Étape 3 -->
+        <fieldset class="nl-step" data-step="3" hidden>
+          <legend class="nl-q">Voulez-vous faire financer la formation par votre OPCO ?</legend>
+          <div class="nl-choices nl-choices-stack">
+            {OPCO_CHOICES.map((c) => (
+              <label class="nl-choice"><input type="radio" name="opcoChoice" value={c.value} />{c.label}</label>
+            ))}
+          </div>
+          <p class="nl-hint">Nos formations sont éligibles. On s’occupe de toute la partie administrative.</p>
+        </fieldset>
+
+        <!-- Étape 4 -->
+        <fieldset class="nl-step" data-step="4" hidden>
+          <legend class="nl-q">Où puis-je vous rappeler ?</legend>
+          <p class="nl-recap" id="fn-recap"></p>
+          <div class="nl-fields">
+            <div class="nl-field nl-span-2">
+              <label for="fn-fullName">Prénom et nom</label>
+              <input id="fn-fullName" name="fullName" type="text" autocomplete="name" aria-describedby="fn-fullName-err" />
+              <p id="fn-fullName-err" class="nl-error" data-error-for="fullName" hidden></p>
+            </div>
+            <div class="nl-field">
+              <label for="fn-email">Email professionnel</label>
+              <input id="fn-email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="fn-email-err" />
+              <p id="fn-email-err" class="nl-error" data-error-for="email" hidden></p>
+            </div>
+            <div class="nl-field">
+              <label for="fn-phone">Téléphone</label>
+              <input id="fn-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78" aria-describedby="fn-phone-err" />
+              <p id="fn-phone-err" class="nl-error" data-error-for="phone" hidden></p>
+            </div>
+            <div class="nl-field nl-span-2">
+              <label for="fn-company">Entreprise</label>
+              <input id="fn-company" name="company" type="text" autocomplete="organization" aria-describedby="fn-company-err" />
+              <p id="fn-company-err" class="nl-error" data-error-for="company" hidden></p>
+            </div>
+            <div class="nl-span-2">
+              <label class="nl-check" for="fn-consent">
+                <input id="fn-consent" name="consent" type="checkbox" aria-describedby="fn-consent-err" />
+                <span>J’accepte d’être recontacté au sujet de ma demande. <a href="/privacy" target="_blank" rel="noopener">Confidentialité</a></span>
+              </label>
+              <p id="fn-consent-err" class="nl-error" data-error-for="consent" hidden></p>
+            </div>
+          </div>
+
+          <!-- Champ piège anti-spam : invisible pour les humains -->
+          <div class="nl-hp" aria-hidden="true">
+            <label for="fn-fax">Ne pas remplir</label>
+            <input id="fn-fax" name="fax_hp" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <button type="submit" id="fn-submit" class="nl-btn nl-btn-full">Être rappelé sous 24 h <span aria-hidden="true">→</span></button>
+          <p id="fn-global-error" class="nl-error" role="alert" hidden></p>
+          <p class="nl-hint nl-center">Sans engagement. Vos données ne servent qu’à vous recontacter.</p>
+          <p class="nl-rgpd">
+            Les informations saisies sont traitées par Alefia, sur la base de votre consentement, pour répondre à votre demande de formation. Elles ne sont ni vendues ni cédées.
+            Vous pouvez y accéder, les rectifier, les supprimer ou retirer votre accord en écrivant à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+            Vous pouvez aussi saisir la CNIL. <a href="/privacy" target="_blank" rel="noopener">Politique de confidentialité</a>
+          </p>
+        </fieldset>
+      </form>
+
+      <div id="fn-confirm" class="nl-confirm" tabindex="-1" hidden>
+        <p class="nl-q" role="status">Merci, votre demande est bien reçue.</p>
+        <p>Je vous rappelle sous 24 h ouvrées pour un appel de 20 minutes. Pensez à noter les tâches qui prennent le plus de temps à votre équipe : on partira de là.</p>
+        <p class="nl-hint">Hassan Houaiss · <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { FIELD_ORDER, parseFormationLead, validateFormationLead } from '../../lib/formationLead';
+  import type { FormationField } from '../../lib/formationLead';
+  import { track as trackEvent } from '../../lib/track';
+
+  const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  const TOTAL_STEPS = 4;
+  const startedAt = Date.now();
+
+  const storage = {
+    get: (key: string) => { try { return sessionStorage.getItem(key); } catch { return null; } },
+    set: (key: string, value: string) => { try { sessionStorage.setItem(key, value); } catch { /* stockage indisponible */ } },
+  };
+
+  // Suivi du tunnel : un événement par étape, pour voir où les visiteurs décrochent
+  const track = (event: string, data: Record<string, unknown> = {}) => trackEvent(event, { event_category: 'funnel', ...data });
+
+  const params = new URLSearchParams(window.location.search);
+  UTM_KEYS.forEach((key) => {
+    const value = params.get(key);
+    if (value) storage.set(key, value);
+  });
+
+  // ---------- Tunnel en 4 étapes ----------
+  const form = document.getElementById('fn-form') as HTMLFormElement | null;
+  const funnelSection = document.getElementById('demande');
+  const stepLabel = document.getElementById('fn-step-label');
+  const segments = Array.from(document.querySelectorAll<HTMLElement>('#fn-progress span'));
+  const fillProgress = (n: number) => segments.forEach((s, i) => s.classList.toggle('is-done', i < n));
+  const backBtn = document.getElementById('fn-back');
+  const recap = document.getElementById('fn-recap');
+  const confirmEl = document.getElementById('fn-confirm');
+  const submitBtn = document.getElementById('fn-submit') as HTMLButtonElement | null;
+  const globalError = document.getElementById('fn-global-error');
+
+  let current = 1;
+  let opcoForced = params.get('opco') === '1';
+
+  const fieldsets = form ? Array.from(form.querySelectorAll<HTMLFieldSetElement>('.nl-step')) : [];
+
+  const answers = () => {
+    if (!form) return { traineesCount: '', topics: [] as string[], extra: '', opcoChoice: '' };
+    const fd = new FormData(form);
+    return {
+      traineesCount: String(fd.get('traineesCount') ?? ''),
+      topics: fd.getAll('topic').map(String),
+      extra: String(fd.get('tasksExtra') ?? '').trim(),
+      opcoChoice: String(fd.get('opcoChoice') ?? ''),
+    };
+  };
+
+  const renderRecap = () => {
+    if (!recap) return;
+    const a = answers();
+    const parts = [
+      a.traineesCount ? `${a.traineesCount} personnes` : 'Effectif à définir',
+      a.topics.length ? a.topics.join(', ') : 'Sujets à définir ensemble',
+      a.opcoChoice === 'no' ? 'Sans OPCO' : 'Vérification OPCO',
+    ];
+    recap.textContent = parts.join(' · ');
+  };
+
+  const goTo = (step: number, focus = true) => {
+    current = Math.min(Math.max(step, 1), TOTAL_STEPS);
+    fieldsets.forEach((fs) => { fs.hidden = Number(fs.dataset.step) !== current; });
+    if (stepLabel) stepLabel.textContent = `Question ${current} sur ${TOTAL_STEPS}`;
+    fillProgress(current);
+    if (backBtn) backBtn.hidden = current === 1;
+    if (current === TOTAL_STEPS) renderRecap();
+    if (focus) {
+      const target = fieldsets[current - 1]?.querySelector<HTMLElement>('input:not([type="hidden"]), textarea');
+      target?.focus({ preventScroll: true });
+    }
+    track('funnel_step_view', { step: current });
+  };
+
+  if (form) {
+    // Étapes 1 et 3 : un clic suffit pour avancer
+    form.querySelectorAll<HTMLInputElement>('input[name="traineesCount"], input[name="opcoChoice"]').forEach((input) => {
+      input.addEventListener('change', () => {
+        const step = Number(input.closest<HTMLElement>('.nl-step')?.dataset.step);
+        track('funnel_answer', { step, value: input.value || 'unknown' });
+        window.setTimeout(() => goTo(step + 1), 180);
+      });
+    });
+    form.querySelectorAll<HTMLButtonElement>('[data-next]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        track('funnel_answer', { step: current, topics: answers().topics.length });
+        goTo(current + 1);
+      });
+    });
+    backBtn?.addEventListener('click', () => goTo(current - 1));
+
+    // Bouton "Vérifier mon éligibilité OPCO" : réponse OPCO pré-remplie
+    const presetOpco = () => {
+      const yes = form.querySelector<HTMLInputElement>('input[name="opcoChoice"][value="yes"]');
+      if (yes) yes.checked = true;
+      opcoForced = true;
+    };
+    if (opcoForced) presetOpco();
+    document.querySelectorAll('[data-opco-cta]').forEach((el) => el.addEventListener('click', presetOpco));
+
+    // Hero : la 1re réponse est prise tout de suite, puis on descend au tunnel en étape 2
+    document.querySelectorAll<HTMLButtonElement>('[data-quickstart]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const value = btn.dataset.quickstart ?? '';
+        const radio = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="traineesCount"]')).find((r) => r.value === value);
+        if (radio) radio.checked = true;
+        track('funnel_answer', { step: 1, value: value || 'unknown', source: 'hero' });
+        goTo(2, false);
+        funnelSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.setTimeout(() => fieldsets[1]?.querySelector<HTMLElement>('input')?.focus({ preventScroll: true }), 600);
+      });
+    });
+
+    // ---------- Validation et envoi ----------
+    const buildRaw = () => {
+      const a = answers();
+      const fd = new FormData(form);
+      return {
+        fullName: fd.get('fullName'),
+        email: fd.get('email'),
+        phone: fd.get('phone'),
+        company: fd.get('company'),
+        traineesCount: a.traineesCount,
+        topics: a.topics,
+        tasks: a.extra,
+        // Bouton "Vérifier mon éligibilité OPCO" cliqué sans répondre à la question 3 : on compte un oui
+        opcoChoice: a.opcoChoice || (opcoForced ? 'yes' : ''),
+        consent: fd.get('consent') === 'on',
+        fax_hp: fd.get('fax_hp'),
+      } as Record<string, unknown>;
+    };
+
+    const setError = (name: FormationField, message?: string) => {
+      const field = form.elements.namedItem(name) as HTMLElement | null;
+      const errorEl = form.querySelector<HTMLElement>(`[data-error-for="${name}"]`);
+      if (errorEl) { errorEl.textContent = message ?? ''; errorEl.hidden = !message; }
+      if (field instanceof HTMLElement) {
+        if (message) field.setAttribute('aria-invalid', 'true');
+        else field.removeAttribute('aria-invalid');
+      }
+    };
+
+    // Les étapes 1 à 3 n'ont pas de champ obligatoire : les erreurs portent toujours sur l'étape 4
+    const applyErrors = (errors: Partial<Record<FormationField, string>>) => {
+      FIELD_ORDER.forEach((name) => setError(name, errors[name]));
+      const first = FIELD_ORDER.find((name) => errors[name]);
+      if (first) {
+        if (current !== TOTAL_STEPS) goTo(TOTAL_STEPS, false);
+        (form.elements.namedItem(first) as HTMLElement | null)?.focus?.();
+      }
+      return Boolean(first);
+    };
+
+    const revalidate = (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      if (target.getAttribute('aria-invalid') !== 'true') return;
+      const name = target.name as FormationField;
+      setError(name, validateFormationLead(parseFormationLead(buildRaw()))[name]);
+    };
+    form.addEventListener('input', revalidate);
+    form.addEventListener('change', revalidate);
+
+    const showConfirmation = () => {
+      form.hidden = true;
+      if (backBtn) backBtn.hidden = true;
+      if (stepLabel) stepLabel.textContent = 'Demande envoyée';
+      fillProgress(TOTAL_STEPS);
+      if (confirmEl) { confirmEl.hidden = false; confirmEl.focus(); }
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      // Entrée dans un champ des étapes 1 à 3 : on avance au lieu d'envoyer
+      if (current < TOTAL_STEPS) { goTo(current + 1); return; }
+      if (globalError) globalError.hidden = true;
+
+      const raw = buildRaw();
+      if (raw.fax_hp) { showConfirmation(); return; }
+
+      const lead = parseFormationLead(raw);
+      if (applyErrors(validateFormationLead(lead))) {
+        track('funnel_validation_error', { step: TOTAL_STEPS });
+        return;
+      }
+
+      const payload: Record<string, unknown> = { ...lead, fax_hp: '', elapsedMs: Date.now() - startedAt, sourcePage: window.location.pathname };
+      UTM_KEYS.forEach((key) => {
+        const value = storage.get(key);
+        if (value) payload[key] = value;
+      });
+
+      const defaultLabel = submitBtn?.innerHTML ?? '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Envoi en cours…'; }
+
+      try {
+        const res = await fetch('/api/formation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.status === 400) {
+          const body = await res.json().catch(() => ({}));
+          if (body.errors && applyErrors(body.errors)) {
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = defaultLabel; }
+            return;
+          }
+        }
+        if (!res.ok) throw new Error(`status ${res.status}`);
+
+        // Événement de conversion, avec la page d'origine (page_variant) pour comparer
+        trackEvent('formation_form_submitted', { event_category: 'lead', event_label: 'formation_ia', opco: lead.opco });
+
+        showConfirmation();
+      } catch (err) {
+        console.error('Formation submit error:', err);
+        if (globalError) {
+          globalError.textContent = 'Une erreur est survenue. Réessayez ou écrivez-moi à hassan@alefia.co.';
+          globalError.hidden = false;
+        }
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = defaultLabel; }
+      }
+    });
+
+    goTo(1, false);
+  }
+</script>

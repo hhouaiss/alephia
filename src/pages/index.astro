@@ -1,178 +1,261 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import StatCard from '../components/shared/StatCard.astro';
-import ServiceCard from '../components/shared/ServiceCard.astro';
-import AuditModal from '../components/shared/AuditModal.astro';
-import UseCasesSection from '../components/sections/UseCasesSection.astro';
-import ValuesSection from '../components/sections/ValuesSection.astro';
-import type { IconName } from '../utils/icons';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import FormationFunnel from '../components/site/FormationFunnel.astro';
+import SectionMethode from '../components/site/SectionMethode.astro';
+import SectionPrix from '../components/site/SectionPrix.astro';
+import SectionFormateur from '../components/site/SectionFormateur.astro';
+import SectionFaq from '../components/site/SectionFaq.astro';
+import { TRAINEE_COUNTS } from '../lib/formationLead';
+import { FORM_ANCHOR, PRICE_FROM, baseFaq, faqSchema, reviews } from '../data/offer';
 
-const seoTitle = "Alefia — Agence IA & Automatisation pour PME, TPE et Indépendants | Paris";
-const seoDescription = "Automatisez vos processus métier avec des agents IA sur mesure. Workflows n8n, Make, Zapier, intégration CRM. Gagnez +10h/semaine. Audit IA gratuit — Réponse sous 48h.";
+// Home France depuis le 2026-10-02 (ex /new-landing-1) : landing "Formation IA" en tunnel de vente.
+// Une seule conversion (POST /api/formation) : un questionnaire en 4 étapes,
+// dont la première question est posée dès le hero. L'ancienne home est sur /old.
 
-const stats: { number: string; label: string; description: string; icon: IconName }[] = [
-  { number: "+10h", label: "Gagnées par semaine en moyenne", description: "Automatisation des tâches répétitives", icon: "clock" },
-  { number: "-60%", label: "Réduction du travail manuel", description: "Workflows intelligents sur mesure", icon: "trending-up" },
-  { number: "48h", label: "Pour déployer votre 1er agent IA", description: "Résultats rapides, sans friction", icon: "rocket" },
+const seoTitle = 'Formation IA sur mesure pour TPE et PME, éligible OPCO | Alefia';
+const seoDescription = "Votre équipe a déjà ChatGPT. Il lui manque la méthode. Formation IA sur mesure, sur vos vrais dossiers, à partir de 1 200 € la journée, éligible OPCO.";
+
+// Menu : ancres vers les sections de la page
+const navLinks = [
+  { href: '#changement', label: 'Exemples' },
+  { href: '#deroule', label: 'Méthode' },
+  { href: '#prix', label: 'Prix' },
+  { href: '#formateur', label: 'Formateur' },
+  { href: '#faq', label: 'FAQ' },
 ];
 
-const expertises: { title: string; description: string; icon: IconName }[] = [
-  { title: "Agents IA sur mesure", description: "Automatisez vos devis, emails, relances et reportings avec des agents IA adaptés à votre métier.", icon: "settings" },
-  { title: "Automatisation de workflows", description: "n8n, Make, Zapier — connectez tous vos outils et éliminez les tâches manuelles répétitives.", icon: "chart" },
-  { title: "Intégration IA dans vos outils", description: "Connectez l'IA à votre CRM, ERP et outils existants sans changer votre organisation.", icon: "tools" },
-  { title: "Analyse de données IA", description: "Dashboards automatiques, reporting IA et insights actionnables en temps réel.", icon: "chart" },
-  { title: "Formation & conseil IA", description: "Stratégie IA, formation de vos équipes et accompagnement pour une adoption durable.", icon: "heart" },
+const pains = [
+  { title: 'Chacun bricole dans son coin.', desc: 'Un collègue l’utilise pour ses mails, un autre n’ose pas y toucher. Ce qui marche ne se partage pas.' },
+  { title: 'Les résultats déçoivent.', desc: 'Une demande floue donne une réponse floue. On en conclut que l’IA ne sert à rien.' },
+  { title: 'Personne n’a fixé les règles.', desc: 'Ce qu’on peut donner à une IA, et ce qu’on ne donne jamais. Tant que ce n’est pas dit, chacun décide seul.' },
 ];
 
-const clients = [
-  "BNP Paribas",
-  "Hello bank!",
-  "Crédit Mutuel",
-  "CIC",
-  "Société Générale",
-  "Wonderbox"
+const beforeAfter = [
+  { task: 'Un mail client délicat', before: 'On cherche ses mots, on réécrit trois fois.', after: 'Un premier jet propre, que vous ajustez.' },
+  { task: 'Un devis ou une offre', before: 'On repart d’un vieux document.', after: 'Une trame claire, adaptée à chaque client.' },
+  { task: 'Un compte rendu de réunion', before: 'Personne ne veut s’en charger.', after: 'Un résumé structuré, avec les actions à mener.' },
+  { task: 'Un document confidentiel', before: 'On le colle dans une IA sans y penser.', after: 'Chacun sait ce qui peut sortir, et ce qui reste chez vous.' },
 ];
+
+const forYou = [
+  'Vous dirigez une TPE ou une PME.',
+  'Votre équipe est métier : direction, commerce, marketing, administratif.',
+  'Vous voulez des usages concrets, pas une conférence sur l’avenir de l’IA.',
+  'Vous voulez faire financer la formation par votre OPCO.',
+];
+const notForYou = [
+  'Vous voulez former des développeurs à créer des modèles d’IA.',
+  'Vous cherchez un catalogue standard, identique pour tout le monde.',
+];
+
+const faq = baseFaq;
 ---
 
-<Layout title={seoTitle} description={seoDescription}>
-  <AuditModal />
+<SiteLayout title={seoTitle} description={seoDescription} variant="home" ctaHref={FORM_ANCHOR}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(faq))} />
 
-  <!-- JSON-LD Structured Data -->
-  <script is:inline type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Alefia",
-    "description": "Agence spécialisée en automatisation IA et développement d'agents IA pour PME, TPE et indépendants.",
-    "url": "https://alefia.co",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "35 Rue du Faubourg Poissonnière",
-      "addressLocality": "Paris",
-      "postalCode": "75009",
-      "addressCountry": "FR"
-    },
-    "areaServed": "France",
-    "serviceType": ["Automatisation IA", "Agents IA", "Intégration IA", "Formation IA"],
-    "priceRange": "Sur devis"
-  })} />
-
-  <!-- Hero Section -->
-  <section class="pt-40 pb-28 bg-gradient-to-b from-primary to-primary-dark text-white relative overflow-hidden">
-    <div class="absolute inset-0 bg-[url('/images/grid.svg')] opacity-10"></div>
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
-
-    <div class="container mx-auto px-4 relative">
-      <div class="max-w-4xl mx-auto text-center">
-        <div class="mb-8 inline-flex items-center bg-white/10 rounded-full px-6 py-3 backdrop-blur-sm border border-white/10">
-          <span class="text-sm font-medium ml-2">Experts IA & Automatisation</span>
+    <!-- ============ BARRE DU HAUT ============ -->
+    <header class="nl-top" slot="header">
+      <div class="nl-wrap nl-top-inner">
+        <a href="#top" class="nl-logo">alefia<span>.</span></a>
+        <nav class="nl-nav" id="nl-nav" aria-label="Sections de la page">
+          <ul>
+            {navLinks.map((l) => <li><a href={l.href} data-nav>{l.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="nl-top-right">
+          <a href={FORM_ANCHOR} class="nl-top-cta" data-cta="header">Être rappelé</a>
+          <button type="button" class="nl-burger" id="nl-burger" aria-expanded="false" aria-controls="nl-nav">
+            <span class="nl-burger-icon" aria-hidden="true"></span>
+            <span class="nl-sr">Ouvrir le menu</span>
+          </button>
         </div>
-        <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-          <span class="text-secondary bg-gradient-to-r from-secondary to-secondary-light bg-clip-text text-transparent">Automatisez</span> votre business <span class="text-secondary bg-gradient-to-r from-secondary to-secondary-light bg-clip-text text-transparent">avec l'IA</span>
-        </h1>
-        <p class="text-xl md:text-2xl mb-12 text-gray-200 leading-relaxed">
-          Agents IA, automatisation de workflows, intégration dans vos outils.<br/>
-          Gagnez du temps, réduisez vos coûts. Sans compétences techniques requises.
-        </p>
+      </div>
+    </header>
 
-        <!-- CTA -->
-        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 max-w-2xl mx-auto border border-white/10 shadow-xl">
-          <div class="flex flex-col md:flex-row gap-4">
-            <input
-              type="email"
-              id="home-email-input"
-              placeholder="Votre email professionnel"
-              class="flex-1 px-6 py-4 rounded-xl text-gray-900 bg-white/95 focus:ring-2 focus:ring-secondary focus:bg-white transition-all duration-200"
-            >
-            <button
-              type="button"
-              id="audit-button"
-              class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-xl transition-all duration-200 hover:shadow-lg hover:scale-105 whitespace-nowrap"
-            >
-              Audit IA gratuit
-            </button>
+    <main id="top">
+      <!-- ============ HERO : Hassan en formation + 1re question du tunnel ============ -->
+      <section class="nl-hero">
+        <div class="nl-wrap nl-hero-grid">
+          <div class="nl-hero-text">
+            <p class="nl-kicker">Formation IA pour les équipes de TPE et PME</p>
+            <h1 class="nl-h1">
+              Votre équipe a déjà ChatGPT. Il lui manque <span class="nl-hl">la méthode.</span>
+            </h1>
+            <p class="nl-lead">
+              Une formation construite sur vos vrais dossiers. Votre équipe l’applique dès le premier jour, dans son métier.
+            </p>
+
+            <!-- Question 1 posée tout de suite : un clic, et on enchaîne sur le questionnaire -->
+            <div class="nl-qs" role="group" aria-labelledby="qs-form-title qs-title">
+              <div class="nl-qs-head">
+                <p id="qs-form-title" class="nl-qs-title">Votre demande de formation</p>
+                <p class="nl-qs-time">4 questions · 1 minute</p>
+              </div>
+              <div class="nl-qs-body">
+                <div class="nl-qs-progress">
+                  <span class="nl-qs-step">Question 1 sur 4</span>
+                  <span class="nl-qs-bar" aria-hidden="true"><i class="is-done"></i><i></i><i></i><i></i></span>
+                </div>
+                <p id="qs-title" class="nl-qs-q">Combien de personnes voulez-vous former ?</p>
+                <div class="nl-qs-row">
+                  {TRAINEE_COUNTS.map((v) => (
+                    <button type="button" class="nl-tile" data-quickstart={v}>{v}</button>
+                  ))}
+                </div>
+                <div class="nl-qs-foot">
+                  <button type="button" class="nl-qs-unsure" data-quickstart="">Je ne sais pas encore</button>
+                  <span>Sans engagement. Rappel sous 24 h.</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <p class="text-sm mt-4 text-gray-300">Sans engagement • Réponse sous 48h • 100% gratuit</p>
+
+          <figure class="nl-hero-visual">
+            <div class="nl-hero-photo">
+              <img
+                src="/images/team/hassan-hero.webp"
+                alt="Hassan Houaiss en pleine formation, micro casque, en train d’expliquer"
+                width="800"
+                height="800"
+                fetchpriority="high"
+              />
+            </div>
+            <figcaption class="nl-hero-cap">
+              <strong>Hassan Houaiss</strong>
+              <span>Votre formateur. 10 ans en banque, chez BNP Paribas et au Crédit Mutuel.</span>
+            </figcaption>
+            <blockquote class="nl-postit">
+              <p>«&nbsp;{reviews[0].text}&nbsp;»</p>
+              <footer>{reviews[0].author}, {reviews[0].company} · avis Malt 5/5</footer>
+            </blockquote>
+          </figure>
         </div>
 
-        <!-- Preuve sociale courte -->
-        <p class="mt-8 text-gray-300 text-sm">
-          Ils nous font confiance : <span class="font-semibold text-white">BNP Paribas, Crédit Mutuel, Wonderbox</span>
-        </p>
-      </div>
-    </div>
-  </section>
+        <div class="nl-wrap">
+          <ul class="nl-facts">
+            <li><strong>À partir de {PRICE_FROM}</strong> la journée</li>
+            <li><strong>Éligible OPCO</strong>, dossier géré de A à Z</li>
+            <li><strong>Chez vous</strong> en Île-de-France, ou à distance</li>
+          </ul>
+        </div>
+      </section>
 
-  <!-- Cas d'usage -->
-  <UseCasesSection />
-
-  <!-- Stats -->
-  <section class="py-20 bg-neutral-100" aria-label="Résultats mesurables">
-    <div class="container mx-auto px-4">
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Des résultats concrets et mesurables</h2>
-        <p class="text-gray-600 text-lg">
-          Nos clients PME, TPE et indépendants gagnent en productivité dès les premières semaines.
-        </p>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {stats.map(stat => (
-          <StatCard {...stat} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Valeurs -->
-  <ValuesSection />
-
-  <!-- Nos expertises -->
-  <section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-4">Nos domaines d'expertise</h2>
-      <p class="text-gray-600 text-center mb-16 max-w-2xl mx-auto">
-        De la stratégie IA au déploiement opérationnel — nous couvrons tout le spectre de l'automatisation intelligente.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {expertises.map(service => (
-          <ServiceCard {...service} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Références clients -->
-  <section class="py-20 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-4">Ils nous font confiance</h2>
-      <p class="text-gray-500 text-center mb-12 max-w-xl mx-auto">
-        Des grands groupes aux TPE, nos solutions d'automatisation IA s'adaptent à toutes les tailles d'entreprise.
-      </p>
-      <div class="flex flex-wrap justify-center items-center gap-6 max-w-4xl mx-auto">
-        {clients.map(client => (
-          <div class="bg-gray-50 border border-gray-200 rounded-xl px-8 py-4 text-gray-700 font-semibold text-lg hover:border-primary hover:text-primary transition-all duration-200">
-            {client}
+      <!-- ============ LE CONSTAT ============ -->
+      <section class="nl-section" id="constat">
+        <div class="nl-wrap nl-split">
+          <div>
+            <p class="nl-kicker">Le constat</p>
+            <h2 class="nl-h2">L’IA est déjà dans vos bureaux. Sans règles, ni méthode.</h2>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
+          <ul class="nl-pains">
+            {pains.map((p) => (
+              <li>
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-  <!-- CTA Final -->
-  <section class="bg-primary text-white py-20">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-6">Prêt à gagner du temps avec l'IA ?</h2>
-      <p class="text-xl mb-8 text-gray-200">
-        Obtenez votre audit IA gratuit et découvrez quelles tâches automatiser en priorité.
-      </p>
-      <button
-        type="button"
-        onclick="openModal()"
-        class="bg-secondary hover:bg-secondary-light text-primary font-semibold px-8 py-4 rounded-lg transition-colors text-lg"
-      >
-        Démarrer mon audit gratuit
-      </button>
-      <p class="text-sm mt-4 text-gray-300">Réponse personnalisée sous 48h • Sans engagement</p>
-    </div>
-  </section>
-</Layout>
+      <!-- ============ AVANT / APRÈS ============ -->
+      <section class="nl-section nl-mist" id="changement">
+        <div class="nl-wrap">
+          <p class="nl-kicker">Exemples</p>
+          <h2 class="nl-h2">Les mêmes tâches. Une autre façon de les faire.</h2>
+
+          <ul class="nl-cases" aria-label="Avant et après la formation">
+            {beforeAfter.map((r) => (
+              <li class="nl-case">
+                <h3>{r.task}</h3>
+                <p class="nl-before"><span>Avant</span>{r.before}</p>
+                <p class="nl-after"><span>Après</span>{r.after}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div class="nl-actions">
+            <a href={FORM_ANCHOR} class="nl-btn" data-cta="avant-apres">Parler de mon équipe <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <SectionMethode />
+
+      <!-- ============ POUR QUI ============ -->
+      <section class="nl-section nl-mist" id="pour-qui">
+        <div class="nl-wrap">
+          <p class="nl-kicker">Pour qui</p>
+          <h2 class="nl-h2">Soyons clairs dès le départ.</h2>
+          <div class="nl-fit">
+            <div class="nl-fit-col">
+              <h3>C’est pour vous si</h3>
+              <ul class="nl-list nl-list-yes">
+                {forYou.map((t) => <li>{t}</li>)}
+              </ul>
+            </div>
+            <div class="nl-fit-col nl-fit-no">
+              <h3>Ce n’est pas pour vous si</h3>
+              <ul class="nl-list nl-list-no">
+                {notForYou.map((t) => <li>{t}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionPrix />
+
+      <SectionFormateur />
+
+      <SectionFaq items={faq} />
+
+      <FormationFunnel />
+    </main>
+</SiteLayout>
+
+<script>
+  import { track } from '../lib/track';
+
+  // ---------- Menu : ouverture mobile + section active ----------
+  const nav = document.getElementById('nl-nav');
+  const burger = document.getElementById('nl-burger');
+  const setMenu = (open: boolean) => {
+    nav?.classList.toggle('is-open', open);
+    burger?.setAttribute('aria-expanded', String(open));
+    const sr = burger?.querySelector('.nl-sr');
+    if (sr) sr.textContent = open ? 'Fermer le menu' : 'Ouvrir le menu';
+  };
+  burger?.addEventListener('click', () => setMenu(!nav?.classList.contains('is-open')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  const navAnchors = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav]'));
+  navAnchors.forEach((a) => a.addEventListener('click', () => {
+    setMenu(false);
+    track('nav_click', { target: a.getAttribute('href') });
+  }));
+
+  if ('IntersectionObserver' in window) {
+    const sections = navAnchors
+      .map((a) => document.querySelector<HTMLElement>(a.getAttribute('href') || ''))
+      .filter((el): el is HTMLElement => Boolean(el));
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navAnchors.forEach((a) => {
+          const active = a.getAttribute('href') === `#${entry.target.id}`;
+          a.classList.toggle('is-active', active);
+          if (active) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach((el) => spy.observe(el));
+
+    // Retour sur le hero : plus aucune section active
+    const heroEl = document.querySelector('.nl-hero');
+    if (heroEl) new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) navAnchors.forEach((l) => { l.classList.remove('is-active'); l.removeAttribute('aria-current'); });
+    }, { rootMargin: '0px 0px -60% 0px' }).observe(heroEl);
+  }
+</script>

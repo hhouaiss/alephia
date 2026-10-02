@@ -1,0 +1,52 @@
+---
+// Bandeau cookies (RGPD), affiché à la première visite ou quand le choix a plus de 13 mois.
+// Le refus par défaut est posé dans Layout.astro (consentMode) avant le chargement de Google Analytics.
+---
+
+<div id="nl-cookies" class="nl-cookies" role="dialog" aria-modal="false" aria-labelledby="nl-cookies-title" aria-describedby="nl-cookies-text" hidden>
+  <p id="nl-cookies-title" class="nl-cookies-title">Vos données, votre choix</p>
+  <p id="nl-cookies-text">
+    Avec votre accord, nous utilisons Google Analytics pour savoir combien de personnes visitent ce site et d’où elles viennent. Rien d’autre, pas de publicité.
+    Vous pouvez changer d’avis à tout moment via « Gérer les cookies » en bas de page. <a href="/privacy" target="_blank" rel="noopener">En savoir plus</a>
+  </p>
+  <div class="nl-cookies-actions">
+    <button type="button" class="nl-cookie-btn" data-consent="denied">Refuser</button>
+    <button type="button" class="nl-cookie-btn" data-consent="granted">Accepter</button>
+  </div>
+</div>
+
+<script>
+  // ---------- Bandeau cookies (RGPD) ----------
+  // Le refus par défaut est posé dans le Layout (consentMode) avant le chargement de Google Analytics.
+  const CONSENT_KEY = 'alefia_consent';
+  const CONSENT_MAX_AGE = 395 * 864e5; // 13 mois, durée max recommandée par la CNIL
+  const banner = document.getElementById('nl-cookies');
+
+  const readConsent = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(CONSENT_KEY) || 'null');
+      if (saved && (saved.v === 'granted' || saved.v === 'denied') && Date.now() - saved.t < CONSENT_MAX_AGE) return saved.v as string;
+    } catch { /* stockage indisponible */ }
+    return null;
+  };
+  const showBanner = (show: boolean) => {
+    if (!banner) return;
+    banner.hidden = !show;
+    document.documentElement.classList.toggle('has-cookie-banner', show);
+  };
+  const saveConsent = (value: 'granted' | 'denied') => {
+    try { localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: value, t: Date.now() })); } catch { /* stockage indisponible */ }
+    const w = window as any;
+    if (typeof w.gtag === 'function') w.gtag('consent', 'update', { analytics_storage: value });
+    showBanner(false);
+  };
+
+  banner?.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((btn) => {
+    btn.addEventListener('click', () => saveConsent(btn.dataset.consent === 'granted' ? 'granted' : 'denied'));
+  });
+  document.querySelectorAll('[data-cookie-open]').forEach((el) => el.addEventListener('click', () => {
+    showBanner(true);
+    banner?.querySelector<HTMLButtonElement>('[data-consent]')?.focus();
+  }));
+  if (!readConsent()) showBanner(true);
+</script>

@@ -1,0 +1,23 @@
+---
+// Les 3 étapes : appel, cadrage, formation
+import { steps } from '../../data/offer';
+
+interface Props { title?: string; mist?: boolean }
+const { title = 'Un appel, un cadrage, une formation faite pour vous.', mist = false } = Astro.props;
+---
+
+<section class:list={['nl-section', { 'nl-mist': mist }]} id="deroule">
+  <div class="nl-wrap">
+    <p class="nl-kicker">Méthode</p>
+    <h2 class="nl-h2">{title}</h2>
+    <ol class="nl-steps">
+      {steps.map((s, i) => (
+        <li>
+          <span class="nl-step-n" aria-hidden="true">{i + 1}</span>
+          <h3>{s.title}</h3>
+          <p>{s.desc}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

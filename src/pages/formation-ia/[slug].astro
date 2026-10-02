@@ -1,0 +1,158 @@
+---
+// Page SEO "Formation IA" par métier ou par usage. Contenu : src/data/formations.ts.
+// Même conversion que la home : le tunnel #demande, avec les sujets de la page pré-cochés.
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import FormationFunnel from '../../components/site/FormationFunnel.astro';
+import SectionMethode from '../../components/site/SectionMethode.astro';
+import SectionPrix from '../../components/site/SectionPrix.astro';
+import SectionFormateur from '../../components/site/SectionFormateur.astro';
+import SectionFaq from '../../components/site/SectionFaq.astro';
+import { formations } from '../../data/formations';
+import type { FormationPage } from '../../data/formations';
+import { FORM_ANCHOR, PRICE_FROM, SITE_URL, baseFaq, faqSchema } from '../../data/offer';
+
+export function getStaticPaths() {
+  return formations.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: FormationPage };
+
+// FAQ de la page d'abord, puis les questions communes sur le prix, l'OPCO et le format
+const faq = [...page.faq, ...baseFaq.filter((b) => !page.faq.some((f) => f.q === b.q)).slice(0, 4)];
+
+const [h1Before, h1After] = page.h1.split(page.highlight);
+const related = formations.filter((f) => f.kind === page.kind && f.slug !== page.slug);
+const other = formations.filter((f) => f.kind !== page.kind).slice(0, 4);
+
+const breadcrumbs = [
+  { name: 'Accueil', href: '/' },
+  { name: 'Formations IA', href: '/formation-ia' },
+  { name: page.label, href: `/formation-ia/${page.slug}` },
+];
+
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: page.metaTitle.replace(/\s*\|\s*Alefia$/, ''),
+  description: page.metaDescription,
+  url: `${SITE_URL}/formation-ia/${page.slug}`,
+  inLanguage: 'fr-FR',
+  provider: { '@id': `${SITE_URL}/#organization` },
+  hasCourseInstance: [
+    { '@type': 'CourseInstance', courseMode: 'Onsite', location: { '@type': 'Place', name: 'Île-de-France' } },
+    { '@type': 'CourseInstance', courseMode: 'Online' },
+  ],
+};
+---
+
+<SiteLayout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  breadcrumbs={breadcrumbs}
+  variant={`formation-ia/${page.slug}`}
+  ctaHref={FORM_ANCHOR}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema(faq))} />
+    <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+  </Fragment>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="nl-hero nl-page-hero">
+      <div class="nl-wrap">
+        <nav class="nl-crumbs" aria-label="Fil d’Ariane">
+          <a href="/">Accueil</a><span aria-hidden="true">/</span><a href="/formation-ia">Formations IA</a><span aria-hidden="true">/</span><span aria-current="page">{page.label}</span>
+        </nav>
+        <div class="nl-page-hero-grid">
+          <div>
+            <p class="nl-kicker">{page.kicker}</p>
+            <h1 class="nl-h1">{h1Before}<span class="nl-hl">{page.highlight}</span>{h1After}</h1>
+            <p class="nl-lead">{page.lead}</p>
+            <div class="nl-actions nl-actions-hero">
+              <a href={FORM_ANCHOR} class="nl-btn" data-cta="hero">Être rappelé sous 24 h <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <aside class="nl-brief" aria-label="En bref">
+            <p class="nl-brief-title">En bref</p>
+            <ul>
+              <li><strong>À partir de {PRICE_FROM}</strong> la journée</li>
+              <li><strong>Éligible OPCO</strong>, dossier géré de A à Z</li>
+              <li><strong>Chez vous</strong> en Île-de-France, ou à distance</li>
+              <li><strong>Sur mesure</strong>, construite sur vos documents</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LE CONSTAT ============ -->
+    <section class="nl-section" id="constat">
+      <div class="nl-wrap nl-split">
+        <div>
+          <p class="nl-kicker">Le constat</p>
+          <h2 class="nl-h2">Ce qui coince aujourd’hui.</h2>
+        </div>
+        <ul class="nl-pains">
+          {page.pains.map((p) => (
+            <li>
+              <h3>{p.title}</h3>
+              <p>{p.desc}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ EXEMPLES AVANT / APRÈS ============ -->
+    <section class="nl-section nl-mist" id="exemples">
+      <div class="nl-wrap">
+        <p class="nl-kicker">Exemples</p>
+        <h2 class="nl-h2">Les mêmes tâches. Une autre façon de les faire.</h2>
+        <ul class="nl-cases" aria-label="Avant et après la formation">
+          {page.examples.map((r) => (
+            <li class="nl-case">
+              <h3>{r.task}</h3>
+              <p class="nl-before"><span>Avant</span>{r.before}</p>
+              <p class="nl-after"><span>Après</span>{r.after}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ PROGRAMME ============ -->
+    <section class="nl-section" id="programme">
+      <div class="nl-wrap nl-split">
+        <div>
+          <p class="nl-kicker">Programme</p>
+          <h2 class="nl-h2">Ce que votre équipe apprend.</h2>
+          <p class="nl-section-lead">Le programme exact est construit avec vous, lors de l’appel de cadrage.</p>
+        </div>
+        <ul class="nl-list nl-list-yes">
+          {page.program.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <SectionMethode mist />
+    <SectionPrix />
+    <SectionFormateur />
+    <SectionFaq items={faq} />
+
+    <!-- ============ AUTRES FORMATIONS ============ -->
+    <section class="nl-section nl-mist" id="autres">
+      <div class="nl-wrap">
+        <p class="nl-kicker">{page.kind === 'secteur' ? 'Autres métiers' : 'Autres usages'}</p>
+        <h2 class="nl-h2">Voir aussi</h2>
+        <ul class="nl-related">
+          {[...related, ...other].map((f) => (
+            <li><a href={`/formation-ia/${f.slug}`}>{f.kind === 'secteur' ? `Formation IA pour ${f.label.toLowerCase()}` : `Formation IA : ${f.label.toLowerCase()}`}<span aria-hidden="true">→</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <FormationFunnel presetTopics={page.topics} />
+  </main>
+</SiteLayout>
