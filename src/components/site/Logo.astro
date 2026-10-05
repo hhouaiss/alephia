@@ -1,0 +1,13 @@
+---
+// Logo Alefia (fichiers de la charte copiés dans public/images/brand, jamais redessinés).
+// color : fonds blancs ou mist. white : fonds bleus ou ink (pied de page).
+interface Props {
+  href?: string;
+  variant?: 'color' | 'white';
+}
+
+const { href = '/', variant = 'color' } = Astro.props;
+const src = variant === 'white' ? '/images/brand/alefia-logo-white.svg' : '/images/brand/alefia-logo.svg';
+---
+
+<a href={href} class="nl-logo" aria-label="Alefia, accueil"><img src={src} alt="" width="105" height="30" /></a>

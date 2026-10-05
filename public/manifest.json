@@ -1,16 +1,21 @@
 {
-  "name": "Alefia - IA souveraine pour entreprises françaises",
+  "name": "Alefia, formation IA pour TPE et PME",
   "short_name": "Alefia",
-  "description": "Hébergez votre propre IA en France et boostez votre productivité. Sécurité, performance et conformité RGPD garanties.",
+  "description": "Votre équipe a déjà ChatGPT. Il lui manque la méthode. Formation IA sur mesure, sur vos vrais dossiers, à partir de 1 200 € la journée, éligible OPCO.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#4F46E5",
+  "theme_color": "#10118B",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

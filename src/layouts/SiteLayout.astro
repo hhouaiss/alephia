@@ -4,6 +4,7 @@
 // pied de page, bandeau cookies, bouton retour en haut et CTA collant mobile.
 import Layout from './Layout.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
+import Logo from '../components/site/Logo.astro';
 import CookieBanner from '../components/site/CookieBanner.astro';
 import '../styles/alefia.css';
 
@@ -35,7 +36,7 @@ const { title, description, noindex = false, breadcrumbs = [], variant, stickyCt
     <slot name="header">
       <header class="nl-top">
         <div class="nl-wrap nl-top-inner">
-          <a href="/" class="nl-logo">alefia<span>.</span></a>
+          <Logo />
           <a href={ctaHref} class="nl-top-cta" data-cta="header">Être rappelé</a>
         </div>
       </header>

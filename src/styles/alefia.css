@@ -36,7 +36,7 @@ html { scroll-behavior: smooth; }
 
 /* ---------- Typo ---------- */
 .nl-kicker { font-size: 14px; font-weight: 600; color: var(--blue); margin-bottom: 14px; }
-.nl-h1, .nl-h2, .nl-q, .nl-logo, .nl-tile, .nl-step-n, .nl-price-amount {
+.nl-h1, .nl-h2, .nl-q, .nl-tile, .nl-step-n, .nl-price-amount {
   font-family: var(--font); font-stretch: 118%;
 }
 .nl-h1 {
@@ -63,8 +63,8 @@ html { scroll-behavior: smooth; }
   border-bottom: 1px solid var(--line);
 }
 .nl-top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
-.nl-logo { font-size: 26px; font-weight: 800; letter-spacing: -0.04em; color: var(--blue); }
-.nl-logo span { color: var(--amber); }
+.nl-logo { display: inline-flex; align-items: center; flex-shrink: 0; }
+.nl-logo img { display: block; height: 30px; width: auto; }
 .nl-top-right { display: flex; align-items: center; gap: 10px; }
 /* Menu : même famille que les titres, en largeur semi-étendue. Survol = soulignement ambre. */
 .nl-nav ul { display: flex; gap: 30px; }
@@ -436,7 +436,6 @@ html { scroll-behavior: smooth; }
 @media (min-width: 768px) { .nl-footer { padding-bottom: 44px; } }
 .nl-footer-inner { display: grid; gap: 24px; }
 @media (min-width: 900px) { .nl-footer-inner { grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; } }
-.nl-footer .nl-logo { color: var(--white); }
 .nl-footer-brand p { margin-top: 4px; }
 .nl-footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .nl-footer-links a, .nl-footer-btn { white-space: nowrap; }
@@ -564,6 +563,6 @@ html.has-cookie-banner .nl-sticky, html.has-cookie-banner .nl-totop { visibility
 .nl-legal p + p { margin-top: 12px; }
 .nl-legal ul { margin: 12px 0; padding-left: 22px; list-style: disc; }
 .nl-legal li + li { margin-top: 6px; }
-.nl-legal a { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
+.nl-legal a:not(.nl-btn) { color: var(--blue); text-decoration: underline; text-underline-offset: 2px; }
 .nl-legal-date { margin-top: 48px; font-size: 14px; color: var(--ink-3); }
 .nl-legal .lead { margin-top: 8px; font-size: 19px; color: var(--ink-2); }

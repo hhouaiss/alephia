@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import Logo from '../components/site/Logo.astro';
 import FormationFunnel from '../components/site/FormationFunnel.astro';
 import SectionMethode from '../components/site/SectionMethode.astro';
 import SectionPrix from '../components/site/SectionPrix.astro';
@@ -57,7 +58,7 @@ const faq = baseFaq;
     <!-- ============ BARRE DU HAUT ============ -->
     <header class="nl-top" slot="header">
       <div class="nl-wrap nl-top-inner">
-        <a href="#top" class="nl-logo">alefia<span>.</span></a>
+        <Logo href="#top" />
         <nav class="nl-nav" id="nl-nav" aria-label="Sections de la page">
           <ul>
             {navLinks.map((l) => <li><a href={l.href} data-nav>{l.label}</a></li>)}

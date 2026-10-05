@@ -1,12 +1,13 @@
 ---
 // Pied de page volontairement court : logo, slogan, liens, email.
 import { CONTACT_EMAIL, SLOGAN } from '../../data/offer';
+import Logo from './Logo.astro';
 ---
 
 <footer class="nl-footer">
   <div class="nl-wrap nl-footer-inner">
     <div class="nl-footer-brand">
-      <a href="/" class="nl-logo">alefia<span>.</span></a>
+      <Logo variant="white" />
       <p>{SLOGAN}</p>
     </div>
     <nav class="nl-footer-links" aria-label="Liens du pied de page">
