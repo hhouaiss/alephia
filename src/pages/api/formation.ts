@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import { supabase } from '../../lib/supabase';
+import { clientIp, isRateLimited } from '../../lib/rateLimit';
 import { OPCO_CHOICES, normalizePhone, parseFormationLead, validateFormationLead } from '../../lib/formationLead';
 import type { FormationLead } from '../../lib/formationLead';
 
@@ -78,7 +79,14 @@ const tableRows = (rows: [string, string][]) => rows.map(([label, value]) => `
     <td style="padding: 10px 0; border-bottom: 1px solid #e3e5f0; font-size: 15px; white-space: pre-wrap;">${escapeHtml(value)}</td>
   </tr>`).join('');
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, clientAddress }) => {
+  // Trop d'envois depuis la même adresse IP : on refuse, pour éviter l'envoi d'emails en masse
+  let fallbackIp: string | undefined;
+  try { fallbackIp = clientAddress; } catch { /* adresse indisponible selon l'environnement */ }
+  if (isRateLimited(`formation:${clientIp(request, fallbackIp)}`)) {
+    return json({ success: false, message: 'Trop de demandes. Réessayez dans quelques minutes.' }, 429);
+  }
+
   let raw: Record<string, unknown>;
   try {
     raw = await request.json();

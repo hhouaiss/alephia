@@ -2,16 +2,15 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<SiteLayout title="Page non trouvée | Alefia" noindex={true} variant="404" stickyCta={false}>
+<SiteLayout title="Page non trouvée | Alefia" noindex={true} variant="404" stickyCta={false} footer="studio">
   <main id="top" class="nl-legal">
     <div class="nl-wrap">
       <p class="nl-kicker">Erreur 404</p>
       <h1 class="nl-h1">Cette page n’existe plus.</h1>
-      <p class="nl-lead">Alefia forme désormais les équipes de TPE et PME à l’IA. La page que vous cherchez a peut-être été déplacée.</p>
+      <p class="nl-lead">Alefia crée des sites web professionnels pour les TPE, indépendants et artisans. La page que vous cherchez a peut-être été déplacée.</p>
       <div class="nl-actions">
-        <a href="/" class="nl-btn">Découvrir la formation <span aria-hidden="true">→</span></a>
+        <a href="/#offres" class="nl-btn">Découvrir nos offres <span aria-hidden="true">→</span></a>
       </div>
-      <p class="nl-legal-date"><a href="/formation-ia">Voir les formations par métier et par usage</a></p>
     </div>
   </main>
 </SiteLayout>

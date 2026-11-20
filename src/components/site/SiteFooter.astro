@@ -1,17 +1,32 @@
 ---
 // Pied de page volontairement court : logo, slogan, liens, email.
+// "studio" : home (offre sites web). "formation" : pages /formation-ia et archive.
 import { CONTACT_EMAIL, SLOGAN } from '../../data/offer';
+import { STUDIO_SLOGAN } from '../../data/studio';
 import Logo from './Logo.astro';
+
+interface Props {
+  variant?: 'studio' | 'formation';
+}
+const { variant = 'formation' } = Astro.props;
+const studio = variant === 'studio';
 ---
 
 <footer class="nl-footer">
   <div class="nl-wrap nl-footer-inner">
     <div class="nl-footer-brand">
       <Logo variant="white" />
-      <p>{SLOGAN}</p>
+      <p>{studio ? STUDIO_SLOGAN : SLOGAN}</p>
     </div>
     <nav class="nl-footer-links" aria-label="Liens du pied de page">
-      <a href="/formation-ia">Formations par métier</a>
+      {studio ? (
+        <>
+          <a href="/#offres">Nos offres</a>
+          <a href="/#faq">Questions fréquentes</a>
+        </>
+      ) : (
+        <a href="/formation-ia">Formations par métier</a>
+      )}
       <a href="/legal">Mentions légales</a>
       <a href="/privacy">Confidentialité</a>
       <button type="button" class="nl-footer-btn" data-cookie-open>Gérer les cookies</button>

@@ -1,0 +1,147 @@
+---
+// Maquette de site en HTML/CSS (aucune image) : sert d'exemple visuel dans le hero et la section Réalisations.
+// Les noms affichés ("Votre atelier"…) sont volontairement génériques : ce ne sont pas des sites clients.
+// La taille du texte suit la largeur de la maquette (unités cqw), donc elle reste lisible partout.
+interface Props {
+  kind: 'artisan' | 'services' | 'commerce';
+  device?: 'desktop' | 'phone';
+  class?: string;
+}
+
+const { kind, device = 'desktop', class: className = '' } = Astro.props;
+
+const content = {
+  artisan: {
+    brand: 'Votre atelier',
+    url: 'votre-atelier.fr',
+    kicker: 'Menuiserie · Rénovation',
+    title: 'Rénovation et menuiserie sur mesure.',
+    cta: 'Demander un devis',
+    cards: ['Cuisines', 'Escaliers', 'Dressings'],
+  },
+  services: {
+    brand: 'Votre cabinet',
+    url: 'votre-cabinet.fr',
+    kicker: 'Conseil aux entreprises',
+    title: 'Le conseil qui fait avancer votre entreprise.',
+    cta: 'Prendre rendez-vous',
+    cards: ['Stratégie', 'Gestion', 'Recrutement'],
+  },
+  commerce: {
+    brand: 'Votre boutique',
+    url: 'votre-boutique.fr',
+    kicker: 'Épicerie fine · Paris 11e',
+    title: 'Des produits locaux, choisis avec soin.',
+    cta: 'Nous trouver',
+    cards: ['Fromages', 'Épicerie', 'Coffrets'],
+  },
+}[kind];
+---
+
+<div class:list={['mk', `mk-${kind}`, `mk-${device}`, className]} aria-hidden="true">
+  <div class="mk-frame">
+    {device === 'desktop' ? (
+      <div class="mk-bar"><i></i><i></i><i></i><span>{content.url}</span></div>
+    ) : (
+      <div class="mk-notch"></div>
+    )}
+    <div class="mk-site">
+      <div class="mk-nav">
+        <b>{content.brand}</b>
+        {device === 'desktop' ? <span class="mk-links"><i></i><i></i><i></i></span> : <span class="mk-burger"><i></i><i></i></span>}
+        {device === 'desktop' && <em>{content.cta}</em>}
+      </div>
+      <div class="mk-hero">
+        <div class="mk-hero-text">
+          <small>{content.kicker}</small>
+          <strong>{content.title}</strong>
+          <span class="mk-line"></span>
+          <span class="mk-line mk-line-short"></span>
+          <em>{content.cta}</em>
+        </div>
+        <div class="mk-art"><span></span><span></span><span></span></div>
+      </div>
+      <div class="mk-cards">
+        {content.cards.map((c) => <div><span></span><b>{c}</b></div>)}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mk { container-type: inline-size; width: 100%; }
+  .mk-frame {
+    overflow: hidden; border-radius: 2.2cqw; background: #fff;
+    box-shadow: 0 1px 2px rgba(20, 21, 58, 0.08), 0 28px 60px -28px rgba(20, 21, 58, 0.45);
+    border: 1px solid rgba(20, 21, 58, 0.08);
+  }
+  .mk-phone .mk-frame { border-radius: 9cqw; border: 2.4cqw solid #14153a; }
+  .mk-bar { display: flex; align-items: center; gap: 1cqw; padding: 1.6cqw 2.2cqw; background: #f3f4f8; border-bottom: 1px solid rgba(20, 21, 58, 0.06); }
+  .mk-bar i { width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: #d7d9e4; }
+  .mk-bar span { margin: 0 auto; padding: 0.6cqw 3cqw; border-radius: 99px; background: #fff; font-size: 1.6cqw; color: #8a8ca5; }
+  .mk-notch { width: 30%; height: 4.5cqw; margin: 0 auto; border-radius: 0 0 3cqw 3cqw; background: #14153a; }
+
+  .mk-site { --bg: #fff; --ink: #222; --accent: #333; --soft: #eee; background: var(--bg); color: var(--ink); font-family: Georgia, 'Times New Roman', serif; }
+  .mk-nav { display: flex; align-items: center; gap: 2cqw; padding: 2.4cqw 3.4cqw; }
+  .mk-nav b { font-size: 2.3cqw; font-weight: 700; letter-spacing: -0.02em; }
+  .mk-links { display: flex; gap: 2cqw; margin-left: auto; }
+  .mk-links i { width: 5cqw; height: 0.8cqw; border-radius: 1cqw; background: currentColor; opacity: 0.25; }
+  .mk-nav em, .mk-hero-text em {
+    font-style: normal; font-family: system-ui, sans-serif; font-weight: 600;
+    font-size: 1.5cqw; padding: 1cqw 2cqw; border-radius: 99px; background: var(--accent); color: var(--bg); white-space: nowrap;
+  }
+  .mk-burger { margin-left: auto; display: grid; gap: 1.4cqw; }
+  .mk-burger i { width: 6cqw; height: 0.9cqw; background: currentColor; border-radius: 1cqw; }
+
+  .mk-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3cqw; align-items: center; padding: 3cqw 3.4cqw 4cqw; }
+  .mk-hero-text { display: grid; gap: 1.4cqw; justify-items: start; }
+  .mk-hero-text small { font-family: system-ui, sans-serif; font-size: 1.4cqw; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+  .mk-hero-text strong { font-size: 4.1cqw; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
+  .mk-line { width: 92%; height: 0.9cqw; border-radius: 1cqw; background: currentColor; opacity: 0.14; }
+  .mk-line-short { width: 64%; }
+  .mk-hero-text em { margin-top: 1cqw; padding: 1.3cqw 2.6cqw; font-size: 1.6cqw; }
+  .mk-art { position: relative; aspect-ratio: 4 / 4.4; border-radius: 1.6cqw; overflow: hidden; background: var(--soft); }
+  .mk-art span { position: absolute; display: block; }
+
+  .mk-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2cqw; padding: 0 3.4cqw 3.4cqw; }
+  .mk-cards div { display: grid; gap: 1.2cqw; padding: 1.6cqw; border-radius: 1.4cqw; background: var(--soft); }
+  .mk-cards span { aspect-ratio: 16 / 9; border-radius: 1cqw; background: var(--accent); opacity: 0.18; }
+  .mk-cards b { font-size: 1.7cqw; font-weight: 700; }
+
+  /* Téléphone : tout s'empile, textes plus grands */
+  .mk-phone .mk-nav { padding: 5cqw 6cqw; }
+  .mk-phone .mk-nav b { font-size: 6cqw; }
+  .mk-phone .mk-hero { grid-template-columns: 1fr; gap: 5cqw; padding: 4cqw 6cqw 6cqw; }
+  .mk-phone .mk-hero-text { gap: 3cqw; }
+  .mk-phone .mk-hero-text small { font-size: 3.4cqw; }
+  .mk-phone .mk-hero-text strong { font-size: 9.5cqw; }
+  .mk-phone .mk-line { height: 2cqw; }
+  .mk-phone .mk-hero-text em { font-size: 4cqw; padding: 3cqw 6cqw; }
+  .mk-phone .mk-art { aspect-ratio: 4 / 3; border-radius: 4cqw; }
+  .mk-phone .mk-cards { grid-template-columns: 1fr 1fr; gap: 3cqw; padding: 0 6cqw 6cqw; }
+  .mk-phone .mk-cards div { padding: 3cqw; border-radius: 3cqw; }
+  .mk-phone .mk-cards div:nth-child(3) { display: none; }
+  .mk-phone .mk-cards b { font-size: 4cqw; }
+
+  /* ---------- Artisan : bois, crème, terracotta ---------- */
+  .mk-artisan .mk-site { --bg: #f6f1e8; --ink: #2b211a; --accent: #b4532a; --soft: #ebe2d3; }
+  .mk-artisan .mk-art { background: repeating-linear-gradient(100deg, #c99a6b 0 6%, #b7875a 6% 9%, #d4a877 9% 15%, #bf8f60 15% 19%); }
+  .mk-artisan .mk-art span:nth-child(1) { inset: 52% 10% 10% 10%; background: #2b211a; border-radius: 1cqw; opacity: 0.88; }
+  .mk-artisan .mk-art span:nth-child(2) { left: 18%; right: 54%; top: 60%; bottom: 18%; background: #f6f1e8; border-radius: 0.6cqw; }
+  .mk-artisan .mk-art span:nth-child(3) { left: 52%; right: 18%; top: 60%; bottom: 18%; background: #f6f1e8; border-radius: 0.6cqw; }
+
+  /* ---------- Services : vert profond, blanc cassé ---------- */
+  .mk-services .mk-site { --bg: #fbfaf7; --ink: #10261f; --accent: #1f5a46; --soft: #e6ece8; font-family: system-ui, -apple-system, sans-serif; }
+  .mk-services .mk-art { background: #1f5a46; }
+  .mk-services .mk-art span:nth-child(1) { width: 70%; aspect-ratio: 1; border-radius: 50%; right: -18%; top: -14%; background: #2f7a60; }
+  .mk-services .mk-art span:nth-child(2) { width: 46%; aspect-ratio: 1; border-radius: 50%; left: 12%; bottom: 12%; background: #e7c873; }
+  .mk-services .mk-art span:nth-child(3) { left: 12%; right: 12%; top: 46%; height: 1.4cqw; background: #fbfaf7; border-radius: 1cqw; opacity: 0.6; }
+  .mk-phone.mk-services .mk-art span:nth-child(3) { height: 2.4cqw; }
+
+  /* ---------- Commerce : rose poudré, encre, jaune ---------- */
+  .mk-commerce .mk-site { --bg: #fff8f2; --ink: #1d1a1a; --accent: #d1462f; --soft: #fbe6d8; }
+  .mk-commerce .mk-art { background: #f6d9c4; }
+  .mk-commerce .mk-art span:nth-child(1) { width: 52%; aspect-ratio: 1; border-radius: 50%; left: 8%; top: 14%; background: #f3b33d; }
+  .mk-commerce .mk-art span:nth-child(2) { width: 38%; aspect-ratio: 1; border-radius: 50%; right: 8%; top: 38%; background: #d1462f; }
+  .mk-commerce .mk-art span:nth-child(3) { left: 0; right: 0; bottom: 0; height: 22%; background: #6b3b24; }
+</style>
