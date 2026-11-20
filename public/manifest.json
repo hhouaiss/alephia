@@ -1,7 +1,7 @@
 {
-  "name": "Alefia, formation IA pour TPE et PME",
+  "name": "Alefia, studio de création de sites web",
   "short_name": "Alefia",
-  "description": "Votre équipe a déjà ChatGPT. Il lui manque la méthode. Formation IA sur mesure, sur vos vrais dossiers, à partir de 1 200 € la journée, éligible OPCO.",
+  "description": "Votre site professionnel. Rapidement. Au juste prix. Site Express dès 299 € HT, Site Business dès 599 € HT.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

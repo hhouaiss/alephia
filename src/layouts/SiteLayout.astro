@@ -19,12 +19,18 @@ interface Props {
   stickyCta?: boolean;
   // Lien du bouton de la barre du haut : #demande si la page a le tunnel, sinon la home
   ctaHref?: string;
+  // Libellé du CTA collant mobile
+  stickyLabel?: string;
+  // Pied de page : offre studio web (home) ou formation (pages /formation-ia, archive)
+  footer?: 'studio' | 'formation';
+  // Image de partage (réseaux sociaux)
+  image?: string;
 }
 
-const { title, description, noindex = false, breadcrumbs = [], variant, stickyCta = true, ctaHref = '/#demande' } = Astro.props;
+const { title, description, noindex = false, breadcrumbs = [], variant, stickyCta = true, ctaHref = '/#demande', stickyLabel = 'Être rappelé sous 24 h', footer = 'formation', image } = Astro.props;
 ---
 
-<Layout title={title} description={description} noindex={noindex} breadcrumbs={breadcrumbs}>
+<Layout title={title} description={description} noindex={noindex} breadcrumbs={breadcrumbs} image={image ?? (footer === 'formation' ? '/og-image.jpg' : undefined)}>
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,14 +43,14 @@ const { title, description, noindex = false, breadcrumbs = [], variant, stickyCt
       <header class="nl-top">
         <div class="nl-wrap nl-top-inner">
           <Logo />
-          <a href={ctaHref} class="nl-top-cta" data-cta="header">Être rappelé</a>
+          <a href={ctaHref} class="nl-top-cta" data-cta="header">{footer === 'studio' ? 'Démarrer mon projet' : 'Être rappelé'}</a>
         </div>
       </header>
     </slot>
 
     <slot />
 
-    <SiteFooter />
+    <SiteFooter variant={footer} />
 
     <!-- Retour en haut de page -->
     <a href="#top" id="nl-totop" class="nl-totop" aria-label="Revenir en haut de la page" tabindex="-1" aria-hidden="true">
@@ -56,7 +62,7 @@ const { title, description, noindex = false, breadcrumbs = [], variant, stickyCt
     {stickyCta && (
       <!-- CTA collant mobile, masqué sur le hero et sur le tunnel -->
       <div id="nl-sticky" class="nl-sticky" aria-hidden="true">
-        <a href="#demande" tabindex="-1" class="nl-btn nl-btn-full" data-cta="sticky">Être rappelé sous 24 h <span aria-hidden="true">→</span></a>
+        <a href="#demande" tabindex="-1" class="nl-btn nl-btn-full" data-cta="sticky">{stickyLabel} <span aria-hidden="true">→</span></a>
       </div>
     )}
   </div>

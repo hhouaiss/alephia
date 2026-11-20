@@ -1,219 +1,264 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
 import Logo from '../components/site/Logo.astro';
-import FormationFunnel from '../components/site/FormationFunnel.astro';
-import SectionMethode from '../components/site/SectionMethode.astro';
-import SectionPrix from '../components/site/SectionPrix.astro';
-import SectionFormateur from '../components/site/SectionFormateur.astro';
+import SiteMockup from '../components/site/SiteMockup.astro';
 import SectionFaq from '../components/site/SectionFaq.astro';
-import { TRAINEE_COUNTS } from '../lib/formationLead';
-import { FORM_ANCHOR, PRICE_FROM, baseFaq, faqSchema, reviews } from '../data/offer';
+import ProjectForm from '../components/site/ProjectForm.astro';
+import { faqSchema, SITE_URL } from '../data/offer';
+import { BRANDS, BUSINESS, EXPRESS, FORM_ANCHOR, OPTIONS, compare, pillars, steps, studioFaq } from '../data/studio';
+import '../styles/studio.css';
 
-// Home France depuis le 2026-10-02 (ex /new-landing-1) : landing "Formation IA" en tunnel de vente.
-// Une seule conversion (POST /api/formation) : un questionnaire en 4 étapes,
-// dont la première question est posée dès le hero. L'ancienne home est sur /old.
+// Home depuis le 2026-11-20 : studio de création de sites web (deux formules, Express et Business).
+// Une seule conversion : le formulaire #demande (POST /api/projet).
+// L'ancienne home Formation IA est archivée sur /archive/formation (noindex).
 
-const seoTitle = 'Formation IA sur mesure pour TPE et PME, éligible OPCO | Alefia';
-const seoDescription = "Votre équipe a déjà ChatGPT. Il lui manque la méthode. Formation IA sur mesure, sur vos vrais dossiers, à partir de 1 200 € la journée, éligible OPCO.";
+const seoTitle = 'Création de site internet pour TPE et artisans, dès 299 € HT | Alefia';
+const seoDescription = 'Votre site professionnel, rapidement et au juste prix. Site Express dès 299 € HT en 48 à 72 h, Site Business dès 599 € HT. Plus de 10 ans d’expertise web, un interlocuteur avant et après la mise en ligne.';
 
-// Menu : ancres vers les sections de la page
 const navLinks = [
-  { href: '#changement', label: 'Exemples' },
-  { href: '#deroule', label: 'Méthode' },
-  { href: '#prix', label: 'Prix' },
-  { href: '#formateur', label: 'Formateur' },
+  { href: '#offres', label: 'Offres' },
+  { href: '#pourquoi', label: 'Pourquoi Alefia' },
+  { href: '#methode', label: 'Méthode' },
+  { href: '#realisations', label: 'Exemples' },
   { href: '#faq', label: 'FAQ' },
 ];
 
-const pains = [
-  { title: 'Chacun bricole dans son coin.', desc: 'Un collègue l’utilise pour ses mails, un autre n’ose pas y toucher. Ce qui marche ne se partage pas.' },
-  { title: 'Les résultats déçoivent.', desc: 'Une demande floue donne une réponse floue. On en conclut que l’IA ne sert à rien.' },
-  { title: 'Personne n’a fixé les règles.', desc: 'Ce qu’on peut donner à une IA, et ce qu’on ne donne jamais. Tant que ce n’est pas dit, chacun décide seul.' },
+const offers = [
+  { ...EXPRESS, featured: false },
+  { ...BUSINESS, featured: true },
 ];
 
-const beforeAfter = [
-  { task: 'Un mail client délicat', before: 'On cherche ses mots, on réécrit trois fois.', after: 'Un premier jet propre, que vous ajustez.' },
-  { task: 'Un devis ou une offre', before: 'On repart d’un vieux document.', after: 'Une trame claire, adaptée à chaque client.' },
-  { task: 'Un compte rendu de réunion', before: 'Personne ne veut s’en charger.', after: 'Un résumé structuré, avec les actions à mener.' },
-  { task: 'Un document confidentiel', before: 'On le colle dans une IA sans y penser.', after: 'Chacun sait ce qui peut sortir, et ce qui reste chez vous.' },
+const examples = [
+  { kind: 'artisan' as const, label: 'Artisan', desc: 'Vos réalisations en photos, vos zones d’intervention, un bouton devis toujours visible.' },
+  { kind: 'services' as const, label: 'Entreprise de services', desc: 'Une expertise expliquée simplement, des offres lisibles, une prise de contact sans effort.' },
+  { kind: 'commerce' as const, label: 'Commerce', desc: 'Votre boutique, vos horaires, votre adresse, et l’envie de passer vous voir.' },
 ];
 
-const forYou = [
-  'Vous dirigez une TPE ou une PME.',
-  'Votre équipe est métier : direction, commerce, marketing, administratif.',
-  'Vous voulez des usages concrets, pas une conférence sur l’avenir de l’IA.',
-  'Vous voulez faire financer la formation par votre OPCO.',
-];
-const notForYou = [
-  'Vous voulez former des développeurs à créer des modèles d’IA.',
-  'Vous cherchez un catalogue standard, identique pour tout le monde.',
-];
-
-const faq = baseFaq;
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Création de site internet professionnel',
+  provider: { '@id': `${SITE_URL}/#organization` },
+  areaServed: { '@type': 'Country', name: 'France' },
+  audience: { '@type': 'BusinessAudience', name: 'TPE, indépendants, artisans et commerçants' },
+  offers: offers.map((o) => ({
+    '@type': 'Offer',
+    name: o.name,
+    description: o.pitch,
+    price: o.price.replace(/[^\d]/g, ''),
+    priceCurrency: 'EUR',
+    priceSpecification: { '@type': 'PriceSpecification', price: o.price.replace(/[^\d]/g, ''), priceCurrency: 'EUR', valueAddedTaxIncluded: false },
+  })),
+};
 ---
 
-<SiteLayout title={seoTitle} description={seoDescription} variant="home" ctaHref={FORM_ANCHOR}>
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(faq))} />
+<SiteLayout
+  title={seoTitle}
+  description={seoDescription}
+  variant="home-studio"
+  ctaHref={FORM_ANCHOR}
+  stickyLabel="Démarrer mon projet"
+  footer="studio"
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(studioFaq))} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <!-- Active les apparitions au défilement avant le premier rendu (évite un clignotement) -->
+  <script slot="head" is:inline>
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('st-anim');
+  </script>
 
-    <!-- ============ BARRE DU HAUT ============ -->
-    <header class="nl-top" slot="header">
-      <div class="nl-wrap nl-top-inner">
-        <Logo href="#top" />
-        <nav class="nl-nav" id="nl-nav" aria-label="Sections de la page">
-          <ul>
-            {navLinks.map((l) => <li><a href={l.href} data-nav>{l.label}</a></li>)}
+  <!-- ============ BARRE DU HAUT ============ -->
+  <header class="nl-top" slot="header">
+    <div class="nl-wrap nl-top-inner">
+      <Logo href="#top" />
+      <nav class="nl-nav" id="nl-nav" aria-label="Sections de la page">
+        <ul>
+          {navLinks.map((l) => <li><a href={l.href} data-nav>{l.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="nl-top-right">
+        <a href={FORM_ANCHOR} class="nl-top-cta" data-cta="header"><span class="st-cta-long">Démarrer mon projet</span><span class="st-cta-short" aria-hidden="true">Mon projet</span></a>
+        <button type="button" class="nl-burger" id="nl-burger" aria-expanded="false" aria-controls="nl-nav">
+          <span class="nl-burger-icon" aria-hidden="true"></span>
+          <span class="nl-sr">Ouvrir le menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="nl-hero st-hero">
+      <div class="nl-wrap st-hero-grid">
+        <div class="st-hero-text">
+          <p class="nl-kicker st-reveal">Studio de création de sites web</p>
+          <h1 class="nl-h1 st-h1 st-reveal">Un site professionnel ne devrait pas coûter <span class="nl-hl">une fortune.</span></h1>
+          <p class="nl-lead st-lead st-reveal">
+            Nous créons des sites web modernes, rapides et pensés pour développer votre activité. Le tout à un prix accessible, avec plus de 10 ans d’expertise web derrière chaque réalisation.
+          </p>
+          <div class="st-hero-ctas st-reveal">
+            <a href="#offres" class="nl-btn" data-cta="hero-offres">Découvrir nos offres <span aria-hidden="true">→</span></a>
+            <a href={FORM_ANCHOR} class="nl-btn st-btn-ghost" data-cta="hero-projet">Parler de mon projet</a>
+          </div>
+          <ul class="st-hero-proof st-reveal">
+            <li><strong>Plus de 10 ans</strong> d’expertise web et design</li>
+            <li><strong>Dès {EXPRESS.price} HT</strong> le site</li>
+            <li><strong>En ligne en quelques jours</strong></li>
           </ul>
-        </nav>
-        <div class="nl-top-right">
-          <a href={FORM_ANCHOR} class="nl-top-cta" data-cta="header">Être rappelé</a>
-          <button type="button" class="nl-burger" id="nl-burger" aria-expanded="false" aria-controls="nl-nav">
-            <span class="nl-burger-icon" aria-hidden="true"></span>
-            <span class="nl-sr">Ouvrir le menu</span>
-          </button>
+        </div>
+
+        <div class="st-hero-visual">
+          <SiteMockup kind="services" class="st-hero-desktop" />
+          <SiteMockup kind="artisan" device="phone" class="st-hero-phone" />
+          <p class="st-hero-tag"><strong>Site Express</strong> en ligne en {EXPRESS.delay}</p>
         </div>
       </div>
-    </header>
 
-    <main id="top">
-      <!-- ============ HERO : Hassan en formation + 1re question du tunnel ============ -->
-      <section class="nl-hero">
-        <div class="nl-wrap nl-hero-grid">
-          <div class="nl-hero-text">
-            <p class="nl-kicker">Formation IA pour les équipes de TPE et PME</p>
-            <h1 class="nl-h1">
-              Votre équipe a déjà ChatGPT. Il lui manque <span class="nl-hl">la méthode.</span>
-            </h1>
-            <p class="nl-lead">
-              Une formation construite sur vos vrais dossiers. Votre équipe l’applique dès le premier jour, dans son métier.
-            </p>
-
-            <!-- Question 1 posée tout de suite : un clic, et on enchaîne sur le questionnaire -->
-            <div class="nl-qs" role="group" aria-labelledby="qs-form-title qs-title">
-              <div class="nl-qs-head">
-                <p id="qs-form-title" class="nl-qs-title">Votre demande de formation</p>
-                <p class="nl-qs-time">4 questions · 1 minute</p>
-              </div>
-              <div class="nl-qs-body">
-                <div class="nl-qs-progress">
-                  <span class="nl-qs-step">Question 1 sur 4</span>
-                  <span class="nl-qs-bar" aria-hidden="true"><i class="is-done"></i><i></i><i></i><i></i></span>
-                </div>
-                <p id="qs-title" class="nl-qs-q">Combien de personnes voulez-vous former ?</p>
-                <div class="nl-qs-row">
-                  {TRAINEE_COUNTS.map((v) => (
-                    <button type="button" class="nl-tile" data-quickstart={v}>{v}</button>
-                  ))}
-                </div>
-                <div class="nl-qs-foot">
-                  <button type="button" class="nl-qs-unsure" data-quickstart="">Je ne sais pas encore</button>
-                  <span>Sans engagement. Rappel sous 24 h.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <figure class="nl-hero-visual">
-            <div class="nl-hero-photo">
-              <img
-                src="/images/team/hassan-hero.webp"
-                alt="Hassan Houaiss en pleine formation, micro casque, en train d’expliquer"
-                width="800"
-                height="800"
-                fetchpriority="high"
-              />
-            </div>
-            <figcaption class="nl-hero-cap">
-              <strong>Hassan Houaiss</strong>
-              <span>Votre formateur. 10 ans en banque, chez BNP Paribas et au Crédit Mutuel.</span>
-            </figcaption>
-            <blockquote class="nl-postit">
-              <p>«&nbsp;{reviews[0].text}&nbsp;»</p>
-              <footer>{reviews[0].author}, {reviews[0].company} · avis Malt 5/5</footer>
-            </blockquote>
-          </figure>
-        </div>
-
-        <div class="nl-wrap">
-          <ul class="nl-facts">
-            <li><strong>À partir de {PRICE_FROM}</strong> la journée</li>
-            <li><strong>Éligible OPCO</strong>, dossier géré de A à Z</li>
-            <li><strong>Chez vous</strong> en Île-de-France, ou à distance</li>
+      <div class="nl-wrap">
+        <div class="st-brands">
+          <p>Plus de 10 ans d’expérience web et design, notamment pour</p>
+          <ul>
+            {BRANDS.map((b) => <li>{b}</li>)}
           </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ============ LE CONSTAT ============ -->
-      <section class="nl-section" id="constat">
-        <div class="nl-wrap nl-split">
+    <!-- ============ OFFRES ============ -->
+    <section class="nl-section st-offers" id="offres">
+      <div class="nl-wrap">
+        <div class="st-head">
+          <p class="nl-kicker">Nos offres</p>
+          <h2 class="nl-h2">Deux formules. Des prix clairs.</h2>
+          <p class="st-head-lead">Choisissez la formule qui correspond à votre activité. Vous savez dès le départ ce qui est inclus, combien ça coûte et quand c’est livré.</p>
+        </div>
+
+        <div class="st-cards">
+          {offers.map((o) => (
+            <article class:list={['st-card', 'st-reveal', { 'st-card-featured': o.featured }]} aria-labelledby={`offer-${o.id}`}>
+              {o.featured && <p class="st-badge">Recommandé</p>}
+              <h3 id={`offer-${o.id}`} class="st-card-name">{o.name}</h3>
+              <p class="st-card-pitch">{o.pitch}</p>
+              <p class="st-price">
+                <small>À partir de</small>
+                <span class="st-price-amount">{o.price}</span>
+                <small class="st-price-ht">HT</small>
+              </p>
+              <p class="st-delay">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span><strong>{o.delay}</strong> {o.delayNote}</span>
+              </p>
+              <ul class="st-included">
+                {o.included.map((item) => <li>{item}</li>)}
+              </ul>
+              <a href={FORM_ANCHOR} class:list={['nl-btn', 'nl-btn-full', { 'nl-btn-amber': o.featured }]} data-formula={o.id} data-cta={`offre-${o.id}`}>
+                {o.cta} <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <div class="st-options st-reveal">
           <div>
-            <p class="nl-kicker">Le constat</p>
-            <h2 class="nl-h2">L’IA est déjà dans vos bureaux. Sans règles, ni méthode.</h2>
+            <h3>Besoin d’un peu plus ?</h3>
+            <p>Ces prestations s’ajoutent à l’une ou l’autre formule, sur devis.</p>
           </div>
-          <ul class="nl-pains">
-            {pains.map((p) => (
-              <li>
-                <h3>{p.title}</h3>
-                <p>{p.desc}</p>
-              </li>
-            ))}
+          <ul>
+            {OPTIONS.map((opt) => <li>{opt}</li>)}
           </ul>
         </div>
-      </section>
+        <p class="st-note">Prix hors taxes. Le nom de domaine et l’hébergement ont un coût annuel, indiqué avant de commencer.</p>
+      </div>
+    </section>
 
-      <!-- ============ AVANT / APRÈS ============ -->
-      <section class="nl-section nl-mist" id="changement">
-        <div class="nl-wrap">
+    <!-- ============ POURQUOI ALEFIA ============ -->
+    <section class="nl-section nl-mist" id="pourquoi">
+      <div class="nl-wrap">
+        <div class="st-head">
+          <p class="nl-kicker">Pourquoi Alefia ?</p>
+          <h2 class="nl-h2">Pas un site généré. Un site conçu, vérifié, optimisé.</h2>
+        </div>
+
+        <ul class="st-pillars">
+          {pillars.map((p, i) => (
+            <li class="st-reveal">
+              <span class="st-pillar-n" aria-hidden="true">0{i + 1}</span>
+              <h3>{p.title}</h3>
+              <p>{p.desc}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div class="st-compare st-reveal">
+          <div class="st-compare-row st-compare-head" aria-hidden="true">
+            <span>Un site fait à la chaîne</span>
+            <span>Un site Alefia</span>
+          </div>
+          {compare.map((c) => (
+            <div class="st-compare-row">
+              <p class="st-compare-generic"><span class="nl-sr">Un site fait à la chaîne : </span>{c.generic}</p>
+              <p class="st-compare-alefia"><span class="nl-sr">Un site Alefia : </span>{c.alefia}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="st-contact-person st-reveal">
+          <img src="/images/team/hassanhouaiss.jpg" alt="" width="96" height="96" loading="lazy" />
+          <p>
+            <strong>Hassan Houaiss, fondateur d’Alefia.</strong>
+            Votre interlocuteur du premier échange à la mise en ligne, et après.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMMENT ÇA MARCHE ============ -->
+    <section class="nl-section" id="methode">
+      <div class="nl-wrap">
+        <div class="st-head">
+          <p class="nl-kicker">Comment ça marche ?</p>
+          <h2 class="nl-h2">Trois étapes. Aucun jargon.</h2>
+        </div>
+        <ol class="nl-steps st-steps">
+          {steps.map((s, i) => (
+            <li class="st-reveal">
+              <span class="nl-step-n">{i + 1}</span>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="nl-actions">
+          <a href={FORM_ANCHOR} class="nl-btn" data-cta="methode">Parler de mon projet <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXEMPLES ============ -->
+    <section class="nl-section nl-mist" id="realisations">
+      <div class="nl-wrap">
+        <div class="st-head">
           <p class="nl-kicker">Exemples</p>
-          <h2 class="nl-h2">Les mêmes tâches. Une autre façon de les faire.</h2>
-
-          <ul class="nl-cases" aria-label="Avant et après la formation">
-            {beforeAfter.map((r) => (
-              <li class="nl-case">
-                <h3>{r.task}</h3>
-                <p class="nl-before"><span>Avant</span>{r.before}</p>
-                <p class="nl-after"><span>Après</span>{r.after}</p>
-              </li>
-            ))}
-          </ul>
-
-          <div class="nl-actions">
-            <a href={FORM_ANCHOR} class="nl-btn" data-cta="avant-apres">Parler de mon équipe <span aria-hidden="true">→</span></a>
-          </div>
+          <h2 class="nl-h2">Un site à l’image de votre métier.</h2>
+          <p class="st-head-lead">Chaque activité a ses codes. Voici comment nous les traduisons pour trois types d’entreprises.</p>
         </div>
-      </section>
+        <ul class="st-examples">
+          {examples.map((e) => (
+            <li class="st-reveal">
+              <SiteMockup kind={e.kind} />
+              <h3>{e.label}</h3>
+              <p>{e.desc}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="st-note">Maquettes de démonstration, créées pour illustrer nos formules. Ce ne sont pas des sites de clients.</p>
+      </div>
+    </section>
 
-      <SectionMethode />
+    <SectionFaq items={studioFaq} title="Vos questions, nos réponses." />
 
-      <!-- ============ POUR QUI ============ -->
-      <section class="nl-section nl-mist" id="pour-qui">
-        <div class="nl-wrap">
-          <p class="nl-kicker">Pour qui</p>
-          <h2 class="nl-h2">Soyons clairs dès le départ.</h2>
-          <div class="nl-fit">
-            <div class="nl-fit-col">
-              <h3>C’est pour vous si</h3>
-              <ul class="nl-list nl-list-yes">
-                {forYou.map((t) => <li>{t}</li>)}
-              </ul>
-            </div>
-            <div class="nl-fit-col nl-fit-no">
-              <h3>Ce n’est pas pour vous si</h3>
-              <ul class="nl-list nl-list-no">
-                {notForYou.map((t) => <li>{t}</li>)}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SectionPrix />
-
-      <SectionFormateur />
-
-      <SectionFaq items={faq} />
-
-      <FormationFunnel />
-    </main>
+    <ProjectForm />
+  </main>
 </SiteLayout>
 
 <script>
@@ -253,10 +298,21 @@ const faq = baseFaq;
     }, { rootMargin: '-45% 0px -50% 0px' });
     sections.forEach((el) => spy.observe(el));
 
-    // Retour sur le hero : plus aucune section active
     const heroEl = document.querySelector('.nl-hero');
     if (heroEl) new IntersectionObserver(([e]) => {
       if (e.isIntersecting) navAnchors.forEach((l) => { l.classList.remove('is-active'); l.removeAttribute('aria-current'); });
     }, { rootMargin: '0px 0px -60% 0px' }).observe(heroEl);
+
+    // ---------- Apparition douce au défilement ----------
+    if (document.documentElement.classList.contains('st-anim')) {
+      const reveal = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          reveal.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.st-reveal').forEach((el) => reveal.observe(el));
+    }
   }
 </script>

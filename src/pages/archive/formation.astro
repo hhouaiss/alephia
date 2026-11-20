@@ -1,0 +1,262 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Logo from '../../components/site/Logo.astro';
+import FormationFunnel from '../../components/site/FormationFunnel.astro';
+import SectionMethode from '../../components/site/SectionMethode.astro';
+import SectionPrix from '../../components/site/SectionPrix.astro';
+import SectionFormateur from '../../components/site/SectionFormateur.astro';
+import SectionFaq from '../../components/site/SectionFaq.astro';
+import { TRAINEE_COUNTS } from '../../lib/formationLead';
+import { FORM_ANCHOR, PRICE_FROM, baseFaq, faqSchema, reviews } from '../../data/offer';
+
+// Home France depuis le 2026-10-02 (ex /new-landing-1) : landing "Formation IA" en tunnel de vente.
+// Une seule conversion (POST /api/formation) : un questionnaire en 4 étapes,
+// dont la première question est posée dès le hero. L'ancienne home est sur /old.
+
+const seoTitle = 'Formation IA sur mesure pour TPE et PME, éligible OPCO | Alefia';
+const seoDescription = "Votre équipe a déjà ChatGPT. Il lui manque la méthode. Formation IA sur mesure, sur vos vrais dossiers, à partir de 1 200 € la journée, éligible OPCO.";
+
+// Menu : ancres vers les sections de la page
+const navLinks = [
+  { href: '#changement', label: 'Exemples' },
+  { href: '#deroule', label: 'Méthode' },
+  { href: '#prix', label: 'Prix' },
+  { href: '#formateur', label: 'Formateur' },
+  { href: '#faq', label: 'FAQ' },
+];
+
+const pains = [
+  { title: 'Chacun bricole dans son coin.', desc: 'Un collègue l’utilise pour ses mails, un autre n’ose pas y toucher. Ce qui marche ne se partage pas.' },
+  { title: 'Les résultats déçoivent.', desc: 'Une demande floue donne une réponse floue. On en conclut que l’IA ne sert à rien.' },
+  { title: 'Personne n’a fixé les règles.', desc: 'Ce qu’on peut donner à une IA, et ce qu’on ne donne jamais. Tant que ce n’est pas dit, chacun décide seul.' },
+];
+
+const beforeAfter = [
+  { task: 'Un mail client délicat', before: 'On cherche ses mots, on réécrit trois fois.', after: 'Un premier jet propre, que vous ajustez.' },
+  { task: 'Un devis ou une offre', before: 'On repart d’un vieux document.', after: 'Une trame claire, adaptée à chaque client.' },
+  { task: 'Un compte rendu de réunion', before: 'Personne ne veut s’en charger.', after: 'Un résumé structuré, avec les actions à mener.' },
+  { task: 'Un document confidentiel', before: 'On le colle dans une IA sans y penser.', after: 'Chacun sait ce qui peut sortir, et ce qui reste chez vous.' },
+];
+
+const forYou = [
+  'Vous dirigez une TPE ou une PME.',
+  'Votre équipe est métier : direction, commerce, marketing, administratif.',
+  'Vous voulez des usages concrets, pas une conférence sur l’avenir de l’IA.',
+  'Vous voulez faire financer la formation par votre OPCO.',
+];
+const notForYou = [
+  'Vous voulez former des développeurs à créer des modèles d’IA.',
+  'Vous cherchez un catalogue standard, identique pour tout le monde.',
+];
+
+const faq = baseFaq;
+---
+
+<SiteLayout title={seoTitle} description={seoDescription} variant="archive-formation" noindex ctaHref={FORM_ANCHOR}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema(faq))} />
+
+    <!-- ============ BARRE DU HAUT ============ -->
+    <header class="nl-top" slot="header">
+      <div class="nl-wrap nl-top-inner">
+        <Logo href="#top" />
+        <nav class="nl-nav" id="nl-nav" aria-label="Sections de la page">
+          <ul>
+            {navLinks.map((l) => <li><a href={l.href} data-nav>{l.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="nl-top-right">
+          <a href={FORM_ANCHOR} class="nl-top-cta" data-cta="header">Être rappelé</a>
+          <button type="button" class="nl-burger" id="nl-burger" aria-expanded="false" aria-controls="nl-nav">
+            <span class="nl-burger-icon" aria-hidden="true"></span>
+            <span class="nl-sr">Ouvrir le menu</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO : Hassan en formation + 1re question du tunnel ============ -->
+      <section class="nl-hero">
+        <div class="nl-wrap nl-hero-grid">
+          <div class="nl-hero-text">
+            <p class="nl-kicker">Formation IA pour les équipes de TPE et PME</p>
+            <h1 class="nl-h1">
+              Votre équipe a déjà ChatGPT. Il lui manque <span class="nl-hl">la méthode.</span>
+            </h1>
+            <p class="nl-lead">
+              Une formation construite sur vos vrais dossiers. Votre équipe l’applique dès le premier jour, dans son métier.
+            </p>
+
+            <!-- Question 1 posée tout de suite : un clic, et on enchaîne sur le questionnaire -->
+            <div class="nl-qs" role="group" aria-labelledby="qs-form-title qs-title">
+              <div class="nl-qs-head">
+                <p id="qs-form-title" class="nl-qs-title">Votre demande de formation</p>
+                <p class="nl-qs-time">4 questions · 1 minute</p>
+              </div>
+              <div class="nl-qs-body">
+                <div class="nl-qs-progress">
+                  <span class="nl-qs-step">Question 1 sur 4</span>
+                  <span class="nl-qs-bar" aria-hidden="true"><i class="is-done"></i><i></i><i></i><i></i></span>
+                </div>
+                <p id="qs-title" class="nl-qs-q">Combien de personnes voulez-vous former ?</p>
+                <div class="nl-qs-row">
+                  {TRAINEE_COUNTS.map((v) => (
+                    <button type="button" class="nl-tile" data-quickstart={v}>{v}</button>
+                  ))}
+                </div>
+                <div class="nl-qs-foot">
+                  <button type="button" class="nl-qs-unsure" data-quickstart="">Je ne sais pas encore</button>
+                  <span>Sans engagement. Rappel sous 24 h.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <figure class="nl-hero-visual">
+            <div class="nl-hero-photo">
+              <img
+                src="/images/team/hassan-hero.webp"
+                alt="Hassan Houaiss en pleine formation, micro casque, en train d’expliquer"
+                width="800"
+                height="800"
+                fetchpriority="high"
+              />
+            </div>
+            <figcaption class="nl-hero-cap">
+              <strong>Hassan Houaiss</strong>
+              <span>Votre formateur. 10 ans en banque, chez BNP Paribas et au Crédit Mutuel.</span>
+            </figcaption>
+            <blockquote class="nl-postit">
+              <p>«&nbsp;{reviews[0].text}&nbsp;»</p>
+              <footer>{reviews[0].author}, {reviews[0].company} · avis Malt 5/5</footer>
+            </blockquote>
+          </figure>
+        </div>
+
+        <div class="nl-wrap">
+          <ul class="nl-facts">
+            <li><strong>À partir de {PRICE_FROM}</strong> la journée</li>
+            <li><strong>Éligible OPCO</strong>, dossier géré de A à Z</li>
+            <li><strong>Chez vous</strong> en Île-de-France, ou à distance</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ LE CONSTAT ============ -->
+      <section class="nl-section" id="constat">
+        <div class="nl-wrap nl-split">
+          <div>
+            <p class="nl-kicker">Le constat</p>
+            <h2 class="nl-h2">L’IA est déjà dans vos bureaux. Sans règles, ni méthode.</h2>
+          </div>
+          <ul class="nl-pains">
+            {pains.map((p) => (
+              <li>
+                <h3>{p.title}</h3>
+                <p>{p.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ AVANT / APRÈS ============ -->
+      <section class="nl-section nl-mist" id="changement">
+        <div class="nl-wrap">
+          <p class="nl-kicker">Exemples</p>
+          <h2 class="nl-h2">Les mêmes tâches. Une autre façon de les faire.</h2>
+
+          <ul class="nl-cases" aria-label="Avant et après la formation">
+            {beforeAfter.map((r) => (
+              <li class="nl-case">
+                <h3>{r.task}</h3>
+                <p class="nl-before"><span>Avant</span>{r.before}</p>
+                <p class="nl-after"><span>Après</span>{r.after}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div class="nl-actions">
+            <a href={FORM_ANCHOR} class="nl-btn" data-cta="avant-apres">Parler de mon équipe <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <SectionMethode />
+
+      <!-- ============ POUR QUI ============ -->
+      <section class="nl-section nl-mist" id="pour-qui">
+        <div class="nl-wrap">
+          <p class="nl-kicker">Pour qui</p>
+          <h2 class="nl-h2">Soyons clairs dès le départ.</h2>
+          <div class="nl-fit">
+            <div class="nl-fit-col">
+              <h3>C’est pour vous si</h3>
+              <ul class="nl-list nl-list-yes">
+                {forYou.map((t) => <li>{t}</li>)}
+              </ul>
+            </div>
+            <div class="nl-fit-col nl-fit-no">
+              <h3>Ce n’est pas pour vous si</h3>
+              <ul class="nl-list nl-list-no">
+                {notForYou.map((t) => <li>{t}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <SectionPrix />
+
+      <SectionFormateur />
+
+      <SectionFaq items={faq} />
+
+      <FormationFunnel />
+    </main>
+</SiteLayout>
+
+<script>
+  import { track } from '../../lib/track';
+
+  // ---------- Menu : ouverture mobile + section active ----------
+  const nav = document.getElementById('nl-nav');
+  const burger = document.getElementById('nl-burger');
+  const setMenu = (open: boolean) => {
+    nav?.classList.toggle('is-open', open);
+    burger?.setAttribute('aria-expanded', String(open));
+    const sr = burger?.querySelector('.nl-sr');
+    if (sr) sr.textContent = open ? 'Fermer le menu' : 'Ouvrir le menu';
+  };
+  burger?.addEventListener('click', () => setMenu(!nav?.classList.contains('is-open')));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  const navAnchors = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav]'));
+  navAnchors.forEach((a) => a.addEventListener('click', () => {
+    setMenu(false);
+    track('nav_click', { target: a.getAttribute('href') });
+  }));
+
+  if ('IntersectionObserver' in window) {
+    const sections = navAnchors
+      .map((a) => document.querySelector<HTMLElement>(a.getAttribute('href') || ''))
+      .filter((el): el is HTMLElement => Boolean(el));
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navAnchors.forEach((a) => {
+          const active = a.getAttribute('href') === `#${entry.target.id}`;
+          a.classList.toggle('is-active', active);
+          if (active) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach((el) => spy.observe(el));
+
+    // Retour sur le hero : plus aucune section active
+    const heroEl = document.querySelector('.nl-hero');
+    if (heroEl) new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) navAnchors.forEach((l) => { l.classList.remove('is-active'); l.removeAttribute('aria-current'); });
+    }, { rootMargin: '0px 0px -60% 0px' }).observe(heroEl);
+  }
+</script>
